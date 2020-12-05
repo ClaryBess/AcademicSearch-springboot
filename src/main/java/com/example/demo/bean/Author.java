@@ -1,7 +1,9 @@
 package com.example.demo.bean;
 
-import java.io.Serializable;
+import org.springframework.data.elasticsearch.annotations.Document;
 
+import java.io.Serializable;
+@Document(indexName="author")
 public class Author implements Serializable {
 	/**
 	 * 作者id
