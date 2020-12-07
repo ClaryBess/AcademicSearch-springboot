@@ -1,4 +1,4 @@
-package com.example.project.mapper;
+package com.example.demo.mapper;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
