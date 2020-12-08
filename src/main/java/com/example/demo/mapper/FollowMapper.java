@@ -29,7 +29,7 @@ public interface FollowMapper {
     public int insertFollow(Follow follow);
 
     @Delete("delete from Follow id=#{id}")
-    public int deleteFollowById(Integer integer);
+    public int deleteFollowById(Integer id);
 
     @Delete("delete from Follow user=#{user}")
     public int deleteFollowByUser(Integer user);

@@ -11,6 +11,7 @@ import java.util.List;
 public class FollowService {
     @Autowired
     FollowMapper followMapper;
+
     //添加关注
     public Follow insertFollow(Follow follow){
         Follow follow1=followMapper.getFollowByUserAndResearcher(follow.getUser(),follow.getResearcher());
@@ -31,7 +32,7 @@ public class FollowService {
     }
 
     //根据id获取
-    public Follow getFollowBtId(Integer id){
+    public Follow getFollowById(Integer id){
         return followMapper.getFollowById(id);
     }
 
