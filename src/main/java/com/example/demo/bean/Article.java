@@ -1,11 +1,14 @@
 package com.example.demo.bean;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import java.io.Serializable;
 import java.util.Date;
-@Document(indexName="projectname", indexStoreType="fs",shards=5,replicas=1,refreshInterval="-1")
+
+@Document(indexName="paper")
 public class Article implements Serializable {
+	@Id
 	private Long id;
 	/**标题*/
 	private String title;
@@ -102,4 +105,6 @@ public class Article implements Serializable {
 				", tutorial=" + tutorial +
 				'}';
 	}
+
+
 }

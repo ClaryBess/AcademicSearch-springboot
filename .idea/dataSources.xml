@@ -6,7 +6,13 @@
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://10.251.253.69:3306</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="EsData Source7.8.1 - jdbc:es://10.251.253.69:9200" uuid="11d8182f-240f-48c0-92c2-b17486345b1e">
+      <driver-ref>java.sql.Driver</driver-ref>
+      <synchronize>true</synchronize>
+      <configured-by-url>true</configured-by-url>
+      <jdbc-driver>org.elasticsearch.xpack.sql.jdbc.EsDriver</jdbc-driver>
+      <jdbc-url>jdbc:es://10.251.253.69:9200</jdbc-url>
     </data-source>
   </component>
 </project>
