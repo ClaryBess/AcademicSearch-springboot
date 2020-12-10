@@ -16,19 +16,8 @@
       </schema-mapping>
     </data-source>
     <data-source name="EsData Source7.8.1 - jdbc:es://10.251.253.69:9200" uuid="11d8182f-240f-48c0-92c2-b17486345b1e">
-      <database-info product="Elasticsearch" version="7.8.1" jdbc-version="4.2" driver-name="Elasticsearch JDBC Driver" driver-version="7.8" dbms="UNKNOWN" exact-version="7.8" exact-driver-version="7.8">
-        <identifier-quote-string>&quot;</identifier-quote-string>
-      </database-info>
-      <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact" />
-      <secret-storage>master_key</secret-storage>
-      <user-name>root</user-name>
-      <schema-mapping>
-        <introspection-scope>
-          <node kind="database" qname="@">
-            <node kind="schema" qname="@" />
-          </node>
-        </introspection-scope>
-      </schema-mapping>
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="UNKNOWN" exact-version="0" />
+      <schema-mapping />
     </data-source>
   </component>
 </project>

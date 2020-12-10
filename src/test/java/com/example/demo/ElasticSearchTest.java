@@ -3,6 +3,7 @@ package com.example.demo;
 import com.example.demo.bean.Article;
 import com.example.demo.bean.Author;
 import com.example.demo.bean.Tutorial;
+import com.example.demo.mapper.ArticleSearchRepository;
 import org.elasticsearch.index.query.QueryStringQueryBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;

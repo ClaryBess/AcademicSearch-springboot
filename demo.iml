@@ -33,6 +33,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
+    <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-jdbc:2.4.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:2.4.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:2.4.0" level="project" />
@@ -164,5 +165,6 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-context-support:5.3.1" level="project" />
     <orderEntry type="library" name="Maven: com.sun.mail:jakarta.mail:1.6.5" level="project" />
     <orderEntry type="library" name="Maven: com.sun.activation:jakarta.activation:1.2.2" level="project" />
+    <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.62" level="project" />
   </component>
 </module>

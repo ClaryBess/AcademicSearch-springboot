@@ -5,10 +5,11 @@ public class Researcher {
     private String name;
     private String organization;
     private Integer paperCount;
-    private String edu;
+    private String index;
     private String email;
     private String pwd;
     private String info;
+    private Integer role = 2;
 
     public Long getId() {
         return id;
@@ -42,14 +43,6 @@ public class Researcher {
         this.paperCount = paperCount;
     }
 
-    public String getEdu() {
-        return edu;
-    }
-
-    public void setEdu(String edu) {
-        this.edu = edu;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -74,14 +67,31 @@ public class Researcher {
         this.info = info;
     }
 
-    public Researcher(Long id, String name, String organization, Integer paperCount, String edu, String email, String pwd, String info) {
+    public String getIndex() {
+        return index;
+    }
+
+    public void setIndex(String index) {
+        this.index = index;
+    }
+
+    public Integer getRole() {
+        return role;
+    }
+
+    public void setRole(Integer role) {
+        this.role = role;
+    }
+
+    public Researcher(Long id, String name, String organization, Integer paperCount, String index, String email, String pwd, String info, Integer role) {
         this.id = id;
         this.name = name;
         this.organization = organization;
         this.paperCount = paperCount;
-        this.edu = edu;
+        this.index = index;
         this.email = email;
         this.pwd = pwd;
         this.info = info;
+        this.role = role;
     }
 }
