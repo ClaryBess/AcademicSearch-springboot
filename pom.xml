@@ -183,7 +183,7 @@
 <!--                <groupId>org.apache.maven.plugins</groupId>-->
 <!--                <artifactId>maven-surefire-plugin</artifactId>-->
 <!--                <version>3.1.1</version>-->
-<!--                　　&lt;!&ndash;版本根据你自己的版本写 &ndash;&gt;-->
+<!--                　　&lt;!&ndash;版本根据你自己的版本写 ps:不知道版本可尝试2.19 &ndash;&gt;-->
 <!--                <configuration>-->
 <!--                    <skipTests>true</skipTests>-->
 <!--                </configuration>-->
