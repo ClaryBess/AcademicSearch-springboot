@@ -14,7 +14,7 @@ public class EmailService {
     JavaMailSenderImpl mailSender;
 
     private String emailServiceCode;
-    public String send(){
+    public String send(String emailTo){
         StringBuilder str = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < 6; i++) {
@@ -25,8 +25,9 @@ public class EmailService {
         message.setSubject("验证码");
         message.setText("验证码是：" + emailServiceCode);
         message.setFrom("17855776325@163.com");
-        message.setTo("17812110675@163.com");
+        message.setTo(emailTo);
         mailSender.send(message);
+        //base64简单加密
         String base64 = Base64.encodeBase64URLSafeString(emailServiceCode.getBytes());
         return base64;
     }
