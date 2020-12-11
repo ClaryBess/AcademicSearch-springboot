@@ -1,12 +1,7 @@
 package com.example.demo.mapper;
 
 import com.example.demo.bean.Collection;
-import com.example.demo.bean.Directory;
-import com.example.demo.bean.Follow;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 

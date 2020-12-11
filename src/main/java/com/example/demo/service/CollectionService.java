@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 import com.example.demo.bean.Collection;
 import com.example.demo.mapper.CollectionMapper;
-import com.example.demo.mapper.DirectoryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
