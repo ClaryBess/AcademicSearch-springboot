@@ -40,6 +40,6 @@ public interface ApplyMapper {
 
     /*添加反馈*/
 //    @Update("update Apply set feedback=#{feedback} where id=#{id}")
-//    public Integer Reject(long id,String feedback);
+//    public Integer Feedback(long id,String feedback);
 
 }
