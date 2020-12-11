@@ -1,6 +1,8 @@
 server:
   port: 8081
 spring:
+  main:
+    allow-bean-definition-overriding: true
   #邮箱验证配置
   mail:
     username: 17855776325@163.com
