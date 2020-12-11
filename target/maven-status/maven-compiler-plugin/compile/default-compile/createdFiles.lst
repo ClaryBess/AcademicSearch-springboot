@@ -32,6 +32,8 @@ com\example\demo\config\EsConfig.class
 com\example\demo\mapper\DirectoryMapper.class
 com\example\demo\bean\Article.class
 com\example\demo\service\ResearcherService.class
+com\example\demo\bean\Apply.class
+com\example\demo\mapper\ApplyMapper.class
 com\example\demo\mapper\UserMapper.class
 com\example\demo\config\ShiroConfig.class
 com\example\demo\service\CollectionService.class

@@ -1,12 +1,6 @@
 package com.example.demo.bean;
 
-import org.springframework.data.annotation.Id;
-
-import javax.persistence.Entity;
-
-@Entity
 public class Apply {
-    @Id
     private long id;
 
     private long user;

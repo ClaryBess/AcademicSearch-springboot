@@ -27,19 +27,19 @@ public interface ApplyMapper {
     public List<Apply> ShowPass();
 
     /*展示某一用户的所有申请*/
-    @Select("select * from Apply where user=#{} order by id desc")
+    @Select("select * from Apply where user=#{user} order by id desc")
     public List<Apply> ShowApplyByUser(long user);
 
     /*接受申请*/
-    @Update("update Apply set state='pass' where id=#{}")
+    @Update("update Apply set state='pass' where id=#{id}")
     public Integer Accept(long id);
 
     /*拒绝申请*/
-    @Update("update Apply set state='reject' where id=#{}")
+    @Update("update Apply set state='reject' where id=#{id}")
     public Integer Reject(long id);
 
     /*添加反馈*/
-    @Update("update Apply set feedback=#{} where id=#{}")
-    public Integer Reject(long id,String feedback);
+//    @Update("update Apply set feedback=#{feedback} where id=#{id}")
+//    public Integer Reject(long id,String feedback);
 
 }
