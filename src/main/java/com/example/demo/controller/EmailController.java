@@ -14,6 +14,7 @@ public class EmailController {
     @Autowired
     EmailService emailService;
 
+    //发送验证码，返回base64格式的验证码
     @RequestMapping("/send")
     public String send(){
         return emailService.send();
