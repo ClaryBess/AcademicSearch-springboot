@@ -11,10 +11,15 @@ public class UserService {
     @Autowired
     UserMapper userMapper;
 
-    //添加用户
-    public User addUser(Integer id, String name, String organization, String email, Integer paperCount, Integer index, String pwd, String info, Integer role) {
-        User newUser = userMapper.insertUser(new User(id, name, organization, email, paperCount, index, pwd, info, role));
-        return newUser;
+    public User Register(User user){
+        User user1 = userMapper.getUserByName(user.getName());
+        User user2 = userMapper.getUserByEmail(user.getEmail());
+        if(user1==null && user2==null){
+            userMapper.insertUser(user);
+            return userMapper.getUserById(user.getId());
+        }
+        else
+            return null;
     }
 
     //用id搜索用户
@@ -23,9 +28,20 @@ public class UserService {
         return newUser;
     }
 
+    //用email搜索用户
+    public User getUserByEmail(String email){
+        User user =userMapper.getUserByEmail(email);
+        return user;
+    }
+
+    //用用户名搜索用户
+    public User getUserByName(String name){
+        User user=userMapper.getUserByName(name);
+        return user;
+    }
+
     //删除用户
     public int deleteUser(Integer id) {
-        int a = userMapper.deleteUserById(id);
-        return a;
+        return userMapper.deleteUserById(id);
     }
 }
