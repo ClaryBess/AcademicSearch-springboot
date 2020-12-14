@@ -6,9 +6,7 @@ import com.example.demo.mapper.UserMapper;
 import com.example.demo.service.UserService;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
@@ -36,5 +34,22 @@ public class UserController {
         System.out.println("R1:User="+user.toString());
         return new CommonResult(200,null,result);
     }
+
+    @RequestMapping(value="/user/login",method = RequestMethod.POST)
+    public CommonResult login(@RequestBody User user){
+        User user1=userMapper.getUserByName(user.getName());
+        //需要先判断user1 是否为null
+        System.out.println("UserName="+user.getName());
+        System.out.println("Password="+user.getPwd());
+        System.out.println("Password2="+user1.getPwd());
+        if(user1!=null&&user.getPwd().equals(user1.getPwd())){
+            return new CommonResult(200,"success",user1);
+        }
+        else {
+            return new CommonResult(500,"failure",null);
+        }
+    }
+
+
 
 }

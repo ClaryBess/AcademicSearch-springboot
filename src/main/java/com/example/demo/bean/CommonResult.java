@@ -1,9 +1,9 @@
 package com.example.demo.bean;
 
 public class CommonResult {
-    Integer status;
-    String msg;
-    Object data;
+    Integer status;//状态码
+    String msg;//成功或错误信息
+    Object data;//返回数据
 
     public CommonResult(Integer i, String s, Object o) {
         this.status=i;
