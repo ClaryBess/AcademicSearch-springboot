@@ -1,5 +1,8 @@
 package com.example.demo.bean;
 
+import org.springframework.data.elasticsearch.annotations.Document;
+
+@Document(indexName = "author")
 public class Researcher {
     private Long id;
     private String name;
