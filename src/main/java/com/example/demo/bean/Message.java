@@ -7,7 +7,7 @@ public class Message {
     private long from;
     private long to;
     private String text;
-    private boolean read;
+    private Integer read;
     private Date time;
 
     public long getId() {
@@ -42,11 +42,11 @@ public class Message {
         this.text = text;
     }
 
-    public boolean isRead() {
+    public Integer isRead() {
         return read;
     }
 
-    public void setRead(boolean read) {
+    public void setRead(Integer read) {
         this.read = read;
     }
 
@@ -58,7 +58,7 @@ public class Message {
         this.time = time;
     }
 
-    public Message(long id, long from, long to, String text, boolean read, Date time) {
+    public Message(long id, long from, long to, String text, Integer read, Date time) {
         this.id = id;
         this.from = from;
         this.to = to;
