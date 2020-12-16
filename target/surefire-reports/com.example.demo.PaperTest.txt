@@ -1,0 +1,32 @@
+-------------------------------------------------------------------------------
+Test set: com.example.demo.PaperTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 0, Errors: 4, Skipped: 0, Time elapsed: 22.299 s <<< FAILURE! - in com.example.demo.PaperTest
+SaveTest  Time elapsed: 2.491 s  <<< ERROR!
+org.springframework.dao.DataAccessResourceFailureException: Connection refused: no further information; nested exception is java.lang.RuntimeException: Connection refused: no further information
+	at com.example.demo.PaperTest.SaveTest(PaperTest.java:27)
+Caused by: java.lang.RuntimeException: Connection refused: no further information
+	at com.example.demo.PaperTest.SaveTest(PaperTest.java:27)
+Caused by: java.net.ConnectException: Connection refused: no further information
+	at com.example.demo.PaperTest.SaveTest(PaperTest.java:27)
+Caused by: java.net.ConnectException: Connection refused: no further information
+
+DeleteTest  Time elapsed: 2.049 s  <<< ERROR!
+org.springframework.dao.DataAccessResourceFailureException: Connection refused: no further information; nested exception is java.lang.RuntimeException: Connection refused: no further information
+	at com.example.demo.PaperTest.DeleteTest(PaperTest.java:34)
+Caused by: java.lang.RuntimeException: Connection refused: no further information
+	at com.example.demo.PaperTest.DeleteTest(PaperTest.java:34)
+Caused by: java.net.ConnectException: Connection refused: no further information
+	at com.example.demo.PaperTest.DeleteTest(PaperTest.java:34)
+Caused by: java.net.ConnectException: Connection refused: no further information
+
+SearchTest  Time elapsed: 2.067 s  <<< ERROR!
+java.net.ConnectException: Connection refused: no further information
+	at com.example.demo.PaperTest.SearchTest(PaperTest.java:47)
+Caused by: java.net.ConnectException: Connection refused: no further information
+
+UpdateTest  Time elapsed: 2.27 s  <<< ERROR!
+java.net.ConnectException: Connection refused: no further information
+	at com.example.demo.PaperTest.UpdateTest(PaperTest.java:41)
+Caused by: java.net.ConnectException: Connection refused: no further information
+
