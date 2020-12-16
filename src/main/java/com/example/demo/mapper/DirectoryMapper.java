@@ -21,7 +21,7 @@ public interface DirectoryMapper {
     public List<Directory> getDirectoryByUser(Integer user);
 
     //创建一个新的收藏夹
-    @Insert("insert into Directory(user,name) values(#{user},#{name})")
+    @Insert("insert into Directory(DEFAULT,user,name) values(#{user},#{name})")
     public int CreateDirectory(Integer user,String name);
 
     //删除收藏夹
