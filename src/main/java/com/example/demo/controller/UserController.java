@@ -4,6 +4,7 @@ import com.example.demo.bean.CommonResult;
 import com.example.demo.bean.User;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.service.UserService;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -13,14 +14,24 @@ import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class UserController {
+
+    @Value("${file.upload.path}")
+    private String filePath;
     @Autowired
     UserService userService;
 
@@ -57,8 +68,7 @@ public class UserController {
     }
 
     @PostMapping("/user/register")
-    public CommonResult register(@RequestBody User user){
-        //System.out.println("UserName="+user.getUserName());
+    public CommonResult register(@RequestParam("string1") String string1,@RequestParam("string2")String string2, @RequestBody User user){
         User user1=userService.getUserByEmail(user.getEmail());
         if(user1!=null){
             return new CommonResult(500,"email already exists!",null);
@@ -66,6 +76,10 @@ public class UserController {
         User user2=userService.getUserByName(user.getName());
         if(user2!=null){
             return new CommonResult(400,"username already exists!",null);
+        }
+        String base64 = Base64.encodeBase64URLSafeString(string1.getBytes());
+        if (base64!=string2){
+            return new CommonResult(300,"code error!",null);
         }
         user.setRole(1);
         user.setAvatar("");//默认头像
@@ -84,6 +98,31 @@ public class UserController {
         }
         else
             return new CommonResult(500,"password error",null);
+    }
+
+    @RequestMapping("user/save")
+    public Map<String, Object> materialPictureAndText(HttpServletRequest request, @RequestParam(value="file", required=false) MultipartFile file){
+        if (StringUtils.isEmpty(file)) {
+            HashMap<String, Object> resultMap = new HashMap<>();
+            resultMap.put("msg", "请上传图片");
+            return resultMap;
+        }
+
+        String filename = file.getOriginalFilename();
+        String path = filePath+"images/";
+        File filepath = new File(path,filename);
+        if(!filepath.getParentFile().exists()) {
+            filepath.getParentFile().mkdirs();
+        }
+        try {
+            file.transferTo(new File(path + File.separator + filename));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        HashMap map = new HashMap();
+        map.put("picture_url","/file/"+filename);
+        return map;
     }
 
     @PostMapping("/user/getUser")

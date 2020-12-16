@@ -28,8 +28,8 @@ public class EmailService {
         message.setFrom("17855776325@163.com");
         message.setTo(emailTo);
         mailSender.send(message);
-        //base64简单加密
-        String base64 = Base64.encodeBase64URLSafeString(emailServiceCode.getBytes());
-        return new CommonResult(200,"发送成功",base64);
-    }
-}
+                //base64简单加密
+                String base64 = Base64.encodeBase64URLSafeString(emailServiceCode.getBytes());
+                return new CommonResult(200,"发送成功",base64);
+                }
+                }
