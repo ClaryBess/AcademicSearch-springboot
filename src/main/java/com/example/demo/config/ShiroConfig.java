@@ -1,65 +1,66 @@
 package com.example.demo.config;
 
-import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
 public class ShiroConfig {
-    //ShiroFilterFactoryBean(步骤3)
-    @Bean(name = "shiroFilterFactoryBean")
-    //@Bean
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(@Qualifier("defaultWebSecurityManager")DefaultWebSecurityManager defaultWebSecurityManager){
-        ShiroFilterFactoryBean bean=new ShiroFilterFactoryBean();
-        bean.setSecurityManager(defaultWebSecurityManager);
-        /*
-         * anon：无需认证就可以访问
-         * authc：必须认证了才能访问
-         * user：必须用有了 记住我 功能才能用
-         * perms：拥有对某个资源的权限才能访问
-         * role：拥有某个角色权限才能访问
-         */
-        Map<String ,String> filterMap = new LinkedHashMap<>();
-        /*示例
-        filterMap.put("/user/add","authc");
-        filterMap.put("/user/update","authc");
-         */
-        filterMap.put(("/user/register"),"authc");
-        filterMap.put(("/user/login"),"authc");
-
-        bean.setFilterChainDefinitionMap(filterMap);
-        return bean;
+    @Bean
+    @ConditionalOnMissingBean
+    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
+        DefaultAdvisorAutoProxyCreator defaultAAP = new DefaultAdvisorAutoProxyCreator();
+        defaultAAP.setProxyTargetClass(true);
+        return defaultAAP;
     }
 
-    //DefaultWebSecurityManager(步骤2)
-    @Bean(name = "defaultWebSecurityManager")
-    public DefaultWebSecurityManager defaultWebSecurityManager(@Qualifier("userRealm") UserRealm userRealm){
-
-        DefaultWebSecurityManager securityManager=new DefaultWebSecurityManager();
-        securityManager.setRealm(userRealm());
-        return securityManager;
-
-    }
-
-    //创建realm对象(步骤1)
-    @Bean(name = "userRealm")
-    public UserRealm userRealm(){
+    //将自己的验证方式加入容器
+    @Bean
+    public UserRealm myShiroRealm() {
         return new UserRealm();
     }
 
+    //权限管理，配置主要是Realm的管理认证
     @Bean
-    public HashedCredentialsMatcher hashedCredentialsMatcher() {
-        HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
-        // 使用md5 算法进行加密
-        hashedCredentialsMatcher.setHashAlgorithmName("md5");
-        // 设置散列次数： 意为加密几次
-        hashedCredentialsMatcher.setHashIterations(2);
-        return hashedCredentialsMatcher;
+    public SecurityManager securityManager() {
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+        securityManager.setRealm(myShiroRealm());
+        return securityManager;
+    }
+
+    //Filter工厂，设置对应的过滤条件和跳转条件
+    @Bean
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
+        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+        shiroFilterFactoryBean.setSecurityManager(securityManager);
+        Map<String, String> map = new HashMap<>();
+        //登出
+        map.put("/logout", "logout");
+        //对所有用户认证
+        map.put("/**", "authc");
+        //登录
+        shiroFilterFactoryBean.setLoginUrl("/login");
+        //首页
+        shiroFilterFactoryBean.setSuccessUrl("/index");
+        //错误页面，认证不通过跳转
+        shiroFilterFactoryBean.setUnauthorizedUrl("/error");
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
+        return shiroFilterFactoryBean;
+    }
+
+    //注入权限管理
+    @Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
+        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
+        return authorizationAttributeSourceAdvisor;
     }
 }
