@@ -14,7 +14,7 @@ public interface CollectionMapper {
     public List<Collection> getCollectionByDirectory(Integer directory);
 
     //在一个收藏夹里添加一个新的收藏
-    @Insert("insert into Collection(directory,paper,user) values(#{directory},#{paper},#{user})")
+    @Insert("insert into Collection(directory,paper,DEFAULT,user) values(#{directory},#{paper},#{user})")
     public int insertCollection(Integer direction,long paper,Integer user);
 
     //删除一个收藏
