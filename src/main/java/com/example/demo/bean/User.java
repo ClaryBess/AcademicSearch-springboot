@@ -10,8 +10,9 @@ public class User {
     String pwd;
     String info;
     Integer role;   //0为管理员，1为普通用户，2为学者
+    String avatar;
 
-    public User(Integer id, String name, String organization, String email, Integer paperCount, Integer index, String pwd, String info, Integer role) {
+    public User(Integer id, String name, String organization, String email, Integer paperCount, Integer index, String pwd, String info, Integer role, String avatar) {
         this.id = id;
         this.name = name;
         this.organization = organization;
@@ -21,6 +22,7 @@ public class User {
         this.pwd = pwd;
         this.info = info;
         this.role = role;
+        this.avatar = avatar;
     }
 
     public User() {
@@ -97,4 +99,8 @@ public class User {
     public void setInfo(String info) {
         this.info = info;
     }
+
+    public String getAvatar() { return avatar; }
+
+    public void setAvatar(String avatar) { this.avatar = avatar; }
 }
