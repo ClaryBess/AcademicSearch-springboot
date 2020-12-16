@@ -43,11 +43,11 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         Map<String, String> map = new HashMap<>();
         //登出
-        map.put("/logout", "logout");
+        map.put("/user/logout", "logout");
         //对所有用户认证
         map.put("/**", "authc");
         //登录
-        shiroFilterFactoryBean.setLoginUrl("/login");
+        shiroFilterFactoryBean.setLoginUrl("/user/login");
         //首页
         shiroFilterFactoryBean.setSuccessUrl("/index");
         //错误页面，认证不通过跳转

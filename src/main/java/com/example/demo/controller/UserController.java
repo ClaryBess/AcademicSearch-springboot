@@ -17,21 +17,18 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 @RestController
 public class UserController {
-
-    @Autowired
-    UserMapper userMapper;
-
     @Autowired
     UserService userService;
 
 
     @GetMapping("/user/login")
-    public String login(User user) {
+    public CommonResult login(User user) {
         if (StringUtils.isEmpty(user.getName()) || StringUtils.isEmpty(user.getId())) {
-            return "请输入用户名和密码！";
+            return new CommonResult(500,"failure",null);
         }
         //用户认证信息
         Subject subject = SecurityUtils.getSubject();
@@ -45,20 +42,17 @@ public class UserController {
             //验证是权限
 //            subject.checkRole("admin");
 //            subject.checkPermissions("query", "add");
-        } catch (UnknownAccountException e) {
-
-            return "用户名不存在！";
         } catch (AuthenticationException e) {
 
-            return "账号或密码错误！";
-        } catch (AuthorizationException e) {
-            return "没有权限";
+            return new CommonResult(500,"failure",null);
         }
-        return "login success";
+        User user1 = (User) SecurityUtils.getSubject().getPrincipal();
+        return new CommonResult(200,"success",user1);
     }
 
-    @GetMapping("/logout")
+    @GetMapping("/user/logout")
     public String logout(){
+
         return "返回退出页面";
     }
 
@@ -73,11 +67,23 @@ public class UserController {
         if(user2!=null){
             return new CommonResult(400,"username already exists!",null);
         }
-
         user.setRole(1);
+        user.setAvatar("");//默认头像
         User result =userService.Register(user);
         System.out.println("R1:User="+user.toString());
         return new CommonResult(200,null,result);
+    }
+
+    @PostMapping("/user/changePassword/{id}")
+    public CommonResult changePassword(@PathVariable Integer id, @RequestBody List<String> pwds){
+        String pwd1=pwds.get(0);
+        String pwd2=pwds.get(1);
+        if (pwd1==userService.getUserById(id).getPwd()){
+            userService.getUserById(id).setPwd(pwd2);
+            return new CommonResult(200,"success",userService.getUserById(id));
+        }
+        else
+            return new CommonResult(500,"password error",null);
     }
 
     @PostMapping("/user/getUser")
