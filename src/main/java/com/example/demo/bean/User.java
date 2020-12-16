@@ -3,6 +3,7 @@ package com.example.demo.bean;
 public class User {
     Integer id;
     String name;
+    String trueName;
     String organization;
     String email;
     Integer paperCount; //论文数目
@@ -12,9 +13,10 @@ public class User {
     Integer role;   //0为管理员，1为普通用户，2为学者
     String avatar;
 
-    public User(Integer id, String name, String organization, String email, Integer paperCount, Integer index, String pwd, String info, Integer role, String avatar) {
+    public User(Integer id, String name,String trueName, String organization, String email, Integer paperCount, Integer index, String pwd, String info, Integer role, String avatar) {
         this.id = id;
         this.name = name;
+        this.trueName=trueName;
         this.organization = organization;
         this.email = email;
         this.paperCount = paperCount;
@@ -42,6 +44,14 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getTrueName() {
+        return trueName;
+    }
+
+    public void setTrueName(String trueName) {
+        this.trueName = trueName;
     }
 
     public String getEmail() {

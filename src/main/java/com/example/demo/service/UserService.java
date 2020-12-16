@@ -44,4 +44,26 @@ public class UserService {
     public int deleteUser(Integer id) {
         return userMapper.deleteUserById(id);
     }
+
+    //更新密码
+    public int updateUserPwd(User user) {
+
+        return userMapper.updatePwd(user);
+
+    }
+
+    //更新真实姓名
+    public int updateTrueName(User user){
+        return userMapper.updateTrueName(user);
+    }
+
+    //更新个人简介
+    public int updateInfo(User user){
+        return userMapper.updateInfo(user);
+    }
+
+    //更新头像
+    public int updateAvatar(User user){
+        return userMapper.updateAvatar(user);
+    }
 }

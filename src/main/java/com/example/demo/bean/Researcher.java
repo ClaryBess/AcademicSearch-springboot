@@ -6,6 +6,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 public class Researcher {
     private Long id;
     private String name;
+    private String trueName;
     private String organization;
     private Integer paperCount;
     private String index;
@@ -28,6 +29,14 @@ public class Researcher {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getTrueName() {
+        return trueName;
+    }
+
+    public void setTrueName(String trueName) {
+        this.trueName = trueName;
     }
 
     public String getOrganization() {
@@ -86,9 +95,10 @@ public class Researcher {
         this.role = role;
     }
 
-    public Researcher(Long id, String name, String organization, Integer paperCount, String index, String email, String pwd, String info, Integer role) {
+    public Researcher(Long id, String name, String trueName, String organization, Integer paperCount, String index, String email, String pwd, String info, Integer role) {
         this.id = id;
         this.name = name;
+        this.trueName=trueName;
         this.organization = organization;
         this.paperCount = paperCount;
         this.index = index;

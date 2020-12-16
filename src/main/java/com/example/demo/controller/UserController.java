@@ -93,7 +93,7 @@ public class UserController {
         String pwd1=pwds.get(0);
         String pwd2=pwds.get(1);
         if (pwd1==userService.getUserById(id).getPwd()){
-            userService.getUserById(id).setPwd(pwd2);
+            userService.updateUserPwd(userService.getUserById(id));
             return new CommonResult(200,"success",userService.getUserById(id));
         }
         else
@@ -129,6 +129,15 @@ public class UserController {
     public User getUser(){
         User user = (User) SecurityUtils.getSubject().getPrincipal(); // 获取当前登录用户
         return user;
+    }
+
+    @PostMapping("/user/info/change")
+    public CommonResult infoChange(@RequestBody User user){
+        userService.updateTrueName(user);
+        userService.updateInfo(user);
+        userService.updateAvatar(user);
+        user=userService.getUserById(user.getId());
+        return new CommonResult(200,null,user);
     }
 
     @PostMapping("/user/getName/{UserID}")
