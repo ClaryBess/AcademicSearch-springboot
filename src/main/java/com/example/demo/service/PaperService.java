@@ -2,7 +2,7 @@ package com.example.demo.service;
 
 import com.alibaba.fastjson.JSON;
 import com.example.demo.bean.Paper;
-import com.example.demo.mapper.PaperMaper;
+import com.example.demo.mapper.PaperMapper;
 import org.elasticsearch.action.DocWriteResponse;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
@@ -10,29 +10,31 @@ import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class PaperService{
+public class PaperService {
     @Qualifier("elasticsearchClient")
     @Autowired
     RestHighLevelClient client;
 
     @Autowired
-    PaperMaper paperMaper;
+    PaperMapper paperMapper;
 
     public void save(Paper paper){
-        paperMaper.save(paper);
+        paperMapper.save(paper);
     }
 
     public void delete(long id){
-        paperMaper.deleteById(id);
+        paperMapper.deleteById(id);
     }
 
     //成功更新返回1

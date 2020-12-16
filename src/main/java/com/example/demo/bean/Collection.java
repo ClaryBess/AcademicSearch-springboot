@@ -3,7 +3,16 @@ package com.example.demo.bean;
 public class Collection {
     private Integer id;
     private Integer directory;
-    private Integer paper;
+    private Long paper;
+    private Integer userId;
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 
     public Integer getId() {
         return id;
@@ -21,11 +30,11 @@ public class Collection {
         this.directory = directory;
     }
 
-    public Integer getPaper() {
+    public Long getPaper() {
         return paper;
     }
 
-    public void setPaper(Integer paper) {
+    public void setPaper(Long paper) {
         this.paper = paper;
     }
 }

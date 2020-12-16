@@ -22,12 +22,13 @@ public class CollectionService {
     }
 
     //取消收藏
-    public int deleteCollectionByByDirectoryAndPaper(Integer directory, Integer paper){
+    public int deleteCollectionByByDirectoryAndPaper(Integer directory, Long paper){
         return collectionMapper.deleteCollectionByByDirectoryAndPaper(directory,paper);
     }
 
+
     //根据收藏夹和文献获取收藏
-    public Collection getCollectionByDirectoryAndPaper(Integer directory, Integer paper){
+    public Collection getCollectionByDirectoryAndPaper(Integer directory, Long paper){
         return collectionMapper.getCollectionByDirectoryAndPaper(directory, paper);
     }
 

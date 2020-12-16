@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.DTO.CommentDTO;
 import com.example.demo.bean.Comments;
 import com.example.demo.bean.CommonResult;
 import com.example.demo.bean.User;
@@ -27,20 +28,21 @@ public class CommentController {
 
     /**
      * 进行评论
-     * @param comments
+     * @param commentDTO
      * @param request
      * @return
      */
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/comment/{userId}", method = RequestMethod.POST)
-    public Object Comment(@RequestBody Comments comments,
+    public Object Comment(@RequestBody CommentDTO commentDTO,
                           @PathVariable("userId") Integer userId,
                           HttpServletRequest request) {
         User user = userService.getUserById(userId);
         if(user==null) return new CommonResult(400,"The user does not exist!",null);
-        commentService.insertComments(comments, user);
-        return new CommonResult(200,null,comments);
+        commentService.insertComments(commentDTO, user);
+        return new CommonResult(200,null,commentDTO);
     }
+
 
 }

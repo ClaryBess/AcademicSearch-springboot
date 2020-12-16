@@ -14,8 +14,8 @@ public class PaperReturnDTO {
     private String url;   //网址
     private String keyWord; //关键字
     private String Abstract;  //摘要
-    private Integer creator;
-    private String creatorName;
+    private Integer AuthorId;
+    private String authorName;
     private Integer collectCount;
     private List<Comments> comments;
     private CommonResult resultDTO;//返回状态
@@ -56,14 +56,6 @@ public class PaperReturnDTO {
         return keyWord;
     }
 
-    public Integer getCreator() {
-        return creator;
-    }
-
-    public void setCreatorName(String creatorName) {
-        this.creatorName = creatorName;
-    }
-
     public List<Comments> getComments() {
         return comments;
     }
@@ -85,14 +77,6 @@ public class PaperReturnDTO {
     }
 
 
-    public void setCreator(Integer creator) {
-        this.creator = creator;
-    }
-
-    public String getCreatorName() {
-        return creatorName;
-    }
-
     public Integer getCollectCount() {
         return collectCount;
     }
@@ -101,6 +85,21 @@ public class PaperReturnDTO {
         this.collectCount = collectCount;
     }
 
+    public Integer getAuthorId() {
+        return AuthorId;
+    }
+
+    public void setAuthorId(Integer authorId) {
+        AuthorId = authorId;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
 
     public CommonResult getResultDTO() {
         return resultDTO;

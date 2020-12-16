@@ -1,5 +1,7 @@
 package com.example.demo.bean;
 
+import lombok.Data;
+
 import java.sql.Timestamp;
 
 public class Comments{
@@ -21,6 +23,10 @@ public class Comments{
     public Comments(String content, Long paperId) {
         this.content = content;
         this.paperId = paperId;
+    }
+
+    public Comments() {
+
     }
 
     public Integer getId() {

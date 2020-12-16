@@ -11,7 +11,7 @@ public interface CollectionMapper {
     public Collection getCollectionById(Integer id);
 
     @Select("select * from Collection where directory=#{directory} and paper=#{paper}")
-    public Collection getCollectionByDirectoryAndPaper(Integer directory, Integer paper);
+    public Collection getCollectionByDirectoryAndPaper(Integer directory, Long paper);
 
     @Select("select * from Collection where directory=#{directory}")
     public List<Collection> getCollectionByDirectory(Integer directory);
@@ -26,5 +26,5 @@ public interface CollectionMapper {
     public int deleteCollectionByDirectory(Integer directory);
 
     @Delete("delete from Follow where  directory=#{directory} and paper=#{paper}")
-    public int deleteCollectionByByDirectoryAndPaper(Integer directory, Integer paper);
+    public int deleteCollectionByByDirectoryAndPaper(Integer directory, Long paper);
 }
