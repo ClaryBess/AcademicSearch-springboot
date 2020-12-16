@@ -1,11 +1,9 @@
 package com.example.demo.service;
 
-import com.example.demo.bean.Collection;
+import com.example.demo.bean.CommonResult;
 import com.example.demo.mapper.CollectionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class CollectionService {
@@ -13,32 +11,35 @@ public class CollectionService {
     CollectionMapper collectionMapper;
 
     //添加收藏
-    public Collection insertCollection(Collection collection){
-        Collection collection1=collectionMapper.getCollectionByDirectoryAndPaper(collection.getDirectory(),collection.getPaper());
-        if(collection1!=null)
-            return collection1;
-        collectionMapper.insertCollection(collection);
-        return collectionMapper.getCollectionById(collection.getId());
+    public CommonResult insertCollection(Integer Did,long Pid,Integer user){
+        return new CommonResult(200,"收藏成功",collectionMapper.insertCollection(Did,Pid,user));
     }
 
-    //取消收藏
-    public int deleteCollectionByByDirectoryAndPaper(Integer directory, Long paper){
-        return collectionMapper.deleteCollectionByByDirectoryAndPaper(directory,paper);
+    //在文献页面取消收藏
+    public CommonResult DeleteCollectionInPaper(Integer user, long paper){
+        return new CommonResult(200,"取消收藏成功",collectionMapper.deleteCollectionInPaper(paper,user));
     }
 
-
-    //根据收藏夹和文献获取收藏
-    public Collection getCollectionByDirectoryAndPaper(Integer directory, Long paper){
-        return collectionMapper.getCollectionByDirectoryAndPaper(directory, paper);
+    //在收藏页面取消收藏
+    public CommonResult DeleteCollectionInDir(Integer Cid){
+        return new CommonResult(200,"取消收藏成功",collectionMapper.deleteCollectionById(Cid));
     }
 
-    //根据id获取收藏
-    public Collection getCollectionById(Integer id){
-        return collectionMapper.getCollectionById(id);
+    //展示收藏夹中的所有收藏
+    public CommonResult ShowCollectionByDir(Integer Did){
+        return new CommonResult(200,"展示收藏",collectionMapper.getCollectionByDirectory(Did));
     }
 
-    //获取收藏夹的全部收藏夹
-    public List<Collection> getCollectionByDirection(Integer directory){
-        return collectionMapper.getCollectionByDirectory(directory);
+    //删除某收藏夹里的所有收藏
+    public CommonResult DeleteCollectionByDir(Integer Did){
+        return new CommonResult(200,"删除成功",collectionMapper.deleteCollectionByDir(Did));
+    }
+
+    //展示某文献的收藏状态
+    public int ShowCollectionStatus(long paper,Integer user){
+        if (collectionMapper.CheckCollectionStatus(paper,user)==null)
+            return 0;
+        else
+            return 1;
     }
 }
