@@ -2,29 +2,35 @@ package com.example.demo.mapper;
 
 import com.example.demo.bean.Collection;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 @Mapper
 public interface CollectionMapper {
-    @Select("select * from Collection where id=#{id}")
-    public Collection getCollectionById(Integer id);
-
-    @Select("select * from Collection where directory=#{directory} and paper=#{paper}")
-    public Collection getCollectionByDirectoryAndPaper(Integer directory, Long paper);
-
-    @Select("select * from Collection where directory=#{directory}")
+    //展示一个收藏夹里面的所有收藏
+    @Select("select * from Collection where directory=#{directory} order by id desc")
     public List<Collection> getCollectionByDirectory(Integer directory);
 
-    @Insert("insert into Collection(directory,paper) values(#{directory},#{paper})")
-    public int insertCollection(Collection collection);
+    //在一个收藏夹里添加一个新的收藏
+    @Insert("insert into Collection(directory,paper,user) values(#{directory},#{paper},#{user})")
+    public int insertCollection(Integer direction,long paper,Integer user);
 
-    @Delete("delete from Collection id=#{id}")
+    //删除一个收藏
+    @Delete("delete from Collection where id=#{id}")
     public int deleteCollectionById(Integer id);
 
+    //删除一个收藏夹里面的所有收藏
     @Delete("delete from Collection directory=#{directory}")
-    public int deleteCollectionByDirectory(Integer directory);
+    public int deleteCollectionByDir(Integer directory);
 
-    @Delete("delete from Follow where  directory=#{directory} and paper=#{paper}")
-    public int deleteCollectionByByDirectoryAndPaper(Integer directory, Long paper);
+    //查找一个用户对某文献的收藏情况
+    @Select("select * from Collection where paper={paper} and user={user}")
+    public Collection CheckCollectionStatus(long paper,Integer user);
+
+    //直接在文献界面取消收藏
+    @Delete("delete from Follow where paper={paper} and user={user}")
+    public int deleteCollectionInPaper(long paper,Integer user);
+
 }

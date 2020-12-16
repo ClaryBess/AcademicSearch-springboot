@@ -4,14 +4,14 @@ public class Collection {
     private Integer id;
     private Integer directory;
     private Long paper;
-    private Integer userId;
+    private Integer user;
 
     public Integer getUserId() {
-        return userId;
+        return user;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser(Integer user) {
+        this.user = user;
     }
 
     public Integer getId() {
