@@ -30,6 +30,8 @@ public class ShiroConfig {
         filterMap.put("/user/add","authc");
         filterMap.put("/user/update","authc");
          */
+        filterMap.put(("/user/register"),"authc");
+        filterMap.put(("/user/login"),"authc");
 
         bean.setFilterChainDefinitionMap(filterMap);
         return bean;
