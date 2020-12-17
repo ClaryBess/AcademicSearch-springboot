@@ -139,6 +139,15 @@ public class UserController {
         return new CommonResult(200,null,user);
     }
 
+    @PostMapping("/user/send2")
+    public CommonResult send2(@RequestBody String email){
+        User user=userService.getUserByName(email);
+        if (user!=null)
+            return new CommonResult(200,"email exist",null);
+        else
+            return new CommonResult(500,"email not found",null);
+    }
+
     @PostMapping("/user/getName/{UserID}")
     public String getName(@PathVariable Integer UserID){
         return  userService.getUserById(UserID).getName();

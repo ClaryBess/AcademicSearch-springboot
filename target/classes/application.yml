@@ -10,7 +10,7 @@ spring:
     host: smtp.163.com
   datasource:
     name:
-    url: jdbc:mysql://10.251.253.69:3306/db?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC
+    url: jdbc:mysql://10.251.253.212:3306/db?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC
     username: root
     password: "@group12"
     type: com.alibaba.druid.pool.DruidDataSource
@@ -34,7 +34,7 @@ spring:
   data:
     elasticsearch:
       cluster-name: #默认为elasticsearch
-      cluster-nodes: 127.0.0.1:9200 #配置es节点信息，逗号分隔，如果没有指定，则启动ClientNode
+      cluster-nodes: 10.251.253.212:9200 #配置es节点信息，逗号分隔，如果没有指定，则启动ClientNode
       properties:
         path:
           logs: ./elasticsearch/log #elasticsearch日志存储目录
