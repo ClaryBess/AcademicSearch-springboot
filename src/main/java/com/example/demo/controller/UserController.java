@@ -62,9 +62,8 @@ public class UserController {
     }
 
     @GetMapping("/user/logout")
-    public String logout(){
-
-        return "返回退出页面";
+    public CommonResult logout(){
+        return new CommonResult(200,"logout success",null);
     }
 
     @PostMapping("/user/register")
@@ -82,7 +81,7 @@ public class UserController {
             return new CommonResult(300,"code error!",null);
         }
         user.setRole(1);
-        user.setAvatar("");//默认头像
+        user.setAvatar("/file/avatar.jpg");//默认头像
         User result =userService.Register(user);
         System.out.println("R1:User="+user.toString());
         return new CommonResult(200,null,result);
