@@ -152,6 +152,23 @@ public class UserController {
             return new CommonResult(500,"email not found",null);
     }
 
+    @PostMapping("/user/verify")
+    public CommonResult verify(@RequestParam("string1") String string1,@RequestParam("string2")String string2){
+        String base64 = Base64.encodeBase64URLSafeString(string1.getBytes());
+        if (base64!=string2){
+            return new CommonResult(300,"code error!",null);
+        }
+        return new CommonResult(200,"verify success",null);
+    }
+
+    @PostMapping("/user/reset")
+    public CommonResult reset(@RequestParam("pwd")String pwd,@RequestParam("email")String email){
+        User user=userService.getUserByEmail(email);
+        user.setPwd(pwd);
+        userService.updateUserPwd(user);
+        return new CommonResult(200,"success",null);
+    }
+
     @PostMapping("/user/getName/{UserID}")
     public String getName(@PathVariable Integer UserID){
         return  userService.getUserById(UserID).getName();
