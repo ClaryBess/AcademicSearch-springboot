@@ -96,7 +96,7 @@ public class UserController {
         return new CommonResult(200,null,result);
     }
 
-    @PostMapping("/user/changePassword/{id}")
+    @PostMapping("/user/changePassword")
     public CommonResult changePassword(@RequestParam("id")Integer id,@RequestParam("string1") String string1,@RequestParam("string2") String string2){
         if (string1.equals(userService.getUserById(id).getPwd())){
             User user=userService.getUserById(id);
