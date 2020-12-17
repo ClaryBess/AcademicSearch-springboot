@@ -92,7 +92,9 @@ public class UserController {
         String pwd1=pwds.get(0);
         String pwd2=pwds.get(1);
         if (pwd1==userService.getUserById(id).getPwd()){
-            userService.updateUserPwd(userService.getUserById(id));
+            User user=userService.getUserById(id);
+            user.setPwd(pwd2);
+            userService.updateUserPwd(user);
             return new CommonResult(200,"success",userService.getUserById(id));
         }
         else
@@ -140,8 +142,9 @@ public class UserController {
     }
 
     @PostMapping("/user/send2")
-    public CommonResult send2(@RequestBody String email){
-        User user=userService.getUserByName(email);
+    public CommonResult send2(@RequestParam("email") String email){
+        User user=userService.getUserByEmail(email);
+        System.out.println(email);
         if (user!=null)
             return new CommonResult(200,"email exist",null);
         else
