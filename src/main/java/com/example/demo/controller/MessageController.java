@@ -77,7 +77,7 @@ public class MessageController {
     //删除我的私信
     @ResponseBody
     @RequestMapping("/message/delete2")
-    public CommonResult DeleteMessage1(@RequestParam("Mid")Integer Mid){
+    public CommonResult DeleteMessage2(@RequestParam("Mid")Integer Mid){
         return messageService.DeleteMyMessage(Mid);
     }
 }
