@@ -86,7 +86,7 @@ public class UserController {
             return new CommonResult(400,"username already exists!",null);
         }
         String base64 = Base64.encodeBase64URLSafeString(string1.getBytes());
-        if (base64!=string2){
+        if (!base64.equals(string2)){
             return new CommonResult(300,"code error!",null);
         }
         user.setRole(1);
@@ -161,7 +161,7 @@ public class UserController {
     @PostMapping("/user/verify")
     public CommonResult verify(@RequestParam("string1") String string1,@RequestParam("string2")String string2){
         String base64 = Base64.encodeBase64URLSafeString(string1.getBytes());
-        if (base64!=string2){
+        if ((!base64.equals(string2)){
             return new CommonResult(300,"code error!",null);
         }
         return new CommonResult(200,"verify success",null);
