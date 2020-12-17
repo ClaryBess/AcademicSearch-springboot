@@ -97,12 +97,10 @@ public class UserController {
     }
 
     @PostMapping("/user/changePassword/{id}")
-    public CommonResult changePassword(@PathVariable Integer id, @RequestBody List<String> pwds){
-        String pwd1=pwds.get(0);
-        String pwd2=pwds.get(1);
-        if (pwd1==userService.getUserById(id).getPwd()){
+    public CommonResult changePassword(@RequestParam("id")Integer id,@RequestParam("string1") String string1,@RequestParam("string2") String string2){
+        if (string1.equals(userService.getUserById(id).getPwd())){
             User user=userService.getUserById(id);
-            user.setPwd(pwd2);
+            user.setPwd(string2);
             userService.updateUserPwd(user);
             return new CommonResult(200,"success",userService.getUserById(id));
         }
