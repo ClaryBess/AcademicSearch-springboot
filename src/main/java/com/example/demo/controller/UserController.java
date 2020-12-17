@@ -37,8 +37,9 @@ public class UserController {
 
 
     @PostMapping("/user/login")
-    public CommonResult login(User user) {
-        if (StringUtils.isEmpty(user.getName())) {
+    public CommonResult login(@RequestBody User user) {
+        System.out.println(user.getName());
+        if (user.getName()==null) {
             return new CommonResult(500,"empty",null);
         }
         //用户认证信息
@@ -56,7 +57,8 @@ public class UserController {
         } catch (AuthenticationException e) {
             return new CommonResult(500,"wrong",null);
         }
-        User user1 = (User) SecurityUtils.getSubject().getPrincipal();
+        String name=(String) SecurityUtils.getSubject().getPrincipal();
+        User user1=userService.getUserByName(name);
         return new CommonResult(200,"success",user1);
     }
 
