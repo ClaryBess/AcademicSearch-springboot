@@ -23,7 +23,7 @@ public class CollectionController {
     @ResponseBody
     @RequestMapping("/showcollection")
     public CommonResult ShowCollectionByDir(@RequestParam("Did") int Did){
-        return collectionService.ShowCollectionByDir(Did);
+        return new CommonResult(200,"展示收藏",collectionService.ShowCollectionByDir(Did));
     }
 
     //添加收藏
@@ -32,7 +32,7 @@ public class CollectionController {
     public CommonResult Collect(@RequestParam("Did") Integer Did,@RequestParam("paper") long paper){
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         Integer Uid = user.getId();
-        return collectionService.insertCollection(Did,paper,Uid);
+        return new CommonResult(200,"收藏成功",collectionService.insertCollection(Did,paper,Uid));
     }
 
     //在文献页面取消收藏
@@ -41,22 +41,25 @@ public class CollectionController {
     public CommonResult DeleteCollectionInPaper(@RequestParam("paper") long paper){
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         Integer Uid = user.getId();
-        return collectionService.DeleteCollectionInPaper(Uid,paper);
+        return new CommonResult(200,"取消收藏成功",collectionService.DeleteCollectionInPaper(Uid,paper));
     }
 
     //在收藏夹里取消收藏
     @ResponseBody
     @RequestMapping("/collection/cancelindir")
     public CommonResult DeleteCollectionInDir(@RequestParam("Cid") Integer Cid){
-        return collectionService.DeleteCollectionInDir(Cid);
+        return new CommonResult(200,"取消收藏成功",collectionService.DeleteCollectionInDir(Cid));
     }
 
     //文献收藏状态
     @ResponseBody
     @RequestMapping("/collection/status")
-    public int ShowCollectionStatus(@RequestParam("paper") Integer paper){
+    public CommonResult ShowCollectionStatus(@RequestParam("paper") Integer paper){
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         Integer Uid = user.getId();
-        return collectionService.ShowCollectionStatus(paper,Uid);
+        if(collectionService.ShowCollectionStatus(paper,Uid)==0)
+            return new CommonResult(200,"未收藏",0);
+        else
+            return new CommonResult(200,"已收藏",1);
     }
 }
