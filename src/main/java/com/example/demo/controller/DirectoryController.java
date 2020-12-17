@@ -25,7 +25,7 @@ public class DirectoryController {
     public CommonResult DeleteCollectionInDir(@RequestParam("Dname") String Dname){
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         Integer Uid = user.getId();
-        return directoryService.CreateDir(Dname,Uid);
+        return new CommonResult(200,"新建成功",directoryService.CreateDir(Dname,Uid));
     }
 
     //展示所有收藏夹
@@ -34,7 +34,7 @@ public class DirectoryController {
     public CommonResult ShowAllDir(){
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         Integer Uid = user.getId();
-        return directoryService.ShowDirByUser(Uid);
+        return new CommonResult(200,"显示收藏夹",directoryService.ShowDirByUser(Uid));
     }
 
     //删除收藏夹，连带删除收藏夹内所有内容
@@ -42,6 +42,6 @@ public class DirectoryController {
     @RequestMapping("/dir/delete")
     public CommonResult DeleteDir(@RequestParam("Did") Integer Did){
         directoryService.DeleteDirByDid(Did);
-        return collectionService.DeleteCollectionByDir(Did);
+        return new CommonResult(200,"删除成功",collectionService.DeleteCollectionByDir(Did));
     }
 }
