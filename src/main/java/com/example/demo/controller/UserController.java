@@ -36,10 +36,10 @@ public class UserController {
     UserService userService;
 
 
-    @GetMapping("/user/login")
+    @PostMapping("/user/login")
     public CommonResult login(User user) {
-        if (StringUtils.isEmpty(user.getName()) || StringUtils.isEmpty(user.getId())) {
-            return new CommonResult(500,"failure",null);
+        if (StringUtils.isEmpty(user.getName())) {
+            return new CommonResult(500,"empty",null);
         }
         //用户认证信息
         Subject subject = SecurityUtils.getSubject();
@@ -54,14 +54,13 @@ public class UserController {
 //            subject.checkRole("admin");
 //            subject.checkPermissions("query", "add");
         } catch (AuthenticationException e) {
-
-            return new CommonResult(500,"failure",null);
+            return new CommonResult(500,"wrong",null);
         }
         User user1 = (User) SecurityUtils.getSubject().getPrincipal();
         return new CommonResult(200,"success",user1);
     }
 
-    @GetMapping("/user/logout")
+    @PostMapping("/user/logout")
     public CommonResult logout(){
         return new CommonResult(200,"logout success",null);
     }
