@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.bean.CommonResult;
 import com.example.demo.bean.User;
 import com.example.demo.mapper.UserMapper;
+import com.example.demo.service.EmailService;
 import com.example.demo.service.UserService;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.ibatis.annotations.Mapper;
@@ -15,6 +16,7 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +36,12 @@ public class UserController {
     private String filePath;
     @Autowired
     UserService userService;
+
+    @Autowired
+    JavaMailSenderImpl mailSender;
+
+    @Autowired
+    EmailService emailService;
 
 
     @PostMapping("/user/login")
@@ -145,11 +153,9 @@ public class UserController {
     @PostMapping("/user/send2")
     public CommonResult send2(@RequestParam("email") String email){
         User user=userService.getUserByEmail(email);
-        System.out.println(email);
-        if (user!=null)
-            return new CommonResult(200,"email exist",null);
-        else
+        if (user==null)
             return new CommonResult(500,"email not found",null);
+        return emailService.send(email);
     }
 
     @PostMapping("/user/verify")
