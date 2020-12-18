@@ -24,6 +24,7 @@ public interface UserMapper {
     public  User getUserByName(String name);
 
     //添加用户
+    @Options(useGeneratedKeys = true,keyProperty = "id")
     @Insert("insert into User(id,name,organization,paperCount,index,email,pwd,info,role) values(#{id},#{name},#{organization},#{paperCount},#{index},#{email},#{pwd},#{info},#{role})")
     public User insertUser(User user);
 
