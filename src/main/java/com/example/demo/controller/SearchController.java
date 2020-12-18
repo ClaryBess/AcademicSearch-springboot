@@ -7,6 +7,8 @@ import com.example.demo.service.ResearcherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 public class SearchController {
     @Autowired
@@ -15,10 +17,10 @@ public class SearchController {
     @Autowired
     ResearcherService researcherService;
 
-//    @RequestMapping("/search/paper/{keyword}")
-//    public CommonResult SearchPaperByTitle(@PathVariable("keyword") String keyword){
-//        return new CommonResult(200,"success",paperService.getPaperByKeyWord(keyword));
-//    }
+    @RequestMapping("/search/paper/{keyword}")
+    public CommonResult SearchPaperByTitle(@PathVariable("keyword") String keyword) throws IOException {
+        return new CommonResult(200,"success",paperService.getPaperByKeyWord(keyword));
+    }
 
     @RequestMapping("/search/researcher/{keyword}")
     public CommonResult SearchResearchByName(@PathVariable("keyword") String keyword){
