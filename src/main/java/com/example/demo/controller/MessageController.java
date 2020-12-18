@@ -19,7 +19,7 @@ public class MessageController {
     @ResponseBody
     @RequestMapping("/message/read")
     public CommonResult ReadMessage(@RequestParam("Mid") Integer Mid){
-        return messageService.ReadMessage(Mid);
+        return new CommonResult(200,"读取成功",messageService.ReadMessage(Mid));
     }
 
     //系统消息列表
@@ -28,7 +28,7 @@ public class MessageController {
     public CommonResult SysMessage(){
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         Integer Uid = user.getId();
-        return messageService.SysMessage(Uid);
+        return new CommonResult(200,"系统消息",messageService.SysMessage(Uid));
     }
 
     //学者私信列表
@@ -37,7 +37,7 @@ public class MessageController {
     public CommonResult ReMessage(){
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         Integer Uid = user.getId();
-        return messageService.ResercherMessage(Uid);
+        return new CommonResult(200,"学者私信",messageService.ResearcherMessage(Uid));
     }
 
     //我的私信列表
@@ -46,7 +46,7 @@ public class MessageController {
     public CommonResult MyMessage(){
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         Integer Uid = user.getId();
-        return messageService.MyMessage(Uid);
+        return new CommonResult(200,"学者私信",messageService.MyMessage(Uid));
     }
 
     //发送私信
@@ -55,7 +55,7 @@ public class MessageController {
     public CommonResult SendMessage(@RequestParam("to")Integer to, @RequestParam("text")String text){
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         Integer Uid = user.getId();
-        return messageService.SendMessage(Uid,to,text);
+        return new CommonResult(200,"发送成功",messageService.SendMessage(Uid,to,text));
     }
 
     //回复私信
@@ -64,20 +64,20 @@ public class MessageController {
     public CommonResult ResponseMessage(@RequestParam("from")Integer from, @RequestParam("text")String text){
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         Integer Uid = user.getId();
-        return messageService.SendMessage(Uid,from,text);
+        return new CommonResult(200,"发送成功",messageService.SendMessage(Uid,from,text));
     }
 
     //删除接收的私信
     @ResponseBody
     @RequestMapping("/message/delete1")
     public CommonResult DeleteMessage1(@RequestParam("Mid")Integer Mid){
-        return messageService.DeleteOtherMessage(Mid);
+        return new CommonResult(200,"删除成功",messageService.DeleteOtherMessage(Mid));
     }
 
     //删除我的私信
     @ResponseBody
     @RequestMapping("/message/delete2")
     public CommonResult DeleteMessage2(@RequestParam("Mid")Integer Mid){
-        return messageService.DeleteMyMessage(Mid);
+        return new CommonResult(200,"删除成功",messageService.DeleteMyMessage(Mid));
     }
 }

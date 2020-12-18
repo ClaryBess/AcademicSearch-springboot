@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.bean.CommonResult;
 import com.example.demo.bean.User;
 import com.example.demo.mapper.UserMapper;
+import com.example.demo.service.EmailService;
 import com.example.demo.service.UserService;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.ibatis.annotations.Mapper;
@@ -15,6 +16,7 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,11 +37,18 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    JavaMailSenderImpl mailSender;
 
-    @GetMapping("/user/login")
-    public CommonResult login(User user) {
-        if (StringUtils.isEmpty(user.getName()) || StringUtils.isEmpty(user.getId())) {
-            return new CommonResult(500,"failure",null);
+    @Autowired
+    EmailService emailService;
+
+
+    @PostMapping("/user/login")
+    public CommonResult login(@RequestBody User user) {
+        System.out.println(user.getName());
+        if (user.getName()==null) {
+            return new CommonResult(500,"empty",null);
         }
         //用户认证信息
         Subject subject = SecurityUtils.getSubject();
@@ -54,17 +63,16 @@ public class UserController {
 //            subject.checkRole("admin");
 //            subject.checkPermissions("query", "add");
         } catch (AuthenticationException e) {
-
-            return new CommonResult(500,"failure",null);
+            return new CommonResult(500,"wrong",null);
         }
-        User user1 = (User) SecurityUtils.getSubject().getPrincipal();
+        String name=(String) SecurityUtils.getSubject().getPrincipal();
+        User user1=userService.getUserByName(name);
         return new CommonResult(200,"success",user1);
     }
 
-    @GetMapping("/user/logout")
-    public String logout(){
-
-        return "返回退出页面";
+    @PostMapping("/user/logout")
+    public CommonResult logout(){
+        return new CommonResult(200,"logout success",null);
     }
 
     @PostMapping("/user/register")
@@ -78,22 +86,22 @@ public class UserController {
             return new CommonResult(400,"username already exists!",null);
         }
         String base64 = Base64.encodeBase64URLSafeString(string1.getBytes());
-        if (base64!=string2){
+        if (!base64.equals(string2)){
             return new CommonResult(300,"code error!",null);
         }
         user.setRole(1);
-        user.setAvatar("");//默认头像
+        user.setAvatar("/file/avatar.jpg");//默认头像
         User result =userService.Register(user);
         System.out.println("R1:User="+user.toString());
         return new CommonResult(200,null,result);
     }
 
-    @PostMapping("/user/changePassword/{id}")
-    public CommonResult changePassword(@PathVariable Integer id, @RequestBody List<String> pwds){
-        String pwd1=pwds.get(0);
-        String pwd2=pwds.get(1);
-        if (pwd1==userService.getUserById(id).getPwd()){
-            userService.updateUserPwd(userService.getUserById(id));
+    @PostMapping("/user/changePassword")
+    public CommonResult changePassword(@RequestParam("id")Integer id,@RequestParam("string1") String string1,@RequestParam("string2") String string2){
+        if (string1.equals(userService.getUserById(id).getPwd())){
+            User user=userService.getUserById(id);
+            user.setPwd(string2);
+            userService.updateUserPwd(user);
             return new CommonResult(200,"success",userService.getUserById(id));
         }
         else
@@ -138,6 +146,31 @@ public class UserController {
         userService.updateAvatar(user);
         user=userService.getUserById(user.getId());
         return new CommonResult(200,null,user);
+    }
+
+    @PostMapping("/user/send2")
+    public CommonResult send2(@RequestParam("email") String email){
+        User user=userService.getUserByEmail(email);
+        if (user==null)
+            return new CommonResult(500,"email not found",null);
+        return emailService.send(email);
+    }
+
+    @PostMapping("/user/verify")
+    public CommonResult verify(@RequestParam("string1") String string1,@RequestParam("string2")String string2){
+        String base64 = Base64.encodeBase64URLSafeString(string1.getBytes());
+        if (!base64.equals(string2)){
+            return new CommonResult(300,"code error!",null);
+        }
+        return new CommonResult(200,"verify success",null);
+    }
+
+    @PostMapping("/user/reset")
+    public CommonResult reset(@RequestParam("pwd")String pwd,@RequestParam("email")String email){
+        User user=userService.getUserByEmail(email);
+        user.setPwd(pwd);
+        userService.updateUserPwd(user);
+        return new CommonResult(200,"success",null);
     }
 
     @PostMapping("/user/getName/{UserID}")
