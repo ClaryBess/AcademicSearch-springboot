@@ -107,6 +107,5 @@ public class PaperService {
             paperList.add(JSON.parseObject(sourceAsString, Paper.class));
         }
         return paperList;
-
     }
 }
