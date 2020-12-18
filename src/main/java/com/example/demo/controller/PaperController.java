@@ -100,7 +100,7 @@ public class PaperController {
         Collection collection=new Collection();
         collection.setDirectory(directory);
         collection.setPaper(paperId);
-        collection.setUserId(userId);
+        collection.setId(userId);
         collectionService.insertCollection(collection);
         return new CommonResult(200,null,collection);
     }

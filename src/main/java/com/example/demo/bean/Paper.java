@@ -11,6 +11,71 @@ import java.sql.Timestamp;
 public class Paper {
     @Id
     private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Timestamp getPaperTime() {
+        return paperTime;
+    }
+
+    public void setPaperTime(Timestamp paperTime) {
+        this.paperTime = paperTime;
+    }
+
+    public String getField() {
+        return field;
+    }
+
+    public void setField(String field) {
+        this.field = field;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getKeyWord() {
+        return keyWord;
+    }
+
+    public void setKeyWord(String keyWord) {
+        this.keyWord = keyWord;
+    }
+
+    public String getAbstract() {
+        return Abstract;
+    }
+
+    public void setAbstract(String anAbstract) {
+        Abstract = anAbstract;
+    }
+
+    public Integer getAuthorId() {
+        return AuthorId;
+    }
+
+    public void setAuthorId(Integer authorId) {
+        AuthorId = authorId;
+    }
+
     private String title;
     private Timestamp paperTime;
     private String field;

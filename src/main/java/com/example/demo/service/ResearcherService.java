@@ -5,6 +5,8 @@ import com.example.demo.mapper.ResearcherMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ResearcherService {
 
@@ -27,5 +29,7 @@ public class ResearcherService {
         return researcher;
     }
 
-
+    public List<Researcher> getRearcherByKeyword(String keyword){
+        return researcherMapper.getResearcherByKeyword(keyword);
+    }
 }

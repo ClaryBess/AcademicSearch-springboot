@@ -20,6 +20,9 @@ public interface ResearcherMapper {
     @Select("select * from User where organization=#{organization} and role=2")
     public List<Researcher> getResearcherByOrganization(String organization);
 
+    @Select("select * from User where name=%#{keyword}% and role=2")
+    public List<Researcher> getResearcherByKeyword(String keyword);
+
     @Insert("insert into User(name,organization,paperCount,index,email,pwd,info,role) values(#{name},#{organization},#{paperCount},#{index},#{email},#{pwd},#{info},2)")
     public int insertResearcher(Researcher researcher);
 
@@ -40,4 +43,5 @@ public interface ResearcherMapper {
 
     @Update("update User set info=#{info} where id=#{id}")
     public int updateInfo(Researcher researcher);
+
 }

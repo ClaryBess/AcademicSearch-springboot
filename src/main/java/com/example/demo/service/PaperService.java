@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -66,5 +67,9 @@ public class PaperService {
         GetResponse response =  client.get(getRequest, RequestOptions.DEFAULT);
         String sourceAsString = response.getSourceAsString();
         return JSON.parseObject(sourceAsString, Paper.class);
+    }
+
+    public List<Paper> getPaperByKeyword(String keyword){
+
     }
 }
