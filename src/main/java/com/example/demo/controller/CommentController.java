@@ -43,6 +43,4 @@ public class CommentController {
         commentService.insertComments(commentDTO, user);
         return new CommonResult(200,null,commentDTO);
     }
-
-
 }

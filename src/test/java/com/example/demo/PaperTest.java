@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 @SpringBootTest
 public class PaperTest {
@@ -21,9 +22,9 @@ public class PaperTest {
 
     @Test
     public void SaveTest() throws Exception{
-        Timestamp t = new Timestamp(new Date().getTime());
 
-        Paper paper=new Paper(1L,"title",t,"field","url","keyWord","Abstract");
+        Timestamp t = new Timestamp(new Date().getTime());
+        Paper paper=new Paper(2L,"title","Abstractt",t,"Author","url","field",13,"keyWord");
         paperService.save(paper);
         System.out.println(paper);
     }
@@ -37,7 +38,7 @@ public class PaperTest {
     @Test
     public void UpdateTest() throws Exception{
         long id=1L;
-        Paper paper=new Paper(null,"titleupdate",null,"fieldupdate",null,null,"Abstractupdate");
+        Paper paper=new Paper(null,"titleupdate","Abstractupdate",null,null,null,"fieldupdate",15,null);
         paperService.update(id,paper);
     }
 
@@ -47,6 +48,13 @@ public class PaperTest {
         Paper paper =paperService.search(id);
         System.out.println(paper);
     }
+    @Test
+    public void SearchByAuthorTest() throws Exception{
+        int userId=1;
+        List<Paper> pp= paperService.searchByAuthorId(userId);
+        System.out.println(pp);
+    }
+
 
 
 
