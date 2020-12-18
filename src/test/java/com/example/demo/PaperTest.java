@@ -24,7 +24,9 @@ public class PaperTest {
     public void SaveTest() throws Exception{
 
         Timestamp t = new Timestamp(new Date().getTime());
-        Paper paper=new Paper(2L,"title","Abstractt",t,"Author","url","field",13,"keyWord");
+        String[] Author={"Author1","Author2"};
+//        String[] Keyword={"keyword"};
+        Paper paper=new Paper(3L,"title","Abstractt",t,Author,"url","field",13,"Keyword");
         paperService.save(paper);
         System.out.println(paper);
     }
@@ -54,6 +56,16 @@ public class PaperTest {
         List<Paper> pp= paperService.searchByAuthorId(userId);
         System.out.println(pp);
     }
+
+
+    //数组测试
+    @Test
+    public void ByAuthorTest() throws Exception{
+        List<Paper> pp= paperService.searchByAuthorName("Author2");
+        System.out.println(pp);
+    }
+
+
 
 
 

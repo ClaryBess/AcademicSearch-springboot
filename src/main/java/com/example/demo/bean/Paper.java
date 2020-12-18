@@ -14,7 +14,7 @@ public class Paper {
     private String title;  //题目
     private String Abstract;  //摘要
     private Timestamp paperTime; //发布时间
-    private String  Author;  //作者名字
+    private String  Author[];  //作者名字
     private String url;   //网址
     private String field;   //领域
     private Integer citation; //被引用量
@@ -53,11 +53,11 @@ public class Paper {
         this.paperTime = paperTime;
     }
 
-    public String getAuthor() {
+    public String[] getAuthor() {
         return Author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(String[] author) {
         Author = author;
     }
 
@@ -97,7 +97,7 @@ public class Paper {
 
     }
 
-    public Paper(Long id, String title, String anAbstract, Timestamp paperTime, String author, String url, String field, Integer citation, String keyWord) {
+    public Paper(Long id, String title, String anAbstract, Timestamp paperTime, String[] author, String url, String field, Integer citation, String keyWord) {
         this.id = id;
         this.title = title;
         Abstract = anAbstract;
@@ -108,4 +108,5 @@ public class Paper {
         this.citation = citation;
         this.keyWord = keyWord;
     }
+
 }
