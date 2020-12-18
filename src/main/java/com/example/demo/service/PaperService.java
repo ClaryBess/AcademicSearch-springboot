@@ -88,7 +88,6 @@ public class PaperService {
         return JSON.parseObject(sourceAsString, Paper.class);
     }
 
-<<<<<<< HEAD
     public List<Paper> searchByAuthorId(long AuthorId) throws IOException {
         Researcher researcher = researcherMapper.getResearcherById(AuthorId);
         String Author=researcher.getName();
@@ -108,9 +107,6 @@ public class PaperService {
             paperList.add(JSON.parseObject(sourceAsString, Paper.class));
         }
         return paperList;
-=======
-    public List<Paper> getPaperByKeyword(String keyword){
 
->>>>>>> edb0869b25284ec0333e2e77b5096a456524802f
     }
 }
