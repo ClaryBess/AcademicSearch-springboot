@@ -1,11 +1,17 @@
 package com.example.demo.config;
 
+import com.example.demo.bean.User;
+import com.example.demo.service.UserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
+
+import java.security.Permissions;
 
 public class UserRealm extends AuthorizingRealm {
     /**
@@ -14,36 +20,60 @@ public class UserRealm extends AuthorizingRealm {
      * @param principalCollection
      * @return
      */
+    @Autowired
+    private UserService userService;
+
+    /**
+     * @MethodName doGetAuthorizationInfo
+     * @Description 权限配置类
+     * @Param [principalCollection]
+     * @Return AuthorizationInfo
+     * @Author WangShiLin
+     */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        // 获取登录用户信息
-        Object primaryPrincipal = principalCollection.getPrimaryPrincipal();
-        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        //执行授权逻辑
-        info.addStringPermission("user:add");
-        return info;
+        //获取登录用户名
+        String name = (String) principalCollection.getPrimaryPrincipal();
+        //查询用户名称
+        User user = userService.getUserByName(name);
+        //添加角色和权限
+        SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+
+        //你这里只有一张USER表  等后面创建Role  权限 在放开
+
+//        for (Role role : user.getRoles()) {
+//            //添加角色
+//            simpleAuthorizationInfo.addRole(role.getRoleName());
+//            //添加权限
+//            for (Permissions permissions : role.getPermissions()) {
+//                simpleAuthorizationInfo.addStringPermission(permissions.getPermissionsName());
+//            }
+//        }
+        return simpleAuthorizationInfo;
     }
 
     /**
-     * 执行认证逻辑
-     *
-     * @param authenticationToken：这个就是前面subject.login()传递过来的token
-     * @return 认证不通过就返回null
-     * @throws AuthenticationException
+     * @MethodName doGetAuthenticationInfo
+     * @Description 认证配置类
+     * @Param [authenticationToken]
+     * @Return AuthenticationInfo
+     * @Author WangShiLin
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        //执行认证的过程
-        //从数据库拿出账号密码和用户传递过来的账号密码对比
-        UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) authenticationToken;
-        String username = usernamePasswordToken.getUsername();
-        //数据查询账号密码
-        if (!username.equals("数据库账号")) {
-            return null;//返回为空，shiro会抛出UnKnowAccountException（也就是账号不存在）
+        if (StringUtils.isEmpty(authenticationToken.getPrincipal())) {
+            return null;
         }
-        //密码不需要判断，直接返回一个AuthenticationInfo的实现类，把数据库密码做参数，shiro会自己判断的
-        //shiro内置的加密算法
-        ByteSource credentialsSalt = ByteSource.Util.bytes("user.getUsername" + "user.getSalt()");//从数据库查询的
-        return new SimpleAuthenticationInfo(username, "数据库加密之后的密码", credentialsSalt, this.getName());
+        //获取用户信息
+        String name = authenticationToken.getPrincipal().toString();
+        User user = userService.getUserByName(name);
+        if (user == null) {
+            //这里返回后会报出对应异常
+            return null;
+        } else {
+            //这里验证authenticationToken和simpleAuthenticationInfo的信息
+            SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(name, user.getPwd().toString(), getName());
+            return simpleAuthenticationInfo;
+        }
     }
 }

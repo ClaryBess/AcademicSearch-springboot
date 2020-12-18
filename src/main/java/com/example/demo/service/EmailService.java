@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.bean.CommonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -14,7 +15,7 @@ public class EmailService {
     JavaMailSenderImpl mailSender;
 
     private String emailServiceCode;
-    public String send(String emailTo){
+    public CommonResult send(String emailTo){
         StringBuilder str = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < 6; i++) {
@@ -27,8 +28,8 @@ public class EmailService {
         message.setFrom("17855776325@163.com");
         message.setTo(emailTo);
         mailSender.send(message);
-        //base64简单加密
-        String base64 = Base64.encodeBase64URLSafeString(emailServiceCode.getBytes());
-        return base64;
-    }
-}
+                //base64简单加密
+                String base64 = Base64.encodeBase64URLSafeString(emailServiceCode.getBytes());
+                return new CommonResult(200,"发送成功",base64);
+                }
+                }

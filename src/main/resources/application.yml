@@ -10,7 +10,7 @@ spring:
     host: smtp.163.com
   datasource:
     name:
-    url: jdbc:mysql://10.251.253.69:3306/db?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC
+    url: jdbc:mysql://10.251.253.212:3306/db?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC
     username: root
     password: "@group12"
     type: com.alibaba.druid.pool.DruidDataSource

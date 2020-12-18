@@ -1,11 +1,17 @@
 <component name="libraryTable">
   <library name="Maven: net.sf.jopt-simple:jopt-simple:5.0.2">
     <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/net/sf/jopt-simple/jopt-simple/5.0.2/jopt-simple-5.0.2.jar!/" />
+      <root url="jar://$USER_HOME$/.m2/repository/net/sf/jopt-simple/jopt-simple/5.0.2/jopt-simple-5.0.2.jar!/" />
     </CLASSES>
+<<<<<<< HEAD
     <JAVADOC />
+=======
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.m2/repository/net/sf/jopt-simple/jopt-simple/5.0.2/jopt-simple-5.0.2-javadoc.jar!/" />
+    </JAVADOC>
+>>>>>>> edb0869b25284ec0333e2e77b5096a456524802f
     <SOURCES>
-      <root url="jar://$MAVEN_REPOSITORY$/net/sf/jopt-simple/jopt-simple/5.0.2/jopt-simple-5.0.2-sources.jar!/" />
+      <root url="jar://$USER_HOME$/.m2/repository/net/sf/jopt-simple/jopt-simple/5.0.2/jopt-simple-5.0.2-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

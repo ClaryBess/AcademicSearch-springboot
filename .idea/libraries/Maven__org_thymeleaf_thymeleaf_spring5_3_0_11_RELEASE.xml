@@ -1,11 +1,17 @@
 <component name="libraryTable">
   <library name="Maven: org.thymeleaf:thymeleaf-spring5:3.0.11.RELEASE">
     <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/org/thymeleaf/thymeleaf-spring5/3.0.11.RELEASE/thymeleaf-spring5-3.0.11.RELEASE.jar!/" />
+      <root url="jar://$USER_HOME$/.m2/repository/org/thymeleaf/thymeleaf-spring5/3.0.11.RELEASE/thymeleaf-spring5-3.0.11.RELEASE.jar!/" />
     </CLASSES>
+<<<<<<< HEAD
     <JAVADOC />
+=======
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.m2/repository/org/thymeleaf/thymeleaf-spring5/3.0.11.RELEASE/thymeleaf-spring5-3.0.11.RELEASE-javadoc.jar!/" />
+    </JAVADOC>
+>>>>>>> edb0869b25284ec0333e2e77b5096a456524802f
     <SOURCES>
-      <root url="jar://$MAVEN_REPOSITORY$/org/thymeleaf/thymeleaf-spring5/3.0.11.RELEASE/thymeleaf-spring5-3.0.11.RELEASE-sources.jar!/" />
+      <root url="jar://$USER_HOME$/.m2/repository/org/thymeleaf/thymeleaf-spring5/3.0.11.RELEASE/thymeleaf-spring5-3.0.11.RELEASE-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

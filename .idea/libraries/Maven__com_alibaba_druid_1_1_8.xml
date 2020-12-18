@@ -1,11 +1,17 @@
 <component name="libraryTable">
   <library name="Maven: com.alibaba:druid:1.1.8">
     <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/com/alibaba/druid/1.1.8/druid-1.1.8.jar!/" />
+      <root url="jar://$USER_HOME$/.m2/repository/com/alibaba/druid/1.1.8/druid-1.1.8.jar!/" />
     </CLASSES>
+<<<<<<< HEAD
     <JAVADOC />
+=======
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.m2/repository/com/alibaba/druid/1.1.8/druid-1.1.8-javadoc.jar!/" />
+    </JAVADOC>
+>>>>>>> edb0869b25284ec0333e2e77b5096a456524802f
     <SOURCES>
-      <root url="jar://$MAVEN_REPOSITORY$/com/alibaba/druid/1.1.8/druid-1.1.8-sources.jar!/" />
+      <root url="jar://$USER_HOME$/.m2/repository/com/alibaba/druid/1.1.8/druid-1.1.8-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
