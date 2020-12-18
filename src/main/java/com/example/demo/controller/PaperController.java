@@ -48,8 +48,7 @@ public class PaperController {
             BeanUtils.copyProperties(paperreturnDTO, paper);
             if (paper == null) return new CommonResult(400, "The paper does not exist!", null);
 
-            User user=userService.getUserByName(paper.getAuthor());
-            paperreturnDTO.setAuthorName(user.getName());
+            paperreturnDTO.setAuthorName(paper.getAuthor());
 
             List<Comments> comments = commentService.selectByPaperId(id);
             paperreturnDTO.setComments(comments);

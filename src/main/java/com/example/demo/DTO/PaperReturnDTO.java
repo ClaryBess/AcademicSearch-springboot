@@ -15,7 +15,7 @@ public class PaperReturnDTO {
     private String keyWord; //关键字
     private String Abstract;  //摘要
     private Integer AuthorId;
-    private String authorName;
+    private String authorName[];
     private Integer collectCount;
     private List<Comments> comments;
     private CommonResult resultDTO;//返回状态
@@ -93,11 +93,11 @@ public class PaperReturnDTO {
         AuthorId = authorId;
     }
 
-    public String getAuthorName() {
+    public String[] getAuthorName() {
         return authorName;
     }
 
-    public void setAuthorName(String authorName) {
+    public void setAuthorName(String[] authorName) {
         this.authorName = authorName;
     }
 

@@ -16,7 +16,9 @@ import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 
+import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
@@ -88,18 +90,41 @@ public class PaperService {
         return JSON.parseObject(sourceAsString, Paper.class);
     }
 
+    //按作者id查询
     public List<Paper> searchByAuthorId(long AuthorId) throws IOException {
         Researcher researcher = researcherMapper.getResearcherById(AuthorId);
         String Author=researcher.getName();
+        return searchByAuthorName(Author);
+    }
+
+    //按作者名字查询
+    public List<Paper> searchByAuthorName(String name) throws IOException {
         List<Paper> paperList = new ArrayList<>();
         SearchRequest searchRequest = new SearchRequest("paper");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
-        boolQueryBuilder.must(QueryBuilders.matchQuery("Author",Author));
-        searchSourceBuilder.query(boolQueryBuilder);
-
+        QueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("Author",name);
+        searchSourceBuilder.query(matchQueryBuilder);
         searchRequest.source(searchSourceBuilder);
+        SearchResponse searchResponse = client.search(searchRequest,RequestOptions.DEFAULT);
+        SearchHits hits = searchResponse.getHits();
+        for (SearchHit hit : hits) {
+            String sourceAsString = hit.getSourceAsString();
+            paperList.add(JSON.parseObject(sourceAsString,Paper.class));
+        }
+        return paperList;
+    }
 
+
+    //按关键字查询,模糊查询
+    public List<Paper> getPaperByKeyWord(String KeyWord) throws IOException {
+        List<Paper> paperList = new ArrayList<>();
+        SearchRequest searchRequest = new SearchRequest("paper");
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+
+        QueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("keyWord",KeyWord)
+                .fuzziness(Fuzziness.AUTO);
+        searchSourceBuilder.query(matchQueryBuilder);
+        searchRequest.source(searchSourceBuilder);
         SearchResponse searchResponse = client.search(searchRequest,RequestOptions.DEFAULT);
         SearchHits hits = searchResponse.getHits();
         for (SearchHit hit : hits) {
@@ -107,6 +132,10 @@ public class PaperService {
             paperList.add(JSON.parseObject(sourceAsString, Paper.class));
         }
         return paperList;
-
     }
+
+
+
+
+
 }
