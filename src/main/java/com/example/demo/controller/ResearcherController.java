@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class ResearcherController {
     @Autowired
@@ -17,4 +19,8 @@ public class ResearcherController {
         return researcherService.getResearcherById(id);
     }
 
+    @GetMapping("/researcher/field/{id}")
+    public List<String> getFieldById(@PathVariable("id") Long id){
+        return researcherService.getFieldById(id);
+    }
 }

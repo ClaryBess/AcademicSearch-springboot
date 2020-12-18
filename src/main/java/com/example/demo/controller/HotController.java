@@ -11,14 +11,14 @@ public class HotController {
     @Autowired
     PaperService paperService;
 
-    @RequestMapping("/hot/paper")
-    public CommonResult getHotPaper(){
-
-    }
-
-    @RequestMapping("/hot/field")
-    public CommonResult getHotField(){
-
-    }
+//    @RequestMapping("/hot/paper")
+//    public CommonResult getHotPaper(){
+//
+//    }
+//
+//    @RequestMapping("/hot/field")
+//    public CommonResult getHotField(){
+//
+//    }
 
 }
