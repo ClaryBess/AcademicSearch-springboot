@@ -18,7 +18,7 @@ public class Paper {
     private String url;   //网址
     private String field;   //领域
     private Integer citation; //被引用量
-    private String keyWord; //关键字
+    private String keyWord[]; //关键字
 
 
     public Long getId() {
@@ -85,11 +85,11 @@ public class Paper {
         this.citation = citation;
     }
 
-    public String getKeyWord() {
+    public String[] getKeyWord() {
         return keyWord;
     }
 
-    public void setKeyWord(String keyWord) {
+    public void setKeyWord(String[] keyWord) {
         this.keyWord = keyWord;
     }
 
@@ -97,7 +97,7 @@ public class Paper {
 
     }
 
-    public Paper(Long id, String title, String anAbstract, Timestamp paperTime, String[] author, String url, String field, Integer citation, String keyWord) {
+    public Paper(Long id, String title, String anAbstract, Timestamp paperTime, String[] author, String url, String field, Integer citation, String[] keyWord) {
         this.id = id;
         this.title = title;
         Abstract = anAbstract;
@@ -108,5 +108,4 @@ public class Paper {
         this.citation = citation;
         this.keyWord = keyWord;
     }
-
 }

@@ -17,12 +17,13 @@ import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 
 import org.elasticsearch.common.unit.Fuzziness;
-import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.sort.FieldSortBuilder;
+import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -120,7 +121,6 @@ public class PaperService {
         List<Paper> paperList = new ArrayList<>();
         SearchRequest searchRequest = new SearchRequest("paper");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-
         QueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("keyWord",KeyWord)
                 .fuzziness(Fuzziness.AUTO);
         searchSourceBuilder.query(matchQueryBuilder);
@@ -133,6 +133,32 @@ public class PaperService {
         }
         return paperList;
     }
+
+    //按被引量排序
+    //但由于es通常没有开放排序功能，对list排序
+    public List<Paper> OrderByCitation() throws IOException {
+        List<Paper> paperList = new ArrayList<>();
+        SearchRequest searchRequest = new SearchRequest("paper");
+
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+
+        searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+        searchRequest.source(searchSourceBuilder);
+
+
+//        //按被引量降序排列
+//        searchSourceBuilder.sort(new FieldSortBuilder("citation").order(SortOrder.DESC));
+        SearchResponse searchResponse = client.search(searchRequest,RequestOptions.DEFAULT);
+        SearchHits hits = searchResponse.getHits();
+        for (SearchHit hit : hits) {
+            String sourceAsString = hit.getSourceAsString();
+            paperList.add(JSON.parseObject(sourceAsString, Paper.class));
+        }
+        //排序
+        return paperList;
+    }
+
+
 
 
 
