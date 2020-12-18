@@ -23,6 +23,7 @@ public interface ResearcherMapper {
     @Select("select * from User where name=%#{keyword}% and role=2")
     public List<Researcher> getResearcherByKeyword(String keyword);
 
+    @Options(useGeneratedKeys = true,keyProperty = "id")
     @Insert("insert into User(name,organization,paperCount,index,email,pwd,info,role) values(#{name},#{organization},#{paperCount},#{index},#{email},#{pwd},#{info},2)")
     public int insertResearcher(Researcher researcher);
 
