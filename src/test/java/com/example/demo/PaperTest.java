@@ -25,28 +25,31 @@ public class PaperTest {
 
         Timestamp t = new Timestamp(new Date().getTime());
         String[] Author={"Author1","Author2"};
-//        String[] Keyword={"keyword"};
-        Paper paper=new Paper(3L,"title","Abstractt",t,Author,"url","field",13,"Keyword");
+        String[] Keyword={"keyword1","Test1"};
+        Paper paper=new Paper(5L,"title","Abstractt",t,Author,"url","field",30,Keyword);
         paperService.save(paper);
         System.out.println(paper);
     }
 
     @Test
     public void DeleteTest() throws Exception{
-        long id=0L;
+        long id=1L;
         paperService.delete(id);
     }
 
     @Test
     public void UpdateTest() throws Exception{
         long id=1L;
-        Paper paper=new Paper(null,"titleupdate","Abstractupdate",null,null,null,"fieldupdate",15,null);
+        String[] Author={"Author1","Author2"};
+        //Paper paper=new Paper(null,"titleupdate","Abstractupdate",null,null,null,"fieldupdate",12,null);
+        Paper paper=new Paper(null,null,null,null,Author,null,null,null,null);
+
         paperService.update(id,paper);
     }
 
     @Test
     public void SearchTest() throws Exception{
-        long id=1L;
+        long id=2L;
         Paper paper =paperService.search(id);
         System.out.println(paper);
     }
@@ -64,6 +67,22 @@ public class PaperTest {
         List<Paper> pp= paperService.searchByAuthorName("Author2");
         System.out.println(pp);
     }
+
+    //数组测试
+    @Test
+    public void ByKeyWordTest() throws Exception{
+        List<Paper> pp= paperService.getPaperByKeyWord("keyword");
+        System.out.println(pp);
+    }
+
+
+    //被引量降序
+    @Test
+    public void OrderByCitation() throws Exception{
+        List<Paper> pp= paperService.OrderByCitation();
+        System.out.println(pp);
+    }
+
 
 
 

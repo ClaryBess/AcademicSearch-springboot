@@ -7,22 +7,36 @@ import com.example.demo.service.ResearcherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 public class SearchController {
+
     @Autowired
     PaperService paperService;
 
-    @Autowired
-    ResearcherService researcherService;
 
-//    @RequestMapping("/search/paper/{keyword}")
-//    public CommonResult SearchPaperByTitle(@PathVariable("keyword") String keyword){
-//        return new CommonResult(200,"success",paperService.getPaperByKeyWord(keyword));
-//    }
+    // 按关键字搜索，模糊搜索
+    @RequestMapping("/search/paper/{keyword}")
+    public CommonResult searchPaperByTitle(@PathVariable("keyword") String keyword) throws IOException {
+        return new CommonResult(200,"success",paperService.getPaperByKeyWord(keyword));
+    }
 
+<<<<<<< HEAD
     @RequestMapping("/search/researcher/{keyword}")
     public CommonResult SearchResearchByName(@PathVariable("keyword") String keyword){
         return new CommonResult(200,"success",researcherService.getResearcherByKeyword(keyword));
+=======
+    // 按学科领域搜索
+    @RequestMapping("/search/subject/{subject}")
+    public CommonResult searchPaperByField(@PathVariable("subject") String subject) throws IOException {
+        return new CommonResult(200, "success", paperService.getPaperByFiled(subject));
+>>>>>>> 5a35db3267dafd586f25a7c7822eb6c69913e27f
     }
 
+    // 按姓名搜索学者
+    @RequestMapping("/search/researcher/{keyword}")
+    public CommonResult searchResearcherByName(@PathVariable("keyword") String keyword) throws IOException {
+        return new CommonResult(200, "success", paperService.searchByAuthorId(keyword));
+    }
 }

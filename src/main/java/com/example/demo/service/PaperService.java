@@ -5,6 +5,7 @@ import com.example.demo.bean.Paper;
 import com.example.demo.bean.Researcher;
 import com.example.demo.mapper.PaperMapper;
 import com.example.demo.mapper.ResearcherMapper;
+import org.apache.http.HttpHost;
 import org.elasticsearch.action.DocWriteResponse;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
@@ -14,15 +15,17 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 
 import org.elasticsearch.common.unit.Fuzziness;
-import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.sort.FieldSortBuilder;
+import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -38,15 +41,15 @@ import java.util.Map;
 public class PaperService {
     @Qualifier("elasticsearchClient")
     @Autowired
-    RestHighLevelClient client;
+    RestHighLevelClient client = new RestHighLevelClient(
+            RestClient.builder(
+            new HttpHost("10.251.253.212", 9200, "http")));
 
     @Autowired
     PaperMapper paperMapper;
 
     @Autowired
     ResearcherMapper researcherMapper;
-
-
 
     public void save(Paper paper) {
         paperMapper.save(paper);
@@ -120,7 +123,6 @@ public class PaperService {
         List<Paper> paperList = new ArrayList<>();
         SearchRequest searchRequest = new SearchRequest("paper");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-
         QueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("keyWord",KeyWord)
                 .fuzziness(Fuzziness.AUTO);
         searchSourceBuilder.query(matchQueryBuilder);
@@ -134,8 +136,46 @@ public class PaperService {
         return paperList;
     }
 
+    //按被引量排序
+    //但由于es通常没有开放排序功能，对list排序
+    public List<Paper> OrderByCitation() throws IOException {
+        List<Paper> paperList = new ArrayList<>();
+        SearchRequest searchRequest = new SearchRequest("paper");
+
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+
+        searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+        searchRequest.source(searchSourceBuilder);
 
 
+//        //按被引量降序排列
+//        searchSourceBuilder.sort(new FieldSortBuilder("citation").order(SortOrder.DESC));
+        SearchResponse searchResponse = client.search(searchRequest,RequestOptions.DEFAULT);
+        SearchHits hits = searchResponse.getHits();
+        for (SearchHit hit : hits) {
+            String sourceAsString = hit.getSourceAsString();
+            paperList.add(JSON.parseObject(sourceAsString, Paper.class));
+        }
+        //排序
+        return paperList;
+    }
 
+    // 按学科领域查询
+    public List<Paper> getPaperByField(String field) throws IOException {
+        List<Paper> paperList = new ArrayList<>();
+        SearchRequest searchRequest = new SearchRequest("field");
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        QueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("field",field)
+                .fuzziness(Fuzziness.AUTO);
+        searchSourceBuilder.query(matchQueryBuilder);
+        searchRequest.source(searchSourceBuilder);
+        SearchResponse searchResponse = client.search(searchRequest,RequestOptions.DEFAULT);
+        SearchHits hits = searchResponse.getHits();
+        for (SearchHit hit : hits) {
+            String sourceAsString = hit.getSourceAsString();
+            paperList.add(JSON.parseObject(sourceAsString, Paper.class));
+        }
+        return paperList;
+    }
 
 }
