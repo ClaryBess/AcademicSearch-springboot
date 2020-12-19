@@ -22,7 +22,7 @@ public interface DirectoryMapper {
 
     //创建一个新的收藏夹
     @Insert("insert into Directory values(DEFAULT,#{user},#{name})")
-    public int CreateDirectory(Integer user,String name);
+    public int CreateDirectory(Integer user, String name);
 
     //删除收藏夹
     @Delete("delete from Directory id=#{id}")
