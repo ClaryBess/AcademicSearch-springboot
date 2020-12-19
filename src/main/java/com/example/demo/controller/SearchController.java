@@ -11,20 +11,26 @@ import java.io.IOException;
 
 @RestController
 public class SearchController {
+
     @Autowired
     PaperService paperService;
 
-    @Autowired
-    ResearcherService researcherService;
 
+    // 按关键字搜索，模糊搜索
     @RequestMapping("/search/paper/{keyword}")
-    public CommonResult SearchPaperByTitle(@PathVariable("keyword") String keyword) throws IOException {
+    public CommonResult searchPaperByTitle(@PathVariable("keyword") String keyword) throws IOException {
         return new CommonResult(200,"success",paperService.getPaperByKeyWord(keyword));
     }
 
-    @RequestMapping("/search/researcher/{keyword}")
-    public CommonResult SearchResearchByName(@PathVariable("keyword") String keyword){
-        return new CommonResult(200,"success",researcherService.getRearcherByKeyword(keyword));
+    // 按学科领域搜索
+    @RequestMapping("/search/subject/{subject}")
+    public CommonResult searchPaperByField(@PathVariable("subject") String subject) throws IOException {
+        return new CommonResult(200, "success", paperService.getPaperByFiled(subject));
     }
 
+    // 按姓名搜索学者
+    @RequestMapping("/search/researcher/{keyword}")
+    public CommonResult searchResearcherByName(@PathVariable("keyword") String keyword) throws IOException {
+        return new CommonResult(200, "success", paperService.searchByAuthorId(keyword));
+    }
 }
