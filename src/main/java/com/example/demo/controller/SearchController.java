@@ -22,7 +22,7 @@ public class SearchController {
 
     @RequestMapping("/search/researcher/{keyword}")
     public CommonResult SearchResearchByName(@PathVariable("keyword") String keyword){
-        return new CommonResult(200,"success",researcherService.getRearcherByKeyword(keyword));
+        return new CommonResult(200,"success",researcherService.getResearcherByKeyword(keyword));
     }
 
 }
