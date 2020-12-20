@@ -2,7 +2,7 @@ package com.example.demo.bean;
 
 public class Directory {
     private int id;
-    private char name;
+    private String name;
     private Integer user;
 
     public int getId() {
@@ -13,11 +13,11 @@ public class Directory {
         this.id = id;
     }
 
-    public char getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(char name) {
+    public void setName(String name) {
         this.name = name;
     }
 

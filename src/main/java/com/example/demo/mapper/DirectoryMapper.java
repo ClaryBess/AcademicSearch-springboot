@@ -34,5 +34,5 @@ public interface DirectoryMapper {
 
     //删除某用户的名为name的收藏夹
     @Delete("delete from Directory where  user=#{user} and name=#{name}")
-    public int deleteDirectoryByUserAndName(Integer user, char name);
+    public int deleteDirectoryByUserAndName(Integer user, String name);
 }

@@ -1,18 +1,13 @@
 package com.example.demo.controller;
 
-import com.example.demo.bean.Collection;
-import com.example.demo.bean.CommonResult;
-import com.example.demo.bean.Paper;
-import com.example.demo.bean.User;
+import com.example.demo.bean.*;
 import com.example.demo.service.CollectionService;
 import com.example.demo.service.DirectoryService;
 import com.example.demo.service.PaperService;
+import javafx.util.Pair;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -105,5 +100,18 @@ public class CollectionController {
             return new CommonResult(200,"未收藏",0);
         else
             return new CommonResult(200,"已收藏",1);
+    }
+
+    @PostMapping("/getCollection")
+    public CommonResult getCollection(@RequestParam("id") Long id){
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        Integer Uid = user.getId();
+        List<Directory> directories=directoryService.ShowDirByUser(Uid);
+        List<Pair<Integer,String>> pairs=new ArrayList<>();
+        for(Directory directory:directories){
+            Pair<Integer,String> pair= new Pair<>(directory.getId(),directory.getName());
+            pairs.add(pair);
+        }
+        return new CommonResult(200,"get success",pairs);
     }
 }
