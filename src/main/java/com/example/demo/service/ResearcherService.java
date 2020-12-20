@@ -30,7 +30,7 @@ public class ResearcherService {
         return researcher;
     }
 
-    public List<Researcher> getRearcherByKeyword(String keyword){
+    public List<Researcher> getResearcherByKeyword(String keyword){
         return researcherMapper.getResearcherByKeyword(keyword);
     }
 

@@ -15,6 +15,8 @@ public class SearchController {
     @Autowired
     PaperService paperService;
 
+    @Autowired
+    ResearcherService researcherService;
 
     // 按关键字搜索，模糊搜索
     @RequestMapping("/search/paper/{keyword}")
@@ -25,12 +27,18 @@ public class SearchController {
     // 按学科领域搜索
     @RequestMapping("/search/subject/{subject}")
     public CommonResult searchPaperByField(@PathVariable("subject") String subject) throws IOException {
-        return new CommonResult(200, "success", paperService.getPaperByFiled(subject));
+        return new CommonResult(200, "success", paperService.getPaperByField(subject));
     }
 
     // 按姓名搜索学者
     @RequestMapping("/search/researcher/{keyword}")
     public CommonResult searchResearcherByName(@PathVariable("keyword") String keyword) throws IOException {
-        return new CommonResult(200, "success", paperService.searchByAuthorId(keyword));
+        return new CommonResult(200, "success", ResearcherService.getResearcherByKeyword(keyword));
+    }
+
+    // 按时间搜索论文
+    @RequestMapping("/search/{time1}&{time2}")
+    public CommonResult searchPaperByTime(@PathVariable("time1") int start, @PathVariable("time2") int end) throws IOException {
+        return new CommonResult(200, "success", paperService.getPaperByYear(start, end));
     }
 }

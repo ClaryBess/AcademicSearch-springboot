@@ -45,10 +45,8 @@ public class PaperService {
             RestClient.builder(
             new HttpHost("10.251.253.212", 9200, "http")));
 
-    @Autowired
     PaperMapper paperMapper;
 
-    @Autowired
     ResearcherMapper researcherMapper;
 
     public void save(Paper paper) {
@@ -178,4 +176,19 @@ public class PaperService {
         return paperList;
     }
 
+    // 按发表年份范围查询
+    public List<Paper> getPaperByYear(int start, int end) throws IOException {
+        List<Paper> paperList = new ArrayList<>();
+        SearchRequest searchRequest = new SearchRequest("year");
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(QueryBuilders.rangeQuery("year").lte(end).gte(start));
+        searchRequest.source(searchSourceBuilder);
+        SearchResponse response = client.search(searchRequest, RequestOptions.DEFAULT);
+        SearchHits hits = response.getHits();
+        for (SearchHit hit : hits) {
+            String sourceAsString = hit.getSourceAsString();
+            paperList.add(JSON.parseObject(sourceAsString, Paper.class));
+        }
+        return paperList;
+    }
 }
