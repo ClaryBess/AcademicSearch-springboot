@@ -1,6 +1,5 @@
 com\example\demo\bean\Follow.class
 com\example\demo\service\UserService.class
-com\example\demo\service\MessageSevice.class
 com\example\demo\service\FollowService.class
 com\example\demo\bean\Comments.class
 com\example\demo\config\CorsConfig.class
@@ -28,7 +27,6 @@ com\example\demo\bean\Researcher.class
 com\example\demo\controller\FollowController.class
 com\example\demo\controller\UserController.class
 com\example\demo\bean\Directory.class
-com\example\demo\DTO\PaperReturnDTO.class
 com\example\demo\mapper\PaperMapper.class
 com\example\demo\config\MyBatisConfig$1.class
 com\example\demo\config\RestClientConfig.class
