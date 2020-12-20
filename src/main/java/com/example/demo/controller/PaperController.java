@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -61,5 +62,19 @@ public class PaperController {
         }
     }
 
-
+    @RequestMapping(value = "/paper/comment/{id}")
+    public CommonResult getCommentByPaper(@PathVariable("id") Long id){
+        List<CommentItem> commentItems = new ArrayList<CommentItem>();
+        List<Comments> comments = commentService.selectByPaperId(id);
+        for(Comments comments1 : comments){
+            User user = userService.getUserById(comments1.getCommentator());
+            String profileUrl = user.getAvatar();
+            CommentItem commentItem = new CommentItem(profileUrl, comments1.getCommentatorName(), comments1.getContent(), comments1.getCommentTime());
+            commentItems.add(commentItem);
+        }
+        if(commentItems.size() == 0)
+            return new CommonResult(400,"this paper have no comment",null);
+        else
+            return new CommonResult(200,"success",commentItems);
+    }
 }

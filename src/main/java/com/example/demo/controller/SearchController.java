@@ -18,13 +18,13 @@ public class SearchController {
     @Autowired
     ResearcherService researcherService;
 
-    // 按关键字搜索，模糊搜索
+    // 按关键字搜索，模糊搜索论文
     @RequestMapping("/search/paper/{keyword}")
     public CommonResult searchPaperByTitle(@PathVariable("keyword") String keyword) throws IOException {
         return new CommonResult(200,"success",paperService.getPaperByKeyWord(keyword));
     }
 
-    // 按学科领域搜索
+    // 按学科领域搜索论文
     @RequestMapping("/search/subject/{subject}")
     public CommonResult searchPaperByField(@PathVariable("subject") String subject) throws IOException {
         return new CommonResult(200, "success", paperService.getPaperByField(subject));

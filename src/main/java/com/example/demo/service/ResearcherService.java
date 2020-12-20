@@ -34,6 +34,10 @@ public class ResearcherService {
         return researcherMapper.getResearcherByKeyword(keyword);
     }
 
+    public Researcher getResearcherByName(String name){
+        return researcherMapper.getResearcherByName(name);
+    }
+
     public List<String> getFieldById(long id){
         Researcher researcher = researcherMapper.getResearcherById(id);
         List<String> fields = new ArrayList<String>();

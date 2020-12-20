@@ -14,7 +14,7 @@ public class Paper {
     private String title;  //题目
     private String Abstract;  //摘要
     private Timestamp paperTime; //发布时间
-    private String  Author[];  //作者名字
+    private String[]  Author;  //作者名字
     private String url;   //网址
     private String field;   //领域
     private Integer citation; //被引用量

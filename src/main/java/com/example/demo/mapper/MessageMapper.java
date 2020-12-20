@@ -24,18 +24,18 @@ public interface MessageMapper {
 
     //向学者发送私信
     @Insert("insert into Message values(DEFAULT,#{from},#{to},#{text},0,NOW())")
-    public int insertMessage(Integer from,Integer to,String text);
+    public int insertMessage(Integer from, Integer to, String text);
 
     //展示私信内容
     @Select("select * from Message where id=#{id}")
     public Message ShowMessageDetail(Integer id);
 
     //读取私信内容
-    @Update("update Message set read=1 where id={id} and read=0")
+    @Update("update Message set read=1 where id=#{id} and read=0")
     public int ReadMessage(Integer id);
 
     //获取私信送达用户
-    @Select("select to from where id={id}")
+    @Select("select to from where id=#{id}")
     public Object GetToUser(Integer id);
 
     //接收方删除私信1
