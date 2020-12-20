@@ -22,18 +22,14 @@ public class DirectoryController {
     //创建收藏夹
     @ResponseBody
     @RequestMapping("/makedir")
-    public CommonResult DeleteCollectionInDir(@RequestParam("Dname") String Dname){
-        User user = (User) SecurityUtils.getSubject().getPrincipal();
-        Integer Uid = user.getId();
+    public CommonResult DeleteCollectionInDir(@RequestParam("Dname") String Dname,@RequestParam("user")Integer Uid){
         return new CommonResult(200,"新建成功",directoryService.CreateDir(Dname,Uid));
     }
 
     //展示所有收藏夹
     @ResponseBody
     @RequestMapping("/showdir")
-    public CommonResult ShowAllDir(){
-        User user = (User) SecurityUtils.getSubject().getPrincipal();
-        Integer Uid = user.getId();
+    public CommonResult ShowAllDir(@RequestParam("user")Integer Uid){
         return new CommonResult(200,"显示收藏夹",directoryService.ShowDirByUser(Uid));
     }
 
