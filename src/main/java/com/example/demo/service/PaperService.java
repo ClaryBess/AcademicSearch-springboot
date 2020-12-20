@@ -154,7 +154,7 @@ public class PaperService {
             Paper paper=JSON.parseObject(sourceAsString, Paper.class);
             StringBuffer author = new StringBuffer();
             for(int i = 0; i < paper.getAuthor().length; i++){
-                author. append(paper.getAuthor()[i]);
+                author. append(paper.getAuthor()[i]+"，");
             }
             String s = author.toString();
             HotDTO hot=new HotDTO(paper.getId(),paper.getTitle(),s,paper.getYear(),paper.getCitation());
