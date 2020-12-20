@@ -35,7 +35,7 @@ public interface MessageMapper {
     public int ReadMessage(Integer id);
 
     //获取私信送达用户
-    @Select("select to from where id=#{id}")
+    @Select("select to from Message where id=#{id}")
     public Object GetToUser(Integer id);
 
     //接收方删除私信1
