@@ -22,9 +22,7 @@ public class ApplyController {
     //发送申请
     @ResponseBody
     @RequestMapping("/apply/send")
-    public CommonResult SendApply(@RequestParam("feedback") String feedback){
-        User user = (User) SecurityUtils.getSubject().getPrincipal();
-        Integer Uid = user.getId();
+    public CommonResult SendApply(@RequestParam("feedback") String feedback,@RequestParam("user")Integer Uid){
         return new CommonResult(200,"发送成功",applyService.SendApply(Uid,feedback));
     }
 
@@ -47,9 +45,7 @@ public class ApplyController {
     //展示用户发送的所有申请
     @ResponseBody
     @RequestMapping("/apply/user")
-    public CommonResult ShowAllApplyByUser(){
-        User user = (User) SecurityUtils.getSubject().getPrincipal();
-        Integer Uid = user.getId();
+    public CommonResult ShowAllApplyByUser(@RequestParam("user")Integer Uid){
         return new CommonResult(200,"我的申请列表",applyService.ShowAllApplyByUser(Uid));
     }
 
