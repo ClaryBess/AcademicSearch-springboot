@@ -53,15 +53,12 @@ public class PaperController {
             return new CommonResult(400,"error",null);
         }
     }
-
-<<<<<<< HEAD
+    
     @RequestMapping("/paper/get/{id}")
     public CommonResult getPaperById(@PathVariable("id") Long id) throws IOException {
         Paper paper = paperService.search(id);
         return new CommonResult(200,"success",paper);
     }
-=======
->>>>>>> b804f53d2bc9a3eea15201acecbf5d807a2eb6a1
 
     @RequestMapping(value = "/paper/comment/{id}")
     public CommonResult getCommentByPaper(@PathVariable("id") Long id){

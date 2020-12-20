@@ -2,17 +2,16 @@
 <project version="4">
   <component name="dataSourceStorageLocal">
     <data-source name="EsData Source7.8.1 - jdbc:es://10.251.253.212:9200" uuid="1db12ea3-d675-4ca4-8e70-7ae69576fccc">
-      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="UNKNOWN" exact-version="0" />
-      <schema-mapping />
-    </data-source>
-    <data-source name="MySQL - @10.251.253.212" uuid="225b460e-fd48-40da-9029-f80fcb6bae36">
-      <database-info product="MySQL" version="8.0.22" jdbc-version="4.2" driver-name="MySQL Connector/J" driver-version="mysql-connector-java-8.0.21 (Revision: 33f65445a1bcc544eb0120491926484da168f199)" dbms="MYSQL" exact-version="8.0.22" exact-driver-version="8.0">
-        <extra-name-characters>#@</extra-name-characters>
-        <identifier-quote-string>`</identifier-quote-string>
+      <database-info product="Elasticsearch" version="7.8.1" jdbc-version="4.2" driver-name="Elasticsearch JDBC Driver" driver-version="7.8" dbms="UNKNOWN" exact-version="7.8" exact-driver-version="7.8">
+        <identifier-quote-string>&quot;</identifier-quote-string>
       </database-info>
       <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact" />
       <secret-storage>master_key</secret-storage>
       <user-name>root</user-name>
+      <schema-mapping />
+    </data-source>
+    <data-source name="MySQL - @10.251.253.212" uuid="225b460e-fd48-40da-9029-f80fcb6bae36">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" exact-version="0" />
       <schema-mapping />
     </data-source>
   </component>
