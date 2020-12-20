@@ -1,7 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.DTO.PaperCreateDTO;
-import com.example.demo.DTO.PaperReturnDTO;
 import com.example.demo.bean.*;
 import com.example.demo.service.*;
 
@@ -30,6 +28,8 @@ public class PaperController {
     private CollectionService collectionService;
     @Autowired
     private DirectoryService directoryService;
+
+
     /**
      * 查看文档
      * @param id
@@ -39,34 +39,29 @@ public class PaperController {
      */
     @CrossOrigin
     @ResponseBody
-    @RequestMapping(value = "/paper/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/paper/detail/{id}", method = RequestMethod.GET)
     public Object viewDoc(@PathVariable("id") Long id,
                           HttpServletRequest request,
                           HttpServletResponse response) {
         try {
             Paper paper = paperService.search(id);
-            PaperReturnDTO paperreturnDTO = new PaperReturnDTO();
-            BeanUtils.copyProperties(paperreturnDTO, paper);
             if (paper == null) return new CommonResult(400, "The paper does not exist!", null);
 
-            paperreturnDTO.setAuthorName(paper.getAuthor());
-
-            List<Comments> comments = commentService.selectByPaperId(id);
-            paperreturnDTO.setComments(comments);
-
             CommonResult commonResult=new CommonResult(200, null, paper);
-            paperreturnDTO.setResultDTO(commonResult);
-            return paperreturnDTO;
+            return commonResult;
         } catch (IOException e) {
-            return null;
+            return new CommonResult(400,"error",null);
         }
     }
 
+<<<<<<< HEAD
     @RequestMapping("/paper/get/{id}")
     public CommonResult getPaperById(@PathVariable("id") Long id) throws IOException {
         Paper paper = paperService.search(id);
         return new CommonResult(200,"success",paper);
     }
+=======
+>>>>>>> b804f53d2bc9a3eea15201acecbf5d807a2eb6a1
 
     @RequestMapping(value = "/paper/comment/{id}")
     public CommonResult getCommentByPaper(@PathVariable("id") Long id){
@@ -83,4 +78,5 @@ public class PaperController {
         else
             return new CommonResult(200,"success",commentItems);
     }
+
 }
