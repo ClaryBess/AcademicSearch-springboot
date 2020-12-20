@@ -4,6 +4,7 @@ import com.example.demo.bean.*;
 import com.example.demo.service.CollectionService;
 import com.example.demo.service.DirectoryService;
 import com.example.demo.service.PaperService;
+import com.example.demo.service.UserService;
 import javafx.util.Pair;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class CollectionController {
 
     @Autowired
     PaperService paperService;
+
+    @Autowired
+    UserService userService;
 
     //展示用户的收藏夹中的文献列表
     @ResponseBody
@@ -94,7 +98,8 @@ public class CollectionController {
     @ResponseBody
     @RequestMapping("/collection/status")
     public CommonResult ShowCollectionStatus(@RequestParam("paper") Integer paper){
-        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        String name=(String) SecurityUtils.getSubject().getPrincipal();
+        User user=userService.getUserByName(name);
         Integer Uid = user.getId();
         if(collectionService.ShowCollectionStatus(paper,Uid)==0)
             return new CommonResult(200,"未收藏",0);
@@ -104,6 +109,8 @@ public class CollectionController {
 
     @PostMapping("/getCollection")
     public CommonResult getCollection(@RequestParam("id") Long id){
+        String name=(String) SecurityUtils.getSubject().getPrincipal();
+        User user1=userService.getUserByName(name);
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         Integer Uid = user.getId();
         List<Directory> directories=directoryService.ShowDirByUser(Uid);
