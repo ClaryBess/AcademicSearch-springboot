@@ -30,10 +30,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class PaperService {
@@ -65,13 +62,13 @@ public class PaperService {
         Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("id", id);
         if (paper.getTitle() != null) jsonMap.put("title", paper.getTitle());
-        if (paper.getPaperTime() != null) jsonMap.put("paperTime", paper.getPaperTime());
+        if (paper.getYear() != null) jsonMap.put("year", paper.getYear());
+        if (paper.getCitation() != null) jsonMap.put("citation", paper.getCitation());
         if (paper.getField() != null) jsonMap.put("field", paper.getField());
         if (paper.getUrl() != null) jsonMap.put("url", paper.getUrl());
-        if (paper.getKeyWord() != null) jsonMap.put("keyWord", paper.getKeyWord());
-        if (paper.getAbstract() != null) jsonMap.put("Abstract", paper.getAbstract());
-        if (paper.getAuthor() != null) jsonMap.put("Author", paper.getAuthor());
-        if (paper.getCitation() != null) jsonMap.put("citation", paper.getCitation());
+        if (paper.getKeyWord() != null) jsonMap.put("keywords", paper.getKeyWord());
+        if (paper.getAbstract() != null) jsonMap.put("abstract", paper.getAbstract());
+        if (paper.getAuthor() != null) jsonMap.put("author", paper.getAuthor());
 
         //构建updateRequest
         UpdateRequest updateRequest = new UpdateRequest("paper", "_doc", String.valueOf(id));
@@ -144,8 +141,6 @@ public class PaperService {
 
         searchSourceBuilder.query(QueryBuilders.matchAllQuery());
         searchRequest.source(searchSourceBuilder);
-
-
 //        //按被引量降序排列
 //        searchSourceBuilder.sort(new FieldSortBuilder("citation").order(SortOrder.DESC));
         SearchResponse searchResponse = client.search(searchRequest,RequestOptions.DEFAULT);
@@ -155,6 +150,7 @@ public class PaperService {
             paperList.add(JSON.parseObject(sourceAsString, Paper.class));
         }
         //排序
+        Collections.sort(paperList);
         return paperList;
     }
 

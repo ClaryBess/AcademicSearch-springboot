@@ -33,7 +33,7 @@ public class PaperTest {
 
     @Test
     public void DeleteTest() throws Exception{
-        long id=1L;
+        long id=5L;
         paperService.delete(id);
     }
 
@@ -42,7 +42,7 @@ public class PaperTest {
         long id=1L;
         String[] Author={"Author1","Author2"};
         //Paper paper=new Paper(null,"titleupdate","Abstractupdate",null,null,null,"fieldupdate",12,null);
-        Paper paper=new Paper(null,null,null,null,Author,null,null,null,null);
+        Paper paper=new Paper(null,null,null,null,null,null,null,1,null);
 
         paperService.update(id,paper);
     }

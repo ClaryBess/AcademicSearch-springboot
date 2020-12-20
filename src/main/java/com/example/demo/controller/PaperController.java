@@ -29,6 +29,8 @@ public class PaperController {
     private CollectionService collectionService;
     @Autowired
     private DirectoryService directoryService;
+
+
     /**
      * 查看文档
      * @param id
@@ -60,6 +62,14 @@ public class PaperController {
             return null;
         }
     }
+
+
+
+
+
+
+
+
 
 
 }
