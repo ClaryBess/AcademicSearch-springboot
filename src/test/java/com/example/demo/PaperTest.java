@@ -82,6 +82,12 @@ public class PaperTest {
         List<HotDTO> pp= paperService.OrderByCitation();
         System.out.println(pp);
     }
+    
+    @Test
+    public void ALLPaper() throws Exception{
+        List<Paper> pp= paperService.searchALLPaper();
+        System.out.println(pp);
+    }
 
 
 
