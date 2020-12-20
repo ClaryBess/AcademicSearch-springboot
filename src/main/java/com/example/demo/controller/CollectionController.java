@@ -52,7 +52,7 @@ public class CollectionController {
             map.put("Title",paper.getTitle());
             map.put("Keyword",keyword);
             map.put("Author",author);
-            map.put("Time",paper.getPaperTime().toString());
+            map.put("Time",paper.getYear().toString());
             map.put("Cid",Cid.toString());
             map.put("Dir",Dir.toString());
             map.put("Paper",paper.getId().toString());

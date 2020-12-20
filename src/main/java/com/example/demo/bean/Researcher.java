@@ -2,139 +2,33 @@ package com.example.demo.bean;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 
+import java.util.List;
+
 @Document(indexName = "author")
-public class Researcher {
-    private Long id;
-    private String name;
-    private String trueName;
-    private String organization;
-    private Integer paperCount;
-    private String index;
-    private String email;
-    private String pwd;
-    private String info;
-    private Integer role = 2;
-    private String field1;
-    private String field2;
-    private String field3;
+public class Researcher extends User{
+    private Integer citation;
+    private List<String> pubs;
 
-    public Long getId() {
-        return id;
+    public Integer getCitation() {
+        return citation;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCitation(Integer citation) {
+        this.citation = citation;
     }
 
-    public String getName() {
-        return name;
+    public List<String> getPubs() {
+        return pubs;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPubs(List<String> pubs) {
+        this.pubs = pubs;
     }
 
-    public String getTrueName() {
-        return trueName;
+    public Researcher(Integer id, String name, String trueName, String organization, String email, Integer paperCount, Integer index, String pwd, String info, Integer role, String avatar, Integer citation, List<String> pubs) {
+        super(id, name, trueName, organization, email, paperCount, index, pwd, info, role, avatar);
+        this.citation = citation;
+        this.pubs = pubs;
     }
 
-    public void setTrueName(String trueName) {
-        this.trueName = trueName;
-    }
-
-    public String getOrganization() {
-        return organization;
-    }
-
-    public void setOrganization(String organization) {
-        this.organization = organization;
-    }
-
-    public Integer getPaperCount() {
-        return paperCount;
-    }
-
-    public void setPaperCount(Integer paperCount) {
-        this.paperCount = paperCount;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPwd() {
-        return pwd;
-    }
-
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
-    }
-
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
-    }
-
-    public String getIndex() {
-        return index;
-    }
-
-    public void setIndex(String index) {
-        this.index = index;
-    }
-
-    public Integer getRole() {
-        return role;
-    }
-
-    public void setRole(Integer role) {
-        this.role = role;
-    }
-
-    public String getField1() {
-        return field1;
-    }
-
-    public void setField1(String field1) {
-        this.field1 = field1;
-    }
-
-    public String getField2() {
-        return field2;
-    }
-
-    public void setField2(String field2) {
-        this.field2 = field2;
-    }
-
-    public String getField3() {
-        return field3;
-    }
-
-    public void setField3(String field3) {
-        this.field3 = field3;
-    }
-
-    public Researcher(Long id, String name, String trueName, String organization, Integer paperCount, String index, String email, String pwd, String info, Integer role, String field1, String field2, String field3) {
-        this.id = id;
-        this.name = name;
-        this.trueName = trueName;
-        this.organization = organization;
-        this.paperCount = paperCount;
-        this.index = index;
-        this.email = email;
-        this.pwd = pwd;
-        this.info = info;
-        this.role = role;
-        this.field1 = field1;
-        this.field2 = field2;
-        this.field3 = field3;
-    }
 }

@@ -26,14 +26,23 @@ public class CommentsService {
 
 
     //添加评论
-    public void insertComments(CommentDTO commentDTO, User user){
+    public Comments insertComments(Long paperId,String content, User user){
+
         Comments comment = new Comments();
-        BeanUtils.copyProperties(commentDTO, comment);
+        comment.setContent(content);
+        comment.setPaperId(paperId);
         comment.setCommentator(user.getId());
         comment.setCommentatorName(user.getName());
         comment.setCommentTime(new Timestamp(new Date().getTime()));
-        commentsMapper.insert(comment);
+        commentsMapper.insertComments(comment);
+        return  comment;
     }
+
+    //通过ID获得评论
+    public Comments selectById(Integer id) {
+        return commentsMapper.getCommentsByrId(id);
+    }
+
 
     //获得文章评论
     public List<Comments> selectByPaperId(Long id) {
@@ -48,6 +57,12 @@ public class CommentsService {
         queryWrapper.eq("Commentator",id);
         return commentsMapper.selectList(queryWrapper);
     }
+
+    //删除评论
+    public int deleteById(Integer id) {
+        return commentsMapper.deleteCommentsById(id);
+    }
+
 
 
 }

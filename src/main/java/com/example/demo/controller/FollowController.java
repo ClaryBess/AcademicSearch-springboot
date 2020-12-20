@@ -27,18 +27,18 @@ public class FollowController {
         return new CommonResult(200,null,follow1);
     }
 
-    @PostMapping("/follow/getList")
-    public List<Researcher> getList(@RequestParam("id")Integer id){
-        List<Follow> followList=followService.getFollowByUser(id);
-        List<Researcher> researcherList = new ArrayList<Researcher>();
-        if(followList == null || followList.size() == 0){
-            return null;
-        }
-        for(Follow follow : followList){
-            Integer researcherId = follow.getResearcher();
-            Researcher researcher = researcherService.getResearcherById(researcherId);
-            researcherList.add(researcher);
-        }
-        return researcherList;
-    }
+//    @PostMapping("/follow/getList")
+//    public List<Researcher> getList(@RequestParam("id")Integer id){
+//        List<Follow> followList=followService.getFollowByUser(id);
+//        List<Researcher> researcherList = new ArrayList<Researcher>();
+//        if(followList == null || followList.size() == 0){
+//            return null;
+//        }
+//        for(Follow follow : followList){
+//            Integer researcherId = follow.getResearcher();
+//            Researcher researcher = researcherService.getResearcherById(researcherId);
+//            researcherList.add(researcher);
+//        }
+//        return researcherList;
+//    }
 }

@@ -1,7 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.DTO.PaperCreateDTO;
-import com.example.demo.DTO.PaperReturnDTO;
 import com.example.demo.bean.*;
 import com.example.demo.service.*;
 
@@ -11,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.image.Kernel;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +29,7 @@ public class PaperController {
     private CollectionService collectionService;
     @Autowired
     private DirectoryService directoryService;
+
     /**
      * 查看文档
      * @param id
@@ -39,28 +39,51 @@ public class PaperController {
      */
     @CrossOrigin
     @ResponseBody
-    @RequestMapping(value = "/paper/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/paper/detail/{id}", method = RequestMethod.GET)
     public Object viewDoc(@PathVariable("id") Long id,
                           HttpServletRequest request,
                           HttpServletResponse response) {
         try {
             Paper paper = paperService.search(id);
-            PaperReturnDTO paperreturnDTO = new PaperReturnDTO();
-            BeanUtils.copyProperties(paperreturnDTO, paper);
             if (paper == null) return new CommonResult(400, "The paper does not exist!", null);
 
-            paperreturnDTO.setAuthorName(paper.getAuthor());
-
-            List<Comments> comments = commentService.selectByPaperId(id);
-            paperreturnDTO.setComments(comments);
-
             CommonResult commonResult=new CommonResult(200, null, paper);
-            paperreturnDTO.setResultDTO(commonResult);
-            return paperreturnDTO;
+            return commonResult;
         } catch (IOException e) {
-            return null;
+            return new CommonResult(400,"error",null);
         }
     }
+
+    /**
+     * 添加文档
+     */
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/paper/add", method = RequestMethod.POST)
+    public Object AddDoc(@RequestParam String title,
+                         @RequestParam Integer citation,
+                         @RequestParam Integer year,
+                         @RequestParam String field1,
+                         @RequestParam String  Author[],
+                         @RequestParam String keyWord[],
+                         @RequestParam String url,
+                         @RequestParam String Abstract,
+                          HttpServletRequest request,
+                          HttpServletResponse response) {
+        Paper paper = new Paper(title,citation,year,field1,Author, keyWord,url,Abstract);
+
+        paperService.save(paper);
+        CommonResult commonResult=new CommonResult(200, null, paper);
+        return commonResult;
+    }
+
+    
+    @RequestMapping("/paper/get/{id}")
+    public CommonResult getPaperById(@PathVariable("id") Long id) throws IOException {
+        Paper paper = paperService.search(id);
+        return new CommonResult(200,"success",paper);
+    }
+
 
     @RequestMapping(value = "/paper/comment/{id}")
     public CommonResult getCommentByPaper(@PathVariable("id") Long id){
@@ -77,4 +100,5 @@ public class PaperController {
         else
             return new CommonResult(200,"success",commentItems);
     }
+
 }

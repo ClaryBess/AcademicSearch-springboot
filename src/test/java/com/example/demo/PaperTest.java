@@ -1,7 +1,9 @@
 package com.example.demo;
 
+import com.example.demo.DTO.HotDTO;
 import com.example.demo.bean.Paper;
 import com.example.demo.service.PaperService;
+
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 
@@ -22,18 +24,16 @@ public class PaperTest {
 
     @Test
     public void SaveTest() throws Exception{
-
-        Timestamp t = new Timestamp(new Date().getTime());
         String[] Author={"Author1","Author2"};
         String[] Keyword={"keyword1","Test1"};
-        Paper paper=new Paper(5L,"title","Abstractt",t,Author,"url","field",30,Keyword);
+        Paper paper=new Paper(17L,"title",13,2000,"field",Author,Keyword,"url","Abstract");
         paperService.save(paper);
         System.out.println(paper);
     }
 
     @Test
     public void DeleteTest() throws Exception{
-        long id=1L;
+        long id=5L;
         paperService.delete(id);
     }
 
@@ -42,7 +42,7 @@ public class PaperTest {
         long id=1L;
         String[] Author={"Author1","Author2"};
         //Paper paper=new Paper(null,"titleupdate","Abstractupdate",null,null,null,"fieldupdate",12,null);
-        Paper paper=new Paper(null,null,null,null,Author,null,null,null,null);
+        Paper paper=new Paper(null,null,null,null,null,null,null,null,null);
 
         paperService.update(id,paper);
     }
@@ -79,7 +79,7 @@ public class PaperTest {
     //被引量降序
     @Test
     public void OrderByCitation() throws Exception{
-        List<Paper> pp= paperService.OrderByCitation();
+        List<HotDTO> pp= paperService.OrderByCitation();
         System.out.println(pp);
     }
 
