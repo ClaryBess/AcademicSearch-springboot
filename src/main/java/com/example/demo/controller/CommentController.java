@@ -32,12 +32,10 @@ public class CommentController {
      */
     @ResponseBody
     @PostMapping(value = "/comment")
-    public CommonResult Comment(@RequestParam Long paperId,
-                          @RequestParam String content) {
-        //获得当前登录用户
-        User user = (User) SecurityUtils.getSubject().getPrincipal();
-        //User user=userService.getUserById(5);
-        if(user==null) return new CommonResult(400,"please login first",null);
+    public CommonResult Comment(@RequestParam("paper") Long paperId, @RequestParam("content") String content, @RequestParam("user") Integer id) {
+        User user=userService.getUserById(id);
+        if(user==null)
+            return new CommonResult(400,"please login first",null);
         Comments comments=commentService.insertComments(paperId,content, user);
         return new CommonResult(200,null,comments);
     }
