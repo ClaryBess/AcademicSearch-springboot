@@ -1,13 +1,15 @@
 package com.example.demo.mapper;
 
 import com.example.demo.bean.Apply;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
+@Repository
 @Mapper
 public interface ApplyMapper {
     /*展示所有申请，按时间顺序*/
@@ -38,8 +40,8 @@ public interface ApplyMapper {
     @Update("update Apply set state='reject' where id=#{id}")
     public Integer Reject(long id);
 
-    /*添加反馈*/
-//    @Update("update Apply set feedback=#{feedback} where id=#{id}")
-//    public Integer Feedback(long id,String feedback);
+    /*发送申请*/
+    @Insert("insert into Apply values(DEFAULT,#{user},'waiting',#{feedback})")
+    public Integer SendApply(Integer user,String feedback);
 
 }
