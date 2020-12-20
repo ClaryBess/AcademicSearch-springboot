@@ -30,8 +30,12 @@ public class ResearcherService {
         return researcher;
     }
 
-    public List<Researcher> getRearcherByKeyword(String keyword){
+    public List<Researcher> getResearcherByKeyword(String keyword){
         return researcherMapper.getResearcherByKeyword(keyword);
+    }
+
+    public Researcher getResearcherByName(String name){
+        return researcherMapper.getResearcherByName(name);
     }
 
     public List<String> getFieldById(long id){

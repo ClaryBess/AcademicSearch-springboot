@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -54,5 +55,24 @@ public class ResearcherController {
             return new CommonResult(400,"failed to calculat total citation",0);
         }
         return new CommonResult(200,"success",sum);
+    }
+
+    @GetMapping("/researcher/relation/{id}")
+    public List<Researcher> getRelationByResearcher(@PathVariable("id") Long id){
+        List<Researcher> researchers = new ArrayList<Researcher>();
+        try {
+            List<Paper> papers = paperService.searchByAuthorId(id);
+            for(Paper paper : papers){
+                String[] names = paper.getAuthor();
+                for(String name : names){
+                    Researcher researcher = researcherService.getResearcherByName(name);
+                    if(researcher != null)
+                        researchers.add(researcher);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return researchers;
     }
 }

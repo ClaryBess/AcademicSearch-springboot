@@ -26,7 +26,7 @@ public class PaperTest {
         Timestamp t = new Timestamp(new Date().getTime());
         String[] Author={"Author1","Author2"};
         String[] Keyword={"keyword1","Test1"};
-        Paper paper=new Paper(5L,"title","Abstractt",t,Author,"url","field",30,Keyword);
+        Paper paper=new Paper(5L,"title",13,2000,"field",Author,Keyword,"url","Abstract");
         paperService.save(paper);
         System.out.println(paper);
     }
@@ -42,7 +42,7 @@ public class PaperTest {
         long id=1L;
         String[] Author={"Author1","Author2"};
         //Paper paper=new Paper(null,"titleupdate","Abstractupdate",null,null,null,"fieldupdate",12,null);
-        Paper paper=new Paper(null,null,null,null,null,null,null,1,null);
+        Paper paper=new Paper(null,null,null,null,null,null,null,null,null);
 
         paperService.update(id,paper);
     }

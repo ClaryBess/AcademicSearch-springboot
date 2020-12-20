@@ -1,15 +1,24 @@
 package com.example.demo.controller;
 
+import com.example.demo.bean.Collection;
 import com.example.demo.bean.CommonResult;
+import com.example.demo.bean.Paper;
 import com.example.demo.bean.User;
 import com.example.demo.service.CollectionService;
 import com.example.demo.service.DirectoryService;
+import com.example.demo.service.PaperService;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 public class CollectionController {
@@ -19,11 +28,46 @@ public class CollectionController {
     @Autowired
     DirectoryService directoryService;
 
+
+    @Autowired
+    PaperService paperService;
+
     //展示用户的收藏夹中的文献列表
     @ResponseBody
     @RequestMapping("/showcollection")
     public CommonResult ShowCollectionByDir(@RequestParam("Did") int Did){
-        return new CommonResult(200,"展示收藏",collectionService.ShowCollectionByDir(Did));
+        List<Collection> lc = collectionService.ShowCollectionByDir(Did);
+        List mapList = new ArrayList<Map>();
+        Map<String,String> map = new HashMap<>();
+        try{
+            for (int i = 0; i < lc.size(); i++) {
+            long id = lc.get(i).getPaper();
+            Integer Cid = lc.get(i).getId();
+            Integer Dir = lc.get(i).getDirectory();
+            Integer User = lc.get(i).getUserId();
+            Paper paper = paperService.search(id);
+            String[] authors = paper.getAuthor();
+            String author = authors[0];
+            String[] keywords = paper.getAuthor();
+            String keyword = authors[0];
+            for (int j = 1;j<authors.length;j++)
+                author += "，"+authors[j];
+            for (int j = 1;j<authors.length;j++)
+                keyword += "，"+keywords[j];
+            map.put("Title",paper.getTitle());
+            map.put("Keyword",keyword);
+            map.put("Author",author);
+            map.put("Time",paper.getYear().toString());
+            map.put("Cid",Cid.toString());
+            map.put("Dir",Dir.toString());
+            map.put("Paper",paper.getId().toString());
+            map.put("User",User.toString());
+            mapList.add(map);
+            }
+        }catch (IOException e) {
+            return new CommonResult(500,"查询异常",null);
+        }
+        return new CommonResult(200,"展示收藏",mapList);
     }
 
     //添加收藏
