@@ -2,11 +2,15 @@ package com.example.demo.mapper;
 
 import com.example.demo.bean.Researcher;
 import org.apache.ibatis.annotations.*;
+import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 import java.util.List;
 
 @Mapper
 public interface ResearcherMapper {
+
+    @Select("select * from User where role=2")
+    public List<Researcher> getAllResearcher();
 
     @Select("select * from User where id=#{id} and role=2")
     public Researcher getResearcherById(Long id);
