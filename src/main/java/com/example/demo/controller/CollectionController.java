@@ -5,7 +5,6 @@ import com.example.demo.service.CollectionService;
 import com.example.demo.service.DirectoryService;
 import com.example.demo.service.PaperService;
 import com.example.demo.service.UserService;
-import javafx.util.Pair;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -72,18 +71,14 @@ public class CollectionController {
     //添加收藏
     @ResponseBody
     @RequestMapping("/collect")
-    public CommonResult Collect(@RequestParam("Did") Integer Did,@RequestParam("paper") long paper){
-        User user = (User) SecurityUtils.getSubject().getPrincipal();
-        Integer Uid = user.getId();
+    public CommonResult Collect(@RequestParam("Did") Integer Did,@RequestParam("paper") long paper,@RequestParam("user")Integer Uid){
         return new CommonResult(200,"收藏成功",collectionService.insertCollection(Did,paper,Uid));
     }
 
     //在文献页面取消收藏
     @ResponseBody
     @RequestMapping("/collection/cancelinpaper")
-    public CommonResult DeleteCollectionInPaper(@RequestParam("paper") long paper){
-        User user = (User) SecurityUtils.getSubject().getPrincipal();
-        Integer Uid = user.getId();
+    public CommonResult DeleteCollectionInPaper(@RequestParam("paper") long paper,@RequestParam("user")Integer Uid){
         return new CommonResult(200,"取消收藏成功",collectionService.DeleteCollectionInPaper(Uid,paper));
     }
 
@@ -105,16 +100,13 @@ public class CollectionController {
     }
 
     @PostMapping("/getCollection")
-    public CommonResult getCollection(@RequestParam("id") Long id,@RequestParam("user") Integer uid){
-//        String name=(String) SecurityUtils.getSubject().getPrincipal();
-//        User user=userService.getUserByName(name);
-//        Integer Uid = user.getId();
+    public CommonResult getCollection(@RequestParam("user") Integer uid){
         List<Directory> directories=directoryService.ShowDirByUser(uid);
-        List<Pair<Integer,String>> pairs=new ArrayList<>();
+        List<DirectoryItem> directoryItems=new ArrayList<>();
         for(Directory directory:directories){
-            Pair<Integer,String> pair= new Pair<>(directory.getId(),directory.getName());
-            pairs.add(pair);
+            DirectoryItem directoryItem= new DirectoryItem(directory.getId(),directory.getName());
+            directoryItems.add(directoryItem);
         }
-        return new CommonResult(200,"get success",pairs);
+        return new CommonResult(200,"get success",directoryItems);
     }
 }

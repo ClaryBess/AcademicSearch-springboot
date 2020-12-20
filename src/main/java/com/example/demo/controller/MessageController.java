@@ -25,45 +25,35 @@ public class MessageController {
     //系统消息列表
     @ResponseBody
     @RequestMapping("/message/sys")
-    public CommonResult SysMessage(){
-        User user = (User) SecurityUtils.getSubject().getPrincipal();
-        Integer Uid = user.getId();
+    public CommonResult SysMessage(@RequestParam("user")Integer Uid){
         return new CommonResult(200,"系统消息",messageService.SysMessage(Uid));
     }
 
     //学者私信列表
     @ResponseBody
     @RequestMapping("/message/fromre")
-    public CommonResult ReMessage(){
-        User user = (User) SecurityUtils.getSubject().getPrincipal();
-        Integer Uid = user.getId();
+    public CommonResult ReMessage(@RequestParam("user")Integer Uid){
         return new CommonResult(200,"学者私信",messageService.ResearcherMessage(Uid));
     }
 
     //我的私信列表
     @ResponseBody
     @RequestMapping("/message/mine")
-    public CommonResult MyMessage(){
-        User user = (User) SecurityUtils.getSubject().getPrincipal();
-        Integer Uid = user.getId();
+    public CommonResult MyMessage(@RequestParam("user")Integer Uid){
         return new CommonResult(200,"学者私信",messageService.MyMessage(Uid));
     }
 
     //发送私信
     @ResponseBody
     @RequestMapping("/message/send")
-    public CommonResult SendMessage(@RequestParam("to")Integer to, @RequestParam("text")String text){
-        User user = (User) SecurityUtils.getSubject().getPrincipal();
-        Integer Uid = user.getId();
+    public CommonResult SendMessage(@RequestParam("to")Integer to, @RequestParam("text")String text,@RequestParam("user")Integer Uid){
         return new CommonResult(200,"发送成功",messageService.SendMessage(Uid,to,text));
     }
 
     //回复私信
     @ResponseBody
     @RequestMapping("/message/response")
-    public CommonResult ResponseMessage(@RequestParam("from")Integer from, @RequestParam("text")String text){
-        User user = (User) SecurityUtils.getSubject().getPrincipal();
-        Integer Uid = user.getId();
+    public CommonResult ResponseMessage(@RequestParam("from")Integer from, @RequestParam("text")String text,@RequestParam("user")Integer Uid){
         return new CommonResult(200,"发送成功",messageService.SendMessage(Uid,from,text));
     }
 

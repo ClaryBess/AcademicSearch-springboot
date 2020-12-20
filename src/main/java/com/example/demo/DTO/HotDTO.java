@@ -6,17 +6,20 @@ import lombok.Data;
 
 @Data
 public class HotDTO implements Comparable<HotDTO> {
+    Long paperId;
     String title;
-    String[] Author;
-    Integer data;
+    String Author;
+    Integer date;
     Integer heat;
 
-    public HotDTO(String title, String[] author, Integer data, Integer heat) {
+    public HotDTO(Long paperId, String title, String author, Integer date, Integer heat) {
+        this.paperId = paperId;
         this.title = title;
         Author = author;
-        this.data = data;
+        this.date = date;
         this.heat = heat;
     }
+
     @Override
     public int compareTo(HotDTO o) {
         return o.getHeat()-this.heat; //升序
