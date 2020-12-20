@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.alibaba.fastjson.JSON;
+import com.example.demo.DTO.HotDTO;
 import com.example.demo.bean.Paper;
 import com.example.demo.bean.Researcher;
 import com.example.demo.mapper.PaperMapper;
@@ -135,8 +136,8 @@ public class PaperService {
 
     //按被引量排序
     //但由于es通常没有开放排序功能，对list排序
-    public List<Paper> OrderByCitation() throws IOException {
-        List<Paper> paperList = new ArrayList<>();
+    public List<HotDTO> OrderByCitation() throws IOException {
+        List<HotDTO> paperList = new ArrayList<>();
         SearchRequest searchRequest = new SearchRequest("paper");
 
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
@@ -149,7 +150,9 @@ public class PaperService {
         SearchHits hits = searchResponse.getHits();
         for (SearchHit hit : hits) {
             String sourceAsString = hit.getSourceAsString();
-            paperList.add(JSON.parseObject(sourceAsString, Paper.class));
+            Paper paper=JSON.parseObject(sourceAsString, Paper.class);
+            HotDTO hot=new HotDTO(paper.getTitle(),paper.getAuthor(),paper.getYear(),paper.getCitation());
+            paperList.add(hot);
         }
         //排序
         Collections.sort(paperList);

@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.DTO.HotDTO;
 import com.example.demo.bean.CommonResult;
 import com.example.demo.bean.Paper;
 import com.example.demo.service.PaperService;
@@ -21,7 +22,7 @@ public class HotController {
     @RequestMapping(value ="/hot/paper",method = RequestMethod.GET)
     public CommonResult getHotPaper(){
         try {
-            List<Paper> hot=paperService.OrderByCitation();
+            List<HotDTO> hot=paperService.OrderByCitation();
             return new CommonResult(200,"success",hot);
         }catch (IOException o){
             return new CommonResult(400,"error",null);

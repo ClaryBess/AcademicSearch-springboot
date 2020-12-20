@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.DTO.HotDTO;
 import com.example.demo.bean.Paper;
 import com.example.demo.service.PaperService;
 
@@ -78,7 +79,7 @@ public class PaperTest {
     //被引量降序
     @Test
     public void OrderByCitation() throws Exception{
-        List<Paper> pp= paperService.OrderByCitation();
+        List<HotDTO> pp= paperService.OrderByCitation();
         System.out.println(pp);
     }
 
