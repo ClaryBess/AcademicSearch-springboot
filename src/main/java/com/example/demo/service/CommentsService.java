@@ -46,16 +46,12 @@ public class CommentsService {
 
     //获得文章评论
     public List<Comments> selectByPaperId(Long id) {
-        QueryWrapper<Comments> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("paperId",id);
-        return commentsMapper.selectList(queryWrapper);
+        return commentsMapper.getCommentsByPaperId(id);
     }
 
     //获得用户评论
     public List<Comments> selectByCommentator(Integer id) {
-        QueryWrapper<Comments> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("Commentator",id);
-        return commentsMapper.selectList(queryWrapper);
+        return commentsMapper.getCommentsByCommentator(id);
     }
 
     //删除评论

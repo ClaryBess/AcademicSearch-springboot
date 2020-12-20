@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+
 @Repository
 public interface CommentsMapper extends BaseMapper<Comments> {
     //根据id获取评论
@@ -13,11 +15,11 @@ public interface CommentsMapper extends BaseMapper<Comments> {
 
     //根据文章id获取评论信息
     @Select("select * from Comments where paperId=#{paperId}")
-    public Comments getCommentsByPaperId(Integer paperId);
+    public List<Comments> getCommentsByPaperId(Long paperId);
 
     //根据用户获取评论
     @Select("select * from Comments where Commentator=#{Commentator}")
-    public Comments getCommentsByCommentator(Integer Commentator);
+    public List<Comments> getCommentsByCommentator(Integer Commentator);
 
     //发布评论
 
