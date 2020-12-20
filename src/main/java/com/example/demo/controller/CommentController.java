@@ -1,8 +1,6 @@
 package com.example.demo.controller;
 
 
-import com.example.demo.DTO.CommentDTO;
-import com.example.demo.bean.CommentItem;
 import com.example.demo.bean.Comments;
 import com.example.demo.bean.CommonResult;
 import com.example.demo.bean.User;
@@ -12,9 +10,6 @@ import com.example.demo.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @RestController
 public class CommentController {

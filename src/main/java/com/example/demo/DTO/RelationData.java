@@ -1,4 +1,7 @@
-package com.example.demo.bean;
+package com.example.demo.DTO;
+
+import com.example.demo.bean.Edge;
+import com.example.demo.bean.Researcher;
 
 import java.util.List;
 

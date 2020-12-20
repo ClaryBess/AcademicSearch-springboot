@@ -194,8 +194,6 @@ public class PaperService {
         return paperList;
     }
 
-<<<<<<< HEAD
-=======
  //热门领域
     public List<String> HotField() throws IOException {
         List<String> hotFiled=new ArrayList<>();
@@ -217,7 +215,6 @@ public class PaperService {
         return hotFiled;
     }
 
->>>>>>> 6284dce75029f15b7ce2c9946e8f9498fcae5247
     //查询paper所有项目
     public List<Paper> searchALLPaper() throws IOException {
         List<Paper> paperList = new ArrayList<>();

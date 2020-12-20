@@ -1,15 +1,14 @@
 package com.example.demo.controller;
 
+import com.example.demo.DTO.CommentItem;
 import com.example.demo.bean.*;
 import com.example.demo.service.*;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.image.Kernel;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
