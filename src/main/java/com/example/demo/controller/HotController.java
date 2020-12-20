@@ -29,9 +29,15 @@ public class HotController {
         }
     }
 
-//    @RequestMapping("/hot/field")
-//    public CommonResult getHotField(){
-//
-//    }
+    @ResponseBody
+    @RequestMapping(value ="/hot/field",method = RequestMethod.GET)
+    public CommonResult getHotField() {
+        try {
+            List<String> hotfiled = paperService.HotField();
+            return new CommonResult(200, "success", hotfiled);
+        } catch (IOException o) {
+            return new CommonResult(400, "error", null);
+        }
+    }
 
 }
