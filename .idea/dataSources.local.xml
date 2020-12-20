@@ -10,7 +10,22 @@
       <user-name>root</user-name>
       <schema-mapping />
     </data-source>
+<<<<<<< HEAD
+    <data-source name="@10.251.253.212" uuid="be78256b-4ba3-4bb0-a2da-2d8c66d5a108">
+      <database-info product="MySQL" version="8.0.22" jdbc-version="4.2" driver-name="MySQL Connector/J" driver-version="mysql-connector-java-8.0.21 (Revision: 33f65445a1bcc544eb0120491926484da168f199)" dbms="MYSQL" exact-version="8.0.22" exact-driver-version="8.0">
+        <extra-name-characters>#@</extra-name-characters>
+        <identifier-quote-string>`</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact" />
+      <user-name>root</user-name>
+      <schema-mapping>
+        <introspection-scope>
+          <node kind="schema" negative="1" />
+        </introspection-scope>
+      </schema-mapping>
+=======
     <data-source name="MySQL - @10.251.253.212" uuid="225b460e-fd48-40da-9029-f80fcb6bae36">
+<<<<<<< HEAD
       <database-info product="MySQL" version="8.0.22" jdbc-version="4.2" driver-name="MySQL Connector/J" driver-version="mysql-connector-java-8.0.21 (Revision: 33f65445a1bcc544eb0120491926484da168f199)" dbms="MYSQL" exact-version="8.0.22" exact-driver-version="8.0">
         <extra-name-characters>#@</extra-name-characters>
         <identifier-quote-string>`</identifier-quote-string>
@@ -23,6 +38,11 @@
           <node kind="schema" negative="1" />
         </introspection-scope>
       </schema-mapping>
+=======
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" exact-version="0" />
+      <schema-mapping />
+>>>>>>> e6feec71b074e932fd81c5dcd2ddb993cfd579d6
+>>>>>>> b43ff6c8c35e6d1dd71d0c8f8dab06f9268286ee
     </data-source>
   </component>
 </project>

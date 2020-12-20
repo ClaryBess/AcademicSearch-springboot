@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.image.Kernel;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,6 @@ public class PaperController {
     private CollectionService collectionService;
     @Autowired
     private DirectoryService directoryService;
-
 
     /**
      * 查看文档
@@ -54,11 +54,39 @@ public class PaperController {
         }
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * 添加文档
+     */
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/paper/add", method = RequestMethod.POST)
+    public Object AddDoc(@RequestParam String title,
+                         @RequestParam Integer citation,
+                         @RequestParam Integer year,
+                         @RequestParam String field1,
+                         @RequestParam String  Author[],
+                         @RequestParam String keyWord[],
+                         @RequestParam String url,
+                         @RequestParam String Abstract,
+                          HttpServletRequest request,
+                          HttpServletResponse response) {
+        Paper paper = new Paper(title,citation,year,field1,Author, keyWord,url,Abstract);
+
+        paperService.save(paper);
+        CommonResult commonResult=new CommonResult(200, null, paper);
+        return commonResult;
+    }
+
+    
+>>>>>>> b43ff6c8c35e6d1dd71d0c8f8dab06f9268286ee
     @RequestMapping("/paper/get/{id}")
     public CommonResult getPaperById(@PathVariable("id") Long id) throws IOException {
         Paper paper = paperService.search(id);
         return new CommonResult(200,"success",paper);
     }
+
 
     @RequestMapping(value = "/paper/comment/{id}")
     public CommonResult getCommentByPaper(@PathVariable("id") Long id){
