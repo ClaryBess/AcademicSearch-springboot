@@ -1,9 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.bean.CommonResult;
-import com.example.demo.bean.Paper;
-import com.example.demo.bean.Researcher;
-import com.example.demo.bean.User;
+import com.example.demo.bean.*;
 import com.example.demo.service.PaperService;
 import com.example.demo.service.ResearcherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,4 +61,24 @@ public class ResearcherController {
         return new CommonResult(200,"success",users);
     }
 
+    @RequestMapping("/researcher/allRelation")
+    public CommonResult getAllRelation() throws IOException {
+        List<Researcher> researchers = researcherService.searchALLResearcher();
+        List<Edge> edges = new ArrayList<Edge>();
+        for(Researcher researcher : researchers){
+            String source = researcher.getName();
+            if(source != null){
+                List<Paper> papers = paperService.searchByAuthorName(source);
+                for(Paper paper : papers){
+                    String[] authors = paper.getAuthor();
+                    for(String target : authors){
+                        if(!target.equals(source))
+                            edges.add(new Edge(source,target,"合作"));
+                    }
+                }
+            }
+        }
+        RelationData relationData = new RelationData("学者关系",researchers,edges);
+        return new CommonResult(200,"success",relationData);
+    }
 }

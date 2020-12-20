@@ -12,6 +12,7 @@ com\example\demo\mapper\MessageMapper.class
 com\example\demo\config\UserRealm.class
 com\example\demo\controller\EmailController.class
 com\example\demo\controller\PaperController.class
+com\example\demo\service\MessageService.class
 com\example\demo\service\ResearcherService.class
 com\example\demo\bean\Apply.class
 com\example\demo\config\ShiroConfig.class
@@ -34,6 +35,8 @@ com\example\demo\bean\Paper.class
 com\example\demo\bean\User.class
 com\example\demo\mapper\AuthorEsRepository.class
 com\example\demo\mapper\CollectionMapper.class
+com\example\demo\controller\DirectoryController.class
+com\example\demo\controller\MessageController.class
 com\example\demo\config\DruidConfig.class
 com\example\demo\service\DirectoryService.class
 com\example\demo\config\MyBatisConfig.class

@@ -78,11 +78,6 @@ public class PaperController {
         return commonResult;
     }
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 37bb9e340b513b5f4b2cac42f5d1823737f36296
     @RequestMapping("/paper/get/{id}")
     public CommonResult getPaperById(@PathVariable("id") Long id) throws IOException {
         Paper paper = paperService.search(id);
@@ -108,6 +103,12 @@ public class PaperController {
             return new CommonResult(400,"this paper have no comment",null);
         else
             return new CommonResult(200,"success",commentItems);
+    }
+
+    @RequestMapping(value = "/paper/all")
+    public CommonResult getAllPaper() throws IOException {
+        List<Paper> paperList = paperService.searchALLPaper();
+        return new CommonResult(200,"success",paperList);
     }
 
 }

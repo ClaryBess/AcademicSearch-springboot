@@ -193,4 +193,23 @@ public class PaperService {
         }
         return paperList;
     }
+
+    //查询paper所有项目
+    public List<Paper> searchALLPaper() throws IOException {
+        List<Paper> paperList = new ArrayList<>();
+        SearchRequest searchRequest = new SearchRequest("paper");
+
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+
+        searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+        searchRequest.source(searchSourceBuilder);
+        SearchResponse searchResponse = client.search(searchRequest,RequestOptions.DEFAULT);
+        SearchHits hits = searchResponse.getHits();
+        for (SearchHit hit : hits) {
+            String sourceAsString = hit.getSourceAsString();
+            Paper paper=JSON.parseObject(sourceAsString, Paper.class);
+            paperList.add(paper);
+        }
+        return paperList;
+    }
 }
