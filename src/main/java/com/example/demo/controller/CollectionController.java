@@ -97,22 +97,19 @@ public class CollectionController {
     //文献收藏状态
     @ResponseBody
     @RequestMapping("/collection/status")
-    public CommonResult ShowCollectionStatus(@RequestParam("paper") Integer paper){
-        String name=(String) SecurityUtils.getSubject().getPrincipal();
-        User user=userService.getUserByName(name);
-        Integer Uid = user.getId();
-        if(collectionService.ShowCollectionStatus(paper,Uid)==0)
+    public CommonResult ShowCollectionStatus(@RequestParam("paper") Integer paper,@RequestParam("user") Integer uid){
+        if(collectionService.ShowCollectionStatus(paper,uid)==0)
             return new CommonResult(200,"未收藏",0);
         else
             return new CommonResult(200,"已收藏",1);
     }
 
     @PostMapping("/getCollection")
-    public CommonResult getCollection(@RequestParam("id") Long id){
-        String name=(String) SecurityUtils.getSubject().getPrincipal();
-        User user=userService.getUserByName(name);
-        Integer Uid = user.getId();
-        List<Directory> directories=directoryService.ShowDirByUser(Uid);
+    public CommonResult getCollection(@RequestParam("id") Long id,@RequestParam("user") Integer uid){
+//        String name=(String) SecurityUtils.getSubject().getPrincipal();
+//        User user=userService.getUserByName(name);
+//        Integer Uid = user.getId();
+        List<Directory> directories=directoryService.ShowDirByUser(uid);
         List<Pair<Integer,String>> pairs=new ArrayList<>();
         for(Directory directory:directories){
             Pair<Integer,String> pair= new Pair<>(directory.getId(),directory.getName());

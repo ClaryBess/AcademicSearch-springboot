@@ -54,8 +54,7 @@ public class PaperController {
         }
     }
 
-<<<<<<< HEAD
-=======
+
     /**
      * 添加文档
      */
@@ -79,11 +78,15 @@ public class PaperController {
         return commonResult;
     }
 
-    
->>>>>>> b43ff6c8c35e6d1dd71d0c8f8dab06f9268286ee
+
+
     @RequestMapping("/paper/get/{id}")
     public CommonResult getPaperById(@PathVariable("id") Long id) throws IOException {
         Paper paper = paperService.search(id);
+        List<String> authors=java.util.Arrays.asList(paper.getAuthor());
+        paper.setAuthorShow(String.join(", ",authors));
+        List<String> keyWords=java.util.Arrays.asList(paper.getKeyWord());
+        paper.setKeyWordShow(String.join(", ",keyWords));
         return new CommonResult(200,"success",paper);
     }
 
