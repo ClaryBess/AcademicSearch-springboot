@@ -72,18 +72,14 @@ public class CollectionController {
     //添加收藏
     @ResponseBody
     @RequestMapping("/collect")
-    public CommonResult Collect(@RequestParam("Did") Integer Did,@RequestParam("paper") long paper){
-        User user = (User) SecurityUtils.getSubject().getPrincipal();
-        Integer Uid = user.getId();
+    public CommonResult Collect(@RequestParam("Did") Integer Did,@RequestParam("paper") long paper,@RequestParam("user")Integer Uid){
         return new CommonResult(200,"收藏成功",collectionService.insertCollection(Did,paper,Uid));
     }
 
     //在文献页面取消收藏
     @ResponseBody
     @RequestMapping("/collection/cancelinpaper")
-    public CommonResult DeleteCollectionInPaper(@RequestParam("paper") long paper){
-        User user = (User) SecurityUtils.getSubject().getPrincipal();
-        Integer Uid = user.getId();
+    public CommonResult DeleteCollectionInPaper(@RequestParam("paper") long paper,@RequestParam("user")Integer Uid){
         return new CommonResult(200,"取消收藏成功",collectionService.DeleteCollectionInPaper(Uid,paper));
     }
 
