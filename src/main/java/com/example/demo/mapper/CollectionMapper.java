@@ -15,7 +15,7 @@ public interface CollectionMapper {
 
     //在一个收藏夹里添加一个新的收藏
     @Insert("insert into Collection values(#{directory},#{paper},DEFAULT,#{user})")
-    public int insertCollection(Integer direction, long paper, Integer user);
+    public int insertCollection(Integer directory, long paper, Integer user);
 
     //删除一个收藏
     @Delete("delete from Collection where id=#{id}")
@@ -30,7 +30,7 @@ public interface CollectionMapper {
     public Collection CheckCollectionStatus(long paper, Integer user);
 
     //直接在文献界面取消收藏
-    @Delete("delete from Follow where paper=#{paper} and user=#{user}")
+    @Delete("delete from Collection where paper=#{paper} and user=#{user}")
     public int deleteCollectionInPaper(long paper, Integer user);
 
 }

@@ -1,15 +1,14 @@
 package com.example.demo.controller;
 
+import com.example.demo.DTO.CommentItem;
 import com.example.demo.bean.*;
 import com.example.demo.service.*;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.image.Kernel;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -81,10 +80,14 @@ public class PaperController {
     @RequestMapping("/paper/get/{id}")
     public CommonResult getPaperById(@PathVariable("id") Long id) throws IOException {
         Paper paper = paperService.search(id);
-        List<String> authors=java.util.Arrays.asList(paper.getAuthor());
-        paper.setAuthorShow(String.join(", ",authors));
-        List<String> keyWords=java.util.Arrays.asList(paper.getKeyWord());
-        paper.setKeyWordShow(String.join(", ",keyWords));
+        if(paper.getAuthor()!=null){
+            List<String> authors=java.util.Arrays.asList(paper.getAuthor());
+            paper.setAuthorShow(String.join(", ",authors));
+        }
+        if(paper.getKeyWord()!=null){
+            List<String> keyWords=java.util.Arrays.asList(paper.getKeyWord());
+            paper.setKeyWordShow(String.join(", ",keyWords));
+        }
         return new CommonResult(200,"success",paper);
     }
 

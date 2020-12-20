@@ -1,8 +1,6 @@
 package com.example.demo.controller;
 
 
-import com.example.demo.DTO.CommentDTO;
-import com.example.demo.bean.CommentItem;
 import com.example.demo.bean.Comments;
 import com.example.demo.bean.CommonResult;
 import com.example.demo.bean.User;
@@ -12,9 +10,6 @@ import com.example.demo.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @RestController
 public class CommentController {
@@ -37,12 +32,10 @@ public class CommentController {
      */
     @ResponseBody
     @PostMapping(value = "/comment")
-    public CommonResult Comment(@RequestParam Long paperId,
-                          @RequestParam String content) {
-        //获得当前登录用户
-        User user = (User) SecurityUtils.getSubject().getPrincipal();
-        //User user=userService.getUserById(5);
-        if(user==null) return new CommonResult(400,"please login first",null);
+    public CommonResult Comment(@RequestParam("paper") Long paperId, @RequestParam("content") String content, @RequestParam("user") Integer id) {
+        User user=userService.getUserById(id);
+        if(user==null)
+            return new CommonResult(400,"please login first",null);
         Comments comments=commentService.insertComments(paperId,content, user);
         return new CommonResult(200,null,comments);
     }

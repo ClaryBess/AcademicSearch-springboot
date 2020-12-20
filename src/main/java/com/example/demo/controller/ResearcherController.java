@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.DTO.RelationData;
 import com.example.demo.bean.*;
 import com.example.demo.service.PaperService;
 import com.example.demo.service.ResearcherService;
@@ -7,8 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @RestController
 public class ResearcherController {
@@ -49,16 +49,25 @@ public class ResearcherController {
 
     @RequestMapping("/researcher/relation/{researcherId}")
     public CommonResult getRelationByResearcher(@PathVariable("researcherId") Long researcherId) throws IOException{
-        List<Paper> papers = paperService.searchByAuthorId(researcherId);
-        List<User> users = new ArrayList<>();
-        for(Paper paper : papers){
-            String[] names = paper.getAuthor();
-            for(String name : names){
-                User user = researcherService.getResearcherByName(name);
-                users.add(user);
+        List<Researcher> researchers = new ArrayList<>();
+        List<Edge> edges = new ArrayList<Edge>();
+        Researcher researcher = researcherService.searchById(researcherId);
+        researchers.add(researcher);
+        String source = researcher.getName();
+        if(source != null){
+            List<Paper> papers = paperService.searchByAuthorName(source);
+            for(Paper paper : papers){
+                String[] authors = paper.getAuthor();
+                for(String target : authors){
+                    if(!target.equals(source)){
+                        researchers.addAll(researcherService.searchResearcherByName(target));
+                        edges.add(new Edge(source,target,"合作"));
+                    }
+                }
             }
         }
-        return new CommonResult(200,"success",users);
+        RelationData relationData = new RelationData("学者关系",researchers,edges);
+        return new CommonResult(200,"success",relationData);
     }
 
     @RequestMapping("/researcher/allRelation")
@@ -81,4 +90,6 @@ public class ResearcherController {
         RelationData relationData = new RelationData("学者关系",researchers,edges);
         return new CommonResult(200,"success",relationData);
     }
+
+
 }
