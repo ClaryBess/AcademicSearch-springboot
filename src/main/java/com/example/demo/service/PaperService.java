@@ -194,6 +194,30 @@ public class PaperService {
         return paperList;
     }
 
+<<<<<<< HEAD
+=======
+ //热门领域
+    public List<String> HotField() throws IOException {
+        List<String> hotFiled=new ArrayList<>();
+        SearchRequest searchRequest = new SearchRequest("paper");
+        List<Paper> paperList=searchALLPaper();
+        //排序
+        Collections.sort(paperList);
+        for(int i=0;i<30&&i<paperList.size();i++){
+            String filed=paperList.get(i).getField();
+            int exist=0;
+            for(String s:hotFiled){
+                if(s.equals(filed)){
+                    exist=1;
+                    break;
+                }
+            }
+            if(exist==0) hotFiled.add(filed);
+        }
+        return hotFiled;
+    }
+
+>>>>>>> 6284dce75029f15b7ce2c9946e8f9498fcae5247
     //查询paper所有项目
     public List<Paper> searchALLPaper() throws IOException {
         List<Paper> paperList = new ArrayList<>();
