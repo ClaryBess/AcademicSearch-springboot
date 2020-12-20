@@ -26,17 +26,15 @@ public class CommentController {
 
     /**
      * 进行评论
-     * @param paperId
-     * @param content
      * @return
      */
     @ResponseBody
     @PostMapping(value = "/comment")
-    public CommonResult Comment(@RequestParam("paper") Long paperId, @RequestParam("content") String content, @RequestParam("user") Integer id) {
-        User user=userService.getUserById(id);
+    public CommonResult Comment(@RequestBody Comments comment) {
+        User user=userService.getUserById(comment.getCommentator());
         if(user==null)
             return new CommonResult(400,"please login first",null);
-        Comments comments=commentService.insertComments(paperId,content, user);
+        Comments comments=commentService.insertComments(comment.getPaperId(),comment.getContent(), user);
         return new CommonResult(200,null,comments);
     }
 
