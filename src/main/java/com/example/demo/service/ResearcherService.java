@@ -21,6 +21,9 @@ import java.util.List;
 @Service
 public class ResearcherService {
 
+    @Autowired
+    ResearcherMapper researcherMapper;
+
     @Qualifier("elasticsearchClient")
     @Autowired
     RestHighLevelClient client = new RestHighLevelClient(
@@ -31,6 +34,35 @@ public class ResearcherService {
         GetRequest getRequest = new GetRequest("researcher", String.valueOf(id));
         GetResponse response = client.get(getRequest, RequestOptions.DEFAULT);
         String sourceAsString = response.getSourceAsString();
-        return JSON.parseObject(sourceAsString, Researcher.class);
+        Researcher researcher = JSON.parseObject(sourceAsString, Researcher.class);
+
+        Researcher researcher1 = researcherMapper.getResearcherById(id);
+        if(researcher1 != null){
+            researcher.setEmail(researcher1.getEmail());
+            researcher.setPwd(researcher1.getPwd());
+            researcher.setRole(2);
+            researcher.setTrueName(researcher1.getTrueName());
+            researcher.setAvatar(researcher1.getAvatar());
+        }
+
+        return researcher;
     }
+
+    public List<String> getFieldByResearcher(long id) throws IOException {
+        GetRequest getRequest = new GetRequest("researcher", String.valueOf(id));
+        GetResponse response = client.get(getRequest, RequestOptions.DEFAULT);
+        String sourceAsString = response.getSourceAsString();
+        Researcher researcher = JSON.parseObject(sourceAsString, Researcher.class);
+        List<String> field = new ArrayList<String>();
+        if(researcher != null){
+            field = researcher.getField();
+            return field;
+        }
+        return null;
+    }
+
+    public Researcher getResearcherByName(String name){
+        return researcherMapper.getResearcherByName(name);
+    }
+
 }

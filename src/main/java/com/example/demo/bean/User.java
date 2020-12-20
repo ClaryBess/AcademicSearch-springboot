@@ -12,14 +12,12 @@ public class User {
     String info;
     Integer role;   //0为管理员，1为普通用户，2为学者
     String avatar;
-    private String field1;
-    private String field2;
-    private String field3;
+    Integer researcherId; //对应ES中的学者ID
 
-    public User(Integer id, String name,String trueName, String organization, String email, Integer paperCount, Integer index, String pwd, String info, Integer role, String avatar) {
+    public User(Integer id, String name, String trueName, String organization, String email, Integer paperCount, Integer index, String pwd, String info, Integer role, String avatar, Integer researcherId) {
         this.id = id;
         this.name = name;
-        this.trueName=trueName;
+        this.trueName = trueName;
         this.organization = organization;
         this.email = email;
         this.paperCount = paperCount;
@@ -28,6 +26,7 @@ public class User {
         this.info = info;
         this.role = role;
         this.avatar = avatar;
+        this.researcherId = researcherId;
     }
 
     public User() {
@@ -117,27 +116,11 @@ public class User {
 
     public void setAvatar(String avatar) { this.avatar = avatar; }
 
-    public String getField1() {
-        return field1;
+    public Integer getResearcherId() {
+        return researcherId;
     }
 
-    public void setField1(String field1) {
-        this.field1 = field1;
-    }
-
-    public String getField2() {
-        return field2;
-    }
-
-    public void setField2(String field2) {
-        this.field2 = field2;
-    }
-
-    public String getField3() {
-        return field3;
-    }
-
-    public void setField3(String field3) {
-        this.field3 = field3;
+    public void setResearcherId(Integer researcherId) {
+        this.researcherId = researcherId;
     }
 }
