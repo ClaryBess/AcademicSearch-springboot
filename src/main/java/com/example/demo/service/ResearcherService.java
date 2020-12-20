@@ -1,56 +1,36 @@
 package com.example.demo.service;
 
+import com.alibaba.fastjson.JSON;
+import com.example.demo.bean.Paper;
 import com.example.demo.bean.Researcher;
 import com.example.demo.mapper.ResearcherMapper;
+import org.apache.http.HttpHost;
+import org.elasticsearch.action.get.GetRequest;
+import org.elasticsearch.action.get.GetResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestClient;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ResearcherService {
 
+    @Qualifier("elasticsearchClient")
     @Autowired
-    ResearcherMapper researcherMapper;
+    RestHighLevelClient client = new RestHighLevelClient(
+            RestClient.builder(
+                    new HttpHost("10.251.253.212", 9200, "http")));
 
-    public Researcher insertResearcher(Researcher researcher){
-        Researcher researcher1 = researcherMapper.getResearcherByName(researcher.getName());
-        Researcher researcher2 = researcherMapper.getResearcherByEmail(researcher.getEmail());
-        if(researcher1==null && researcher2==null){
-            researcherMapper.insertResearcher(researcher);
-            return researcherMapper.getResearcherById(researcher.getId());
-        }
-        else
-            return null;
+    public Researcher searchById(long id) throws IOException {
+        GetRequest getRequest = new GetRequest("researcher", String.valueOf(id));
+        GetResponse response = client.get(getRequest, RequestOptions.DEFAULT);
+        String sourceAsString = response.getSourceAsString();
+        return JSON.parseObject(sourceAsString, Researcher.class);
     }
-
-    public Researcher getResearcherById(long id){
-        Researcher researcher = researcherMapper.getResearcherById(id);
-        return researcher;
-    }
-
-    public List<Researcher> getResearcherByKeyword(String keyword){
-        return researcherMapper.getResearcherByKeyword(keyword);
-    }
-
-    public Researcher getResearcherByName(String name){
-        return researcherMapper.getResearcherByName(name);
-    }
-
-    public List<String> getFieldById(long id){
-        Researcher researcher = researcherMapper.getResearcherById(id);
-        List<String> fields = new ArrayList<String>();
-        if(researcher.getField1() != null){
-            fields.add(researcher.getField1());
-        }
-        if(researcher.getField2() != null){
-            fields.add(researcher.getField2());
-        }
-        if(researcher.getField3() != null){
-            fields.add(researcher.getField3());
-        }
-        return fields;
-    }
-
 }

@@ -1,23 +1,23 @@
 package com.example.demo.bean;
 
 public class Edge {
-    private Integer source;
-    private Integer target;
+    private String source;
+    private String target;
     private String value;
 
-    public Integer getSource() {
+    public String getSource() {
         return source;
     }
 
-    public void setSource(Integer source) {
+    public void setSource(String source) {
         this.source = source;
     }
 
-    public Integer getTarget() {
+    public String getTarget() {
         return target;
     }
 
-    public void setTarget(Integer target) {
+    public void setTarget(String target) {
         this.target = target;
     }
 
@@ -29,7 +29,7 @@ public class Edge {
         this.value = value;
     }
 
-    public Edge(Integer source, Integer target, String value) {
+    public Edge(String source, String target, String value) {
         this.source = source;
         this.target = target;
         this.value = value;
