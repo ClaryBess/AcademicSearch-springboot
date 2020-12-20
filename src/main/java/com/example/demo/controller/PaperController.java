@@ -54,8 +54,6 @@ public class PaperController {
         }
     }
 
-<<<<<<< HEAD
-=======
     /**
      * 添加文档
      */
@@ -78,9 +76,7 @@ public class PaperController {
         CommonResult commonResult=new CommonResult(200, null, paper);
         return commonResult;
     }
-
     
->>>>>>> b43ff6c8c35e6d1dd71d0c8f8dab06f9268286ee
     @RequestMapping("/paper/get/{id}")
     public CommonResult getPaperById(@PathVariable("id") Long id) throws IOException {
         Paper paper = paperService.search(id);
