@@ -30,7 +30,7 @@ public interface CollectionMapper {
     public Collection CheckCollectionStatus(long paper, Integer user);
 
     //直接在文献界面取消收藏
-    @Delete("delete from Follow where paper=#{paper} and user=#{user}")
+    @Delete("delete from Collection where paper=#{paper} and user=#{user}")
     public int deleteCollectionInPaper(long paper, Integer user);
 
 }
