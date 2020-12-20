@@ -110,8 +110,7 @@ public class CollectionController {
     @PostMapping("/getCollection")
     public CommonResult getCollection(@RequestParam("id") Long id){
         String name=(String) SecurityUtils.getSubject().getPrincipal();
-        User user1=userService.getUserByName(name);
-        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        User user=userService.getUserByName(name);
         Integer Uid = user.getId();
         List<Directory> directories=directoryService.ShowDirByUser(Uid);
         List<Pair<Integer,String>> pairs=new ArrayList<>();
