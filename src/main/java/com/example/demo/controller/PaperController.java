@@ -53,7 +53,7 @@ public class PaperController {
             return new CommonResult(400,"error",null);
         }
     }
-    
+
     @RequestMapping("/paper/get/{id}")
     public CommonResult getPaperById(@PathVariable("id") Long id) throws IOException {
         Paper paper = paperService.search(id);
