@@ -40,4 +40,10 @@ public class Researcher extends User{
         this.field = field;
         this.pubs = pubs;
     }
+
+    public Researcher(Integer citation, List<String> field, List<String> pubs) {
+        this.citation = citation;
+        this.field = field;
+        this.pubs = pubs;
+    }
 }

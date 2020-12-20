@@ -1,6 +1,7 @@
 package com.example.demo.mapper;
 
 import com.example.demo.bean.Researcher;
+import com.example.demo.bean.User;
 import org.apache.ibatis.annotations.*;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
@@ -13,19 +14,19 @@ public interface ResearcherMapper {
     public List<Researcher> getAllResearcher();
 
     @Select("select * from User where researcherId=#{researcherId} and role=2")
-    public Researcher getResearcherById(Long researcherId);
+    public User getResearcherById(Long researcherId);
 
     @Select("select * from User where name=#{name} and role=2")
-    public Researcher getResearcherByName(String name);
+    public User getResearcherByName(String name);
 
     @Select("select * from User where email=#{email} and role=2")
-    public Researcher getResearcherByEmail(String email);
+    public User getResearcherByEmail(String email);
 
     @Select("select * from User where organization=#{organization} and role=2")
-    public List<Researcher> getResearcherByOrganization(String organization);
+    public List<User> getResearcherByOrganization(String organization);
 
     @Select("select * from User where name=%#{keyword}% and role=2")
-    public List<Researcher> getResearcherByKeyword(String keyword);
+    public List<User> getResearcherByKeyword(String keyword);
 
     @Options(useGeneratedKeys = true,keyProperty = "id")
     @Insert("insert into User(name,organization,paperCount,index,email,pwd,info,role) values(#{name},#{organization},#{paperCount},#{index},#{email},#{pwd},#{info},2)")

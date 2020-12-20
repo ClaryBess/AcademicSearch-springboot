@@ -3,13 +3,11 @@ package com.example.demo.controller;
 import com.example.demo.bean.CommonResult;
 import com.example.demo.bean.Paper;
 import com.example.demo.bean.Researcher;
+import com.example.demo.bean.User;
 import com.example.demo.service.PaperService;
 import com.example.demo.service.ResearcherService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,23 +44,24 @@ public class ResearcherController {
             return new CommonResult(400,"researcher not exist",null);
     }
 
-    @RequestMapping("/researcher/paper/{researcherId}")
-    public CommonResult getPapersByResearcher(@PathVariable("researcherId") Long researcherId) throws IOException{
-        List<Paper> papers = paperService.searchByAuthorId(researcherId);
+    @RequestMapping("/researcher/paper")
+    public CommonResult getPapersByResearcherName(@RequestParam("AuthorName") String AuthorName) throws IOException{
+        List<Paper> papers = paperService.searchByAuthorName(AuthorName);
         return new CommonResult(200,"success",papers);
     }
 
     @RequestMapping("/researcher/relation/{researcherId}")
     public CommonResult getRelationByResearcher(@PathVariable("researcherId") Long researcherId) throws IOException{
         List<Paper> papers = paperService.searchByAuthorId(researcherId);
-        List<Researcher> researchers= new ArrayList<>();
+        List<User> users = new ArrayList<>();
         for(Paper paper : papers){
             String[] names = paper.getAuthor();
             for(String name : names){
-                Researcher researcher = researcherService.getResearcherByName(name);
-                researchers.add(researcher);
+                User user = researcherService.getResearcherByName(name);
+                users.add(user);
             }
         }
-        return new CommonResult(200,"success",researchers);
+        return new CommonResult(200,"success",users);
     }
+
 }

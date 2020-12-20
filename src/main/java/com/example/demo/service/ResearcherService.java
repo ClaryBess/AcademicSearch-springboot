@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.alibaba.fastjson.JSON;
 import com.example.demo.bean.Paper;
 import com.example.demo.bean.Researcher;
+import com.example.demo.bean.User;
 import com.example.demo.mapper.ResearcherMapper;
 import org.apache.http.HttpHost;
 import org.elasticsearch.action.get.GetRequest;
@@ -36,13 +37,13 @@ public class ResearcherService {
         String sourceAsString = response.getSourceAsString();
         Researcher researcher = JSON.parseObject(sourceAsString, Researcher.class);
 
-        Researcher researcher1 = researcherMapper.getResearcherById(id);
-        if(researcher1 != null){
-            researcher.setEmail(researcher1.getEmail());
-            researcher.setPwd(researcher1.getPwd());
+        User user = researcherMapper.getResearcherById(id);
+        if(user != null){
+            researcher.setEmail(user.getEmail());
+            researcher.setPwd(user.getPwd());
             researcher.setRole(2);
-            researcher.setTrueName(researcher1.getTrueName());
-            researcher.setAvatar(researcher1.getAvatar());
+            researcher.setTrueName(user.getTrueName());
+            researcher.setAvatar(user.getAvatar());
         }
 
         return researcher;
@@ -61,7 +62,7 @@ public class ResearcherService {
         return null;
     }
 
-    public Researcher getResearcherByName(String name){
+    public User getResearcherByName(String name){
         return researcherMapper.getResearcherByName(name);
     }
 

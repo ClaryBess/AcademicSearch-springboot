@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.example.demo.DTO.HotDTO;
 import com.example.demo.bean.Paper;
 import com.example.demo.bean.Researcher;
+import com.example.demo.bean.User;
 import com.example.demo.mapper.PaperMapper;
 import com.example.demo.mapper.ResearcherMapper;
 import org.apache.http.HttpHost;
@@ -93,8 +94,8 @@ public class PaperService {
 
     //按作者id查询
     public List<Paper> searchByAuthorId(long AuthorId) throws IOException {
-        Researcher researcher = researcherMapper.getResearcherById(AuthorId);
-        String Author=researcher.getName();
+        User user = researcherMapper.getResearcherById(AuthorId);
+        String Author = user.getName();
         return searchByAuthorName(Author);
     }
 
@@ -103,7 +104,7 @@ public class PaperService {
         List<Paper> paperList = new ArrayList<>();
         SearchRequest searchRequest = new SearchRequest("paper");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        QueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("Author",name);
+        QueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("author",name);
         searchSourceBuilder.query(matchQueryBuilder);
         searchRequest.source(searchSourceBuilder);
         SearchResponse searchResponse = client.search(searchRequest,RequestOptions.DEFAULT);
