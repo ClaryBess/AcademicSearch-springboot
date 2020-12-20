@@ -193,4 +193,44 @@ public class PaperService {
         }
         return paperList;
     }
+
+ //热门领域
+    public List<String> HotField() throws IOException {
+        List<String> hotFiled=new ArrayList<>();
+        SearchRequest searchRequest = new SearchRequest("paper");
+        List<Paper> paperList=searchALLPaper();
+        //排序
+        Collections.sort(paperList);
+        for(int i=0;i<30&&i<paperList.size();i++){
+            String filed=paperList.get(i).getField();
+            int exist=0;
+            for(String s:hotFiled){
+                if(s.equals(filed)){
+                    exist=1;
+                    break;
+                }
+            }
+            if(exist==0) hotFiled.add(filed);
+        }
+        return hotFiled;
+    }
+
+    //查询paper所有项目
+    public List<Paper> searchALLPaper() throws IOException {
+        List<Paper> paperList = new ArrayList<>();
+        SearchRequest searchRequest = new SearchRequest("paper");
+
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+
+        searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+        searchRequest.source(searchSourceBuilder);
+        SearchResponse searchResponse = client.search(searchRequest,RequestOptions.DEFAULT);
+        SearchHits hits = searchResponse.getHits();
+        for (SearchHit hit : hits) {
+            String sourceAsString = hit.getSourceAsString();
+            Paper paper=JSON.parseObject(sourceAsString, Paper.class);
+            paperList.add(paper);
+        }
+        return paperList;
+    }
 }
