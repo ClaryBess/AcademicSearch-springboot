@@ -33,7 +33,7 @@ public class SearchController {
     // 按姓名搜索学者
     @RequestMapping("/search/researcher/{keyword}")
     public CommonResult searchResearcherByName(@PathVariable("keyword") String keyword) throws IOException {
-        return new CommonResult(200, "success", ResearcherService.getResearcherByKeyword(keyword));
+        return new CommonResult(200, "success", researcherService.getResearcherByKeyword(keyword));
     }
 
     // 按时间搜索论文
