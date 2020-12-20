@@ -21,12 +21,18 @@ public class Paper implements Comparable<Paper> {
     private String Abstract;  //摘要
 
 
-    public Paper(){
-
-    }
-
     public Paper(Long id, String title, Integer citation, Integer year, String field, String[] author, String[] keyWord, String url, String anAbstract) {
         this.id = id;
+        this.title = title;
+        this.citation = citation;
+        this.year = year;
+        this.field = field;
+        Author = author;
+        this.keyWord = keyWord;
+        this.url = url;
+        Abstract = anAbstract;
+    }
+    public Paper(String title, Integer citation, Integer year, String field, String[] author, String[] keyWord, String url, String anAbstract) {
         this.title = title;
         this.citation = citation;
         this.year = year;

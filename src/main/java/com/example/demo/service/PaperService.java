@@ -38,17 +38,19 @@ import java.util.*;
 public class PaperService {
     @Qualifier("elasticsearchClient")
     @Autowired
+
     RestHighLevelClient client = new RestHighLevelClient(
             RestClient.builder(
             new HttpHost("10.251.253.212", 9200, "http")));
 
+    @Autowired
     PaperMapper paperMapper;
 
+    @Autowired
     ResearcherMapper researcherMapper;
 
-    public void save(Paper paper) {
-        paperMapper.save(paper);
-    }
+    public void save(Paper paper) { paperMapper.save(paper);}
+
 
     public void delete(long id) {
         paperMapper.deleteById(id);
