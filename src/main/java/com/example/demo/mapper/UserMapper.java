@@ -47,4 +47,12 @@ public interface UserMapper {
     //更新头像
     @Update("update User set avatar=#{avatar} where id=#{id}")
     public int updateAvatar(User user);
+
+    //更新权限
+    @Update("update User set role=#{role} where id=#{id}")
+    public int updateRole(User user);
+
+    //更新学者id
+    @Update("update User set researcherId=#{researcherId} where id=#{id}")
+    public int updateResearcherId(User user);
 }

@@ -66,4 +66,14 @@ public class UserService {
     public int updateAvatar(User user){
         return userMapper.updateAvatar(user);
     }
+
+    //将用户设置为学者
+    public int setResearcher(User user){
+        user.setRole(2);
+        return userMapper.updateRole(user);
+    }
+
+    public int updateResearcherId(User user){
+        return userMapper.updateResearcherId(user);
+    }
 }
