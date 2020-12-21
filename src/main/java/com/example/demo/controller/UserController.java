@@ -134,8 +134,8 @@ public class UserController {
     }
 
     @PostMapping("/user/getUser")
-    public User getUser(){
-        User user = (User) SecurityUtils.getSubject().getPrincipal(); // 获取当前登录用户
+    public User getUser(@RequestParam("id")Integer id){
+        User user = userService.getUserById(id);
         return user;
     }
 
