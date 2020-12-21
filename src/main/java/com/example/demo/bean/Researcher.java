@@ -36,11 +36,11 @@ public class Researcher extends User{
         this.pubs = pubs;
     }
 
-    public Researcher(Integer userid, String name, String trueName, String organization, String email, Integer paperCount, Integer index, String pwd, String info, Integer role, String avatar, Long id, Integer citation, List<String> pubs, List<String> field) {
-        super(userid, name, trueName, organization, email, paperCount, index, pwd, info, role, avatar, id);
+    public Researcher(Integer id, String name, String trueName, String organization, String email, Integer paperCount, Integer index, String pwd, String info, Integer role, String avatar, Long researcherId, Integer citation, List<String> field, List<String> pubs) {
+        super(id, name, trueName, organization, email, paperCount, index, pwd, info, role, avatar, researcherId);
         this.citation = citation;
-        this.pubs = pubs;
         this.field = field;
+        this.pubs = pubs;
     }
 
     public Researcher(Integer citation, List<String> field, List<String> pubs) {
@@ -48,5 +48,4 @@ public class Researcher extends User{
         this.field = field;
         this.pubs = pubs;
     }
-
 }

@@ -31,7 +31,7 @@ public class CommentsService {
         Comments comment = new Comments();
         comment.setContent(content);
         comment.setPaperId(paperId);
-        comment.setCommentator(user.getUserid());
+        comment.setCommentator(user.getId());
         comment.setCommentatorName(user.getName());
         comment.setCommentTime(new Timestamp(new Date().getTime()));
         commentsMapper.insertComments(comment);

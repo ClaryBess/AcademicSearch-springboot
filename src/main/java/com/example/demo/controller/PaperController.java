@@ -158,7 +158,7 @@ public class PaperController {
             Researcher researcher= r.get(0);
             PaperAuthorDTO paperAuthorDTO=new PaperAuthorDTO();
             if (researcher == null) return new CommonResult(400, "The researcher does not exist!", null);
-            paperAuthorDTO.setId(researcher.getId());
+            paperAuthorDTO.setId( researcher.getResearcherId());
             String field=String.join(", ",researcher.getField());
             paperAuthorDTO.setField(field);
             paperAuthorDTO.setName(researcher.getName());
@@ -178,7 +178,7 @@ public class PaperController {
     @RequestMapping(value = "/paper/delete/{id}", method = RequestMethod.GET)
     public CommonResult CommentDelete(@PathVariable("id") Long paperId) throws IOException {
         Paper paper=paperService.search(paperId);
-        if(paper==null) return new CommonResult(400,"this paper not exist",null);
+        if(paper==null) return new CommonResult(200,null,paper);
         paperService.delete(paperId);
         return new CommonResult(200,null,null);
     }
