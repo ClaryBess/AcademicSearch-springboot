@@ -158,7 +158,7 @@ public class PaperController {
             Researcher researcher= r.get(0);
             PaperAuthorDTO paperAuthorDTO=new PaperAuthorDTO();
             if (researcher == null) return new CommonResult(400, "The researcher does not exist!", null);
-            paperAuthorDTO.setId( researcher.getResearcherId());
+            paperAuthorDTO.setId(researcher.getId());
             String field=String.join(", ",researcher.getField());
             paperAuthorDTO.setField(field);
             paperAuthorDTO.setName(researcher.getName());

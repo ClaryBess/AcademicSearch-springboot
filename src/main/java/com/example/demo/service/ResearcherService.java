@@ -57,7 +57,6 @@ public class ResearcherService {
         if(user != null){
             researcher.setEmail(user.getEmail());
             researcher.setPwd(user.getPwd());
-            researcher.setRole(2);
             researcher.setTrueName(user.getTrueName());
             researcher.setAvatar(user.getAvatar());
         }

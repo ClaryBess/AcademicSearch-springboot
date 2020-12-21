@@ -1,15 +1,28 @@
 package com.example.demo.bean;
 
+import lombok.Data;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import java.util.List;
 
+@Data
 @Document(indexName = "researcher")
-public class Researcher extends User{
+public class Researcher{
+    private Long id;
+    private String name;
+    private Integer index;
+    private String organization;
+    private Integer paperCount;
     private Integer citation;
-
+    private String info;
     private List<String> pubs;
     private List<String> field;
+    private String trueName;
+    private String email;
+    private String pwd;
+    private String avatar;
+
+
 
 
     public Integer getCitation() {
@@ -36,11 +49,18 @@ public class Researcher extends User{
         this.pubs = pubs;
     }
 
-    public Researcher(Integer id, String name, String trueName, String organization, String email, Integer paperCount, Integer index, String pwd, String info, Integer role, String avatar, Long researcherId, Integer citation, List<String> field, List<String> pubs) {
-        super(id, name, trueName, organization, email, paperCount, index, pwd, info, role, avatar, researcherId);
+
+
+    public Researcher(Long id, String name, Integer index, String organization, Integer paperCount, Integer citation, String info, List<String> pubs, List<String> field) {
+        this.id = id;
+        this.name = name;
+        this.index = index;
+        this.organization = organization;
+        this.paperCount = paperCount;
         this.citation = citation;
-        this.field = field;
+        this.info = info;
         this.pubs = pubs;
+        this.field = field;
     }
 
     public Researcher(Integer citation, List<String> field, List<String> pubs) {
