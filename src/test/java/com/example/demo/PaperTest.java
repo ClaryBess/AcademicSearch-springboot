@@ -24,16 +24,16 @@ public class PaperTest {
 
     @Test
     public void SaveTest() throws Exception{
-        String[] Author={"Author1","Author2"};
-        String[] Keyword={"keyword1","Test1"};
-        Paper paper=new Paper(17L,"title",13,2000,"field",Author,Keyword,"url","Abstract");
+        String[] author={"Author1","Author2"};
+        String[] keywords={"keyword1","Test1"};
+        Paper paper=new Paper(18L,"title",13,2000,author,keywords,"url","Abstract");
         paperService.save(paper);
         System.out.println(paper);
     }
 
     @Test
     public void DeleteTest() throws Exception{
-        long id=5L;
+        long id=17L;
         paperService.delete(id);
     }
 
@@ -42,7 +42,7 @@ public class PaperTest {
         long id=1L;
         String[] Author={"Author1","Author2"};
         //Paper paper=new Paper(null,"titleupdate","Abstractupdate",null,null,null,"fieldupdate",12,null);
-        Paper paper=new Paper(null,null,null,null,null,null,null,null,null);
+        Paper paper=new Paper((Long) null,null,null,null,null,null,null,null);
 
         paperService.update(id,paper);
     }
@@ -57,6 +57,13 @@ public class PaperTest {
     public void SearchByAuthorTest() throws Exception{
         int userId=1;
         List<Paper> pp= paperService.searchByAuthorId(userId);
+        System.out.println(pp);
+    }
+
+    @Test
+    public void SearchByFiledTest() throws Exception{
+        String filed="keyword";
+        List<Paper> pp= paperService.getPaperByField(filed);
         System.out.println(pp);
     }
 
@@ -82,7 +89,8 @@ public class PaperTest {
         List<HotDTO> pp= paperService.OrderByCitation();
         System.out.println(pp);
     }
-    
+
+
     @Test
     public void ALLPaper() throws Exception{
         List<Paper> pp= paperService.searchALLPaper();
