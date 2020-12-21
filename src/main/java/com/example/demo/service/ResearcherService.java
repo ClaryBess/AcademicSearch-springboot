@@ -5,6 +5,7 @@ import com.example.demo.DTO.PaperAuthorDTO;
 import com.example.demo.bean.Paper;
 import com.example.demo.bean.Researcher;
 import com.example.demo.bean.User;
+import com.example.demo.mapper.EsResearcherMapper;
 import com.example.demo.mapper.ResearcherMapper;
 import org.apache.http.HttpHost;
 import org.elasticsearch.action.get.GetRequest;
@@ -32,12 +33,19 @@ public class ResearcherService {
 
     @Autowired
     ResearcherMapper researcherMapper;
+    @Autowired
+    EsResearcherMapper esresearcherMapper;
+
 
     @Qualifier("elasticsearchClient")
     @Autowired
     RestHighLevelClient client = new RestHighLevelClient(
             RestClient.builder(
                     new HttpHost("10.251.253.212", 9200, "http")));
+
+
+
+    public void save(Researcher researcher) { esresearcherMapper.save(researcher);}
 
     public Researcher searchById(long id) throws IOException {
         GetRequest getRequest = new GetRequest("researcher", String.valueOf(id));
@@ -103,6 +111,7 @@ public class ResearcherService {
         SearchHits hits = searchResponse.getHits();
         for (SearchHit hit : hits) {
             String sourceAsString = hit.getSourceAsString();
+            System.out.println(sourceAsString);
             researchers.add(JSON.parseObject(sourceAsString,Researcher.class));
         }
         return researchers;
