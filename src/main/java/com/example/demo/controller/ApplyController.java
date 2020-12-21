@@ -67,13 +67,13 @@ public class ApplyController {
     @ResponseBody
     @RequestMapping("/apply/waiting/show")
     public CommonResult ShowWaiting(){
-        return new CommonResult(200,"已同意的申请",applyService.ShowAccept());
+        return new CommonResult(200,"未处理的申请",applyService.ShowAccept());
     }
 
     //展示同意的申请
     @ResponseBody
     @RequestMapping("/apply/accept/show")
     public CommonResult ShowAccept(){
-        return new CommonResult(200,"未处理的申请",applyService.ShowWaiting());
+        return new CommonResult(200,"已通过的申请",applyService.ShowWaiting());
     }
 }
