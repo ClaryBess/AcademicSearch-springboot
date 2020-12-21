@@ -5,6 +5,7 @@ import com.example.demo.DTO.PaperAuthorDTO;
 import com.example.demo.bean.*;
 import com.example.demo.service.*;
 
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -149,7 +150,12 @@ public class PaperController {
                           HttpServletRequest request,
                           HttpServletResponse response) {
         try {
-            Researcher researcher= researcherService.searchByAuthorid(id);
+            Paper paper=paperService.search(id);
+            String name=paper.getAuthor()[0];
+            List<Researcher> r=researcherService.searchResearcherByName(name);
+            if(r.size()==0) return new CommonResult(400, "this author not exist", name);
+            //用第一个
+            Researcher researcher= r.get(0);
             PaperAuthorDTO paperAuthorDTO=new PaperAuthorDTO();
             if (researcher == null) return new CommonResult(400, "The researcher does not exist!", null);
             paperAuthorDTO.setId(researcher.getId());
@@ -162,6 +168,19 @@ public class PaperController {
         } catch (IOException e) {
             return new CommonResult(400,"error",null);
         }
+    }
+    /**
+     * 删除论文
+     * @return
+     */
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/paper/delete/{id}", method = RequestMethod.GET)
+    public CommonResult CommentDelete(@PathVariable("id") Long paperId) throws IOException {
+        Paper paper=paperService.search(paperId);
+        if(paper==null) return new CommonResult(400,"this paper not exist",null);
+        paperService.delete(paperId);
+        return new CommonResult(200,null,null);
     }
 
 
