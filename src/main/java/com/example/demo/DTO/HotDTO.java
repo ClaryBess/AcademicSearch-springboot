@@ -25,4 +25,5 @@ public class HotDTO implements Comparable<HotDTO> {
         return o.getHeat()-this.heat; //升序
         //return o.id-this.id;  降序
     }
+
 }

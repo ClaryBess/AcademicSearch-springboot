@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.alibaba.fastjson.JSON;
+import com.example.demo.DTO.PaperAuthorDTO;
 import com.example.demo.bean.Paper;
 import com.example.demo.bean.Researcher;
 import com.example.demo.bean.User;
@@ -105,5 +106,13 @@ public class ResearcherService {
             researchers.add(JSON.parseObject(sourceAsString,Researcher.class));
         }
         return researchers;
+    }
+
+    public Researcher searchByAuthorid(Long id) throws IOException {
+        GetRequest getRequest = new GetRequest("researcher", String.valueOf(id));
+        GetResponse response = client.get(getRequest, RequestOptions.DEFAULT);
+        String sourceAsString = response.getSourceAsString();
+        Researcher researcher = JSON.parseObject(sourceAsString, Researcher.class);
+        return researcher;
     }
 }

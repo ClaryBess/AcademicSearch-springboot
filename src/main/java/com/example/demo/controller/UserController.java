@@ -144,7 +144,7 @@ public class UserController {
         userService.updateTrueName(user);
         userService.updateInfo(user);
         userService.updateAvatar(user);
-        user=userService.getUserById(user.getId());
+        user=userService.getUserById(user.getUserid());
         return new CommonResult(200,null,user);
     }
 
