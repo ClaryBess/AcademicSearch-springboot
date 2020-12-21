@@ -13,7 +13,7 @@ public class ApplyService {
     ApplyMapper applyMapper;
 
     //发送申请
-    public int SendApply(Integer user,String feedback,long researcher){
+    public int SendApply(Integer user,String feedback,Integer researcher){
         return applyMapper.SendApply(user,feedback,researcher);
     }
 

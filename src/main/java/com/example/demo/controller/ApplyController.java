@@ -26,7 +26,7 @@ public class ApplyController {
     //发送申请
     @ResponseBody
     @RequestMapping("/apply/send")
-    public CommonResult SendApply(@RequestParam("feedback") String feedback,@RequestParam("user")Integer Uid,@RequestParam("researcher")Long researcher){
+    public CommonResult SendApply(@RequestParam("feedback") String feedback,@RequestParam("user")Integer Uid,@RequestParam("researcher")Integer researcher){
         return new CommonResult(200,"发送成功",applyService.SendApply(Uid,feedback,researcher));
     }
 
@@ -37,7 +37,8 @@ public class ApplyController {
         applyService.AcceptApply(id);
         userService.setResearcher(userService.getUserById(user));
         userService.getUserById(user).setResearcherId(applyService.getApplyById(id).getResearcher());
-        return new CommonResult(200,"已同意",messageService.SendMessage(100000,user,"您的申请"+id.toString()+"已通过审核。"));
+        messageService.SendMessage(100000,user,"您的申请"+id.toString()+"已通过审核。");
+        return new CommonResult(200,"已同意",userService.getUserById(user));
     }
 
     //拒绝申请,同时发送通知到该用户
