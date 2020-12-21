@@ -15,6 +15,7 @@ public class Paper implements Comparable<Paper> {
     private Integer citation; //被引用量
     private Integer year; //发布年份
     //private String field;   //领域
+
     private String  author[];  //作者名字
     private String keywords[]; //关键字
     private String url;   //网址
@@ -23,24 +24,25 @@ public class Paper implements Comparable<Paper> {
     private String keyWordShow;//关键词显示
 
 
-    public Paper(Long id, String title, Integer citation, Integer year, String[] author, String[] keyWord, String url, String anAbstract) {
+    public Paper(Long id, String title, Integer citation, Integer year, String[] author, String[] keywords, String url, String anAbstract) {
         this.id = id;
         this.title = title;
         this.citation = citation;
         this.year = year;
         //this.field = keyWord[0];
+        this.keywords = keywords;
         this.author = author;
-        this.keywords = keyWord;
+
         this.url = url;
         Abstract = anAbstract;
     }
-    public Paper(String title, Integer citation, Integer year, String[] author, String[] keyWord, String url, String anAbstract) {
+    public Paper(String title, Integer citation, Integer year, String[] author, String[] keywords, String url, String anAbstract) {
         this.title = title;
         this.citation = citation;
         this.year = year;
         //this.field = field;
         this.author = author;
-        this.keywords = keyWord;
+        this.keywords = keywords;
         this.url = url;
         Abstract = anAbstract;
     }

@@ -33,7 +33,7 @@ public class PaperTest {
 
     @Test
     public void DeleteTest() throws Exception{
-        long id=17L;
+        long id=18L;
         paperService.delete(id);
     }
 
@@ -78,7 +78,7 @@ public class PaperTest {
     //数组测试
     @Test
     public void ByKeyWordTest() throws Exception{
-        List<Paper> pp= paperService.getPaperByKeyWord("keyword");
+        List<Paper> pp= paperService.getPaperByKeyWord("Class Rank");
         System.out.println(pp);
     }
 
