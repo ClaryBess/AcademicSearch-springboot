@@ -14,33 +14,35 @@ public class Paper implements Comparable<Paper> {
     private String title;  //题目
     private Integer citation; //被引用量
     private Integer year; //发布年份
-    private String field;   //领域
-    private String  Author[];  //作者名字
-    private String keyWord[]; //关键字
+    //private String field;   //领域
+
+    private String  author[];  //作者名字
+    private String keywords[]; //关键字
     private String url;   //网址
     private String Abstract;  //摘要
     private String authorShow;//作者显示
     private String keyWordShow;//关键词显示
 
 
-    public Paper(Long id, String title, Integer citation, Integer year, String field, String[] author, String[] keyWord, String url, String anAbstract) {
+    public Paper(Long id, String title, Integer citation, Integer year, String[] author, String[] keywords, String url, String anAbstract) {
         this.id = id;
         this.title = title;
         this.citation = citation;
         this.year = year;
-        this.field = field;
-        Author = author;
-        this.keyWord = keyWord;
+        //this.field = keyWord[0];
+        this.keywords = keywords;
+        this.author = author;
+
         this.url = url;
         Abstract = anAbstract;
     }
-    public Paper(String title, Integer citation, Integer year, String field, String[] author, String[] keyWord, String url, String anAbstract) {
+    public Paper(String title, Integer citation, Integer year, String[] author, String[] keywords, String url, String anAbstract) {
         this.title = title;
         this.citation = citation;
         this.year = year;
-        this.field = field;
-        Author = author;
-        this.keyWord = keyWord;
+        //this.field = field;
+        this.author = author;
+        this.keywords = keywords;
         this.url = url;
         Abstract = anAbstract;
     }
@@ -77,28 +79,29 @@ public class Paper implements Comparable<Paper> {
         this.year = year;
     }
 
-    public String getField() {
-        return field;
-    }
+//    public String getField() {
+//        return field;
+//    }
+//
+//    public void setField(String field) {
+//        this.field = field;
+//    }
 
-    public void setField(String field) {
-        this.field = field;
-    }
 
     public String[] getAuthor() {
-        return Author;
+        return author;
     }
 
     public void setAuthor(String[] author) {
-        Author = author;
+        this.author = author;
     }
 
-    public String[] getKeyWord() {
-        return keyWord;
+    public String[] getKeywords() {
+        return keywords;
     }
 
-    public void setKeyWord(String[] keyWord) {
-        this.keyWord = keyWord;
+    public void setKeywords(String[] keywords) {
+        this.keywords = keywords;
     }
 
     public String getUrl() {
@@ -138,4 +141,6 @@ public class Paper implements Comparable<Paper> {
         return o.getCitation()-this.citation; //升序
         //return o.id-this.id;  降序
     }
+
+
 }

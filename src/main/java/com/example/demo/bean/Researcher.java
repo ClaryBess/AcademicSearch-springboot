@@ -4,11 +4,13 @@ import org.springframework.data.elasticsearch.annotations.Document;
 
 import java.util.List;
 
-@Document(indexName = "author")
+@Document(indexName = "researcher")
 public class Researcher extends User{
     private Integer citation;
-    private List<String> field;
+
     private List<String> pubs;
+    private List<String> field;
+
 
     public Integer getCitation() {
         return citation;
@@ -34,11 +36,11 @@ public class Researcher extends User{
         this.pubs = pubs;
     }
 
-    public Researcher(Integer id, String name, String trueName, String organization, String email, Integer paperCount, Integer index, String pwd, String info, Integer role, String avatar, Integer researcherId, Integer citation, List<String> field, List<String> pubs) {
-        super(id, name, trueName, organization, email, paperCount, index, pwd, info, role, avatar, researcherId);
+    public Researcher(Integer userid, String name, String trueName, String organization, String email, Integer paperCount, Integer index, String pwd, String info, Integer role, String avatar, Long id, Integer citation, List<String> pubs, List<String> field) {
+        super(userid, name, trueName, organization, email, paperCount, index, pwd, info, role, avatar, id);
         this.citation = citation;
-        this.field = field;
         this.pubs = pubs;
+        this.field = field;
     }
 
     public Researcher(Integer citation, List<String> field, List<String> pubs) {
@@ -46,4 +48,5 @@ public class Researcher extends User{
         this.field = field;
         this.pubs = pubs;
     }
+
 }

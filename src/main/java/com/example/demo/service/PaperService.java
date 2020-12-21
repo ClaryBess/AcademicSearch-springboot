@@ -68,9 +68,9 @@ public class PaperService {
         if (paper.getTitle() != null) jsonMap.put("title", paper.getTitle());
         if (paper.getYear() != null) jsonMap.put("year", paper.getYear());
         if (paper.getCitation() != null) jsonMap.put("citation", paper.getCitation());
-        if (paper.getField() != null) jsonMap.put("field", paper.getField());
+        //if (paper.getField() != null) jsonMap.put("field", paper.getField());
         if (paper.getUrl() != null) jsonMap.put("url", paper.getUrl());
-        if (paper.getKeyWord() != null) jsonMap.put("keywords", paper.getKeyWord());
+        if (paper.getKeywords() != null) jsonMap.put("keywords", paper.getKeywords());
         if (paper.getAbstract() != null) jsonMap.put("abstract", paper.getAbstract());
         if (paper.getAuthor() != null) jsonMap.put("author", paper.getAuthor());
 
@@ -122,7 +122,7 @@ public class PaperService {
         List<Paper> paperList = new ArrayList<>();
         SearchRequest searchRequest = new SearchRequest("paper");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        QueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("keyWord",KeyWord)
+        QueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("keywords",KeyWord)
                 .fuzziness(Fuzziness.AUTO);
         searchSourceBuilder.query(matchQueryBuilder);
         searchRequest.source(searchSourceBuilder);
@@ -153,9 +153,10 @@ public class PaperService {
             String sourceAsString = hit.getSourceAsString();
             Paper paper=JSON.parseObject(sourceAsString, Paper.class);
             StringBuffer author = new StringBuffer();
-            for(int i = 0; i < paper.getAuthor().length; i++){
-                author. append(paper.getAuthor()[i]);
+            for(int i = 0; i < paper.getAuthor().length-1; i++){
+                author. append(paper.getAuthor()[i]+"，");
             }
+            author. append(paper.getAuthor()[paper.getAuthor().length-1]);
             String s = author.toString();
             HotDTO hot=new HotDTO(paper.getId(),paper.getTitle(),s,paper.getYear(),paper.getCitation());
             paperList.add(hot);
@@ -168,9 +169,9 @@ public class PaperService {
     // 按学科领域查询
     public List<Paper> getPaperByField(String field) throws IOException {
         List<Paper> paperList = new ArrayList<>();
-        SearchRequest searchRequest = new SearchRequest("field");
+        SearchRequest searchRequest = new SearchRequest("paper");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        QueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("field",field)
+        QueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("keywords",field)
                 .fuzziness(Fuzziness.AUTO);
         searchSourceBuilder.query(matchQueryBuilder);
         searchRequest.source(searchSourceBuilder);
@@ -186,7 +187,7 @@ public class PaperService {
     // 按发表年份范围查询
     public List<Paper> getPaperByYear(int start, int end) throws IOException {
         List<Paper> paperList = new ArrayList<>();
-        SearchRequest searchRequest = new SearchRequest("year");
+        SearchRequest searchRequest = new SearchRequest("paper");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.rangeQuery("year").lte(end).gte(start));
         searchRequest.source(searchSourceBuilder);
@@ -207,7 +208,7 @@ public class PaperService {
         //排序
         Collections.sort(paperList);
         for(int i=0;i<30&&i<paperList.size();i++){
-            String filed=paperList.get(i).getField();
+            String filed=paperList.get(i).getKeywords()[0];
             int exist=0;
             for(String s:hotFiled){
                 if(s.equals(filed)){

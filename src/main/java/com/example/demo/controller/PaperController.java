@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.DTO.CommentItem;
+import com.example.demo.DTO.PaperAuthorDTO;
 import com.example.demo.bean.*;
 import com.example.demo.service.*;
 
@@ -21,6 +22,8 @@ public class PaperController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ResearcherService researcherService;
     @Autowired
     private CommentsService commentService;
 
@@ -63,16 +66,37 @@ public class PaperController {
     public Object AddDoc(@RequestParam String title,
                          @RequestParam Integer citation,
                          @RequestParam Integer year,
-                         @RequestParam String field1,
                          @RequestParam String  Author[],
                          @RequestParam String keyWord[],
                          @RequestParam String url,
                          @RequestParam String Abstract,
                           HttpServletRequest request,
                           HttpServletResponse response) {
-        Paper paper = new Paper(title,citation,year,field1,Author, keyWord,url,Abstract);
+        Paper paper = new Paper(title,citation,year,Author, keyWord,url,Abstract);
 
         paperService.save(paper);
+        CommonResult commonResult=new CommonResult(200, null, paper);
+        return commonResult;
+    }
+
+    /**
+     * 更新文档
+     */
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/paper/update", method = RequestMethod.POST)
+    public Object UpdateDoc(@RequestParam Long id,
+                         @RequestParam(required = false) String title,
+                         @RequestParam(required = false) Integer citation,
+                         @RequestParam (required = false) Integer year,
+                         @RequestParam(required = false)  String  Author[],
+                         @RequestParam (required = false) String keyWord[],
+                         @RequestParam (required = false) String url,
+                         @RequestParam (required = false) String Abstract,
+                         HttpServletRequest request,
+                         HttpServletResponse response) throws IOException {
+        Paper paper = new Paper(id,title,citation,year,Author, keyWord,url,Abstract);
+        paperService.update(id,paper);
         CommonResult commonResult=new CommonResult(200, null, paper);
         return commonResult;
     }
@@ -84,8 +108,8 @@ public class PaperController {
             List<String> authors=java.util.Arrays.asList(paper.getAuthor());
             paper.setAuthorShow(String.join(", ",authors));
         }
-        if(paper.getKeyWord()!=null){
-            List<String> keyWords=java.util.Arrays.asList(paper.getKeyWord());
+        if(paper.getKeywords()!=null){
+            List<String> keyWords=java.util.Arrays.asList(paper.getKeywords());
             paper.setKeyWordShow(String.join(", ",keyWords));
         }
         return new CommonResult(200,"success",paper);
@@ -113,5 +137,34 @@ public class PaperController {
         List<Paper> paperList = paperService.searchALLPaper();
         return new CommonResult(200,"success",paperList);
     }
+
+    /**
+     * 查看作者
+     * @return
+     */
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/paper/author/{id}", method = RequestMethod.GET)
+    public Object PaperAuthor(@PathVariable("id") Long id,
+                          HttpServletRequest request,
+                          HttpServletResponse response) {
+        try {
+            Researcher researcher= researcherService.searchByAuthorid(id);
+            PaperAuthorDTO paperAuthorDTO=new PaperAuthorDTO();
+            if (researcher == null) return new CommonResult(400, "The researcher does not exist!", null);
+            paperAuthorDTO.setId(researcher.getId());
+            String field=String.join(", ",researcher.getField());
+            paperAuthorDTO.setField(field);
+            paperAuthorDTO.setName(researcher.getName());
+            paperAuthorDTO.setWork(researcher.getOrganization());
+            CommonResult commonResult=new CommonResult(200, null, paperAuthorDTO);
+            return commonResult;
+        } catch (IOException e) {
+            return new CommonResult(400,"error",null);
+        }
+    }
+
+
+
 
 }

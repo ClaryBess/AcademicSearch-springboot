@@ -16,7 +16,7 @@ public class UserService {
         User user2 = userMapper.getUserByEmail(user.getEmail());
         if(user1==null && user2==null){
             userMapper.insertUser(user);
-            return userMapper.getUserById(user.getId());
+            return userMapper.getUserById(user.getUserid());
         }
         else
             return null;
@@ -65,5 +65,15 @@ public class UserService {
     //更新头像
     public int updateAvatar(User user){
         return userMapper.updateAvatar(user);
+    }
+
+    //将用户设置为学者
+    public int setResearcher(User user){
+        user.setRole(2);
+        return userMapper.updateRole(user);
+    }
+
+    public int updateResearcherId(User user){
+        return userMapper.updateResearcherId(user);
     }
 }
