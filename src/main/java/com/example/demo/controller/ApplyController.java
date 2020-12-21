@@ -36,9 +36,10 @@ public class ApplyController {
     public CommonResult AcceptApply(@RequestParam("Aid")Long id,@RequestParam("user")Integer user){
         applyService.AcceptApply(id);
         userService.setResearcher(userService.getUserById(user));
-        userService.getUserById(user).setResearcherId(applyService.getApplyById(id).getResearcher());
-        messageService.SendMessage(100000,user,"您的申请"+id.toString()+"已通过审核。");
-        return new CommonResult(200,"已同意",userService.getUserById(user));
+        User user1=userService.getUserById(user);
+        user1.setResearcherId(applyService.getApplyById(id).getResearcher());
+        userService.updateResearcherId(user1);
+        return new CommonResult(200,"已同意",messageService.SendMessage(100000,user,"您的申请"+id.toString()+"已通过审核。"));
     }
 
     //拒绝申请,同时发送通知到该用户
