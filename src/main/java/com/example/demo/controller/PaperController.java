@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.DTO.CommentItem;
+import com.example.demo.DTO.PaperAuthorDTO;
 import com.example.demo.bean.*;
 import com.example.demo.service.*;
 
@@ -21,6 +22,8 @@ public class PaperController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ResearcherService researcherService;
     @Autowired
     private CommentsService commentService;
 
@@ -134,5 +137,34 @@ public class PaperController {
         List<Paper> paperList = paperService.searchALLPaper();
         return new CommonResult(200,"success",paperList);
     }
+
+    /**
+     * 查看作者
+     * @return
+     */
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/paper/author/{id}", method = RequestMethod.GET)
+    public Object PaperAuthor(@PathVariable("id") Long id,
+                          HttpServletRequest request,
+                          HttpServletResponse response) {
+        try {
+            Researcher researcher= researcherService.searchByAuthorid(id);
+            PaperAuthorDTO paperAuthorDTO=new PaperAuthorDTO();
+            if (researcher == null) return new CommonResult(400, "The researcher does not exist!", null);
+            paperAuthorDTO.setId(researcher.getId());
+            String field=String.join(", ",researcher.getField());
+            paperAuthorDTO.setField(field);
+            paperAuthorDTO.setName(researcher.getName());
+            paperAuthorDTO.setWork(researcher.getOrganization());
+            CommonResult commonResult=new CommonResult(200, null, paperAuthorDTO);
+            return commonResult;
+        } catch (IOException e) {
+            return new CommonResult(400,"error",null);
+        }
+    }
+
+
+
 
 }

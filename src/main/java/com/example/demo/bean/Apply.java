@@ -6,9 +6,9 @@ public class Apply {
     private long user;
     private String state;
     private String feedback;
-    private Integer researcher;
+    private Long researcher;
 
-    public Apply(long id, long user, String state, String feedback, Integer researcher) {
+    public Apply(long id, long user, String state, String feedback, Long researcher) {
         this.id = id;
         this.user = user;
         this.state = state;
@@ -48,11 +48,11 @@ public class Apply {
         this.feedback = feedback;
     }
 
-    public Integer getResearcher() {
+    public Long getResearcher() {
         return researcher;
     }
 
-    public void setResearcher(Integer researcher) {
+    public void setResearcher(Long researcher) {
         this.researcher = researcher;
     }
 }

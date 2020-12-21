@@ -16,7 +16,7 @@ public class UserService {
         User user2 = userMapper.getUserByEmail(user.getEmail());
         if(user1==null && user2==null){
             userMapper.insertUser(user);
-            return userMapper.getUserById(user.getId());
+            return userMapper.getUserById(user.getUserid());
         }
         else
             return null;

@@ -2,8 +2,10 @@ package com.example.demo;
 
 import com.example.demo.DTO.HotDTO;
 import com.example.demo.bean.Paper;
+import com.example.demo.bean.Researcher;
 import com.example.demo.service.PaperService;
 
+import com.example.demo.service.ResearcherService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 
@@ -13,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +24,8 @@ import java.util.List;
 public class PaperTest {
     @Autowired
     PaperService paperService;
+    @Autowired
+    ResearcherService researcherService;
 
     @Test
     public void SaveTest() throws Exception{
@@ -33,7 +38,7 @@ public class PaperTest {
 
     @Test
     public void DeleteTest() throws Exception{
-        long id=17L;
+        long id=18L;
         paperService.delete(id);
     }
 
@@ -78,7 +83,7 @@ public class PaperTest {
     //数组测试
     @Test
     public void ByKeyWordTest() throws Exception{
-        List<Paper> pp= paperService.getPaperByKeyWord("keyword");
+        List<Paper> pp= paperService.getPaperByKeyWord("Class Rank");
         System.out.println(pp);
     }
 
@@ -95,6 +100,13 @@ public class PaperTest {
     public void ALLPaper() throws Exception{
         List<Paper> pp= paperService.searchALLPaper();
         System.out.println(pp);
+    }
+
+    @Test
+    public void searchByAuthoridTest() throws IOException {
+        long id=1L;
+        Researcher researcher=researcherService.searchByAuthorid(id);
+        System.out.println(researcher);
     }
 
 

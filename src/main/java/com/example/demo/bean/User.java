@@ -1,7 +1,7 @@
 package com.example.demo.bean;
 
 public class User {
-    Integer id;
+    Integer userid;
     String name;
     String trueName;
     String organization;
@@ -12,10 +12,10 @@ public class User {
     String info;
     Integer role;   //0为管理员，1为普通用户，2为学者
     String avatar;
-    Integer researcherId; //对应ES中的学者ID
+    Long id; //对应ES中的学者ID
 
-    public User(Integer id, String name, String trueName, String organization, String email, Integer paperCount, Integer index, String pwd, String info, Integer role, String avatar, Integer researcherId) {
-        this.id = id;
+    public User(Integer userid, String name, String trueName, String organization, String email, Integer paperCount, Integer index, String pwd, String info, Integer role, String avatar, Long id) {
+        this.userid = userid;
         this.name = name;
         this.trueName = trueName;
         this.organization = organization;
@@ -26,19 +26,13 @@ public class User {
         this.info = info;
         this.role = role;
         this.avatar = avatar;
-        this.researcherId = researcherId;
+        this.id = id;
     }
 
     public User() {
     }
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -116,11 +110,19 @@ public class User {
 
     public void setAvatar(String avatar) { this.avatar = avatar; }
 
-    public Integer getResearcherId() {
-        return researcherId;
+    public Integer getUserid() {
+        return userid;
     }
 
-    public void setResearcherId(Integer researcherId) {
-        this.researcherId = researcherId;
+    public void setUserid(Integer userid) {
+        this.userid = userid;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
