@@ -6,12 +6,14 @@ public class Apply {
     private long user;
     private String state;
     private String feedback;
+    private Integer researcher;
 
-    public Apply(long id, long user, String state, String feedback) {
+    public Apply(long id, long user, String state, String feedback, Integer researcher) {
         this.id = id;
         this.user = user;
         this.state = state;
         this.feedback = feedback;
+        this.researcher = researcher;
     }
 
     public long getId() {
@@ -44,5 +46,13 @@ public class Apply {
 
     public void setFeedback(String feedback) {
         this.feedback = feedback;
+    }
+
+    public Integer getResearcher() {
+        return researcher;
+    }
+
+    public void setResearcher(Integer researcher) {
+        this.researcher = researcher;
     }
 }

@@ -13,17 +13,17 @@ public class ApplyService {
     ApplyMapper applyMapper;
 
     //发送申请
-    public int SendApply(Integer user,String feedback){
-        return applyMapper.SendApply(user,feedback);
+    public int SendApply(Integer user,String feedback,long researcher){
+        return applyMapper.SendApply(user,feedback,researcher);
     }
 
     //接受申请
-    public int AcceptApply(Integer id){
+    public int AcceptApply(Long id){
         return applyMapper.Accept(id);
     }
 
     //拒绝申请
-    public int RejectApply(Integer id){
+    public int RejectApply(Long id){
         return applyMapper.Reject(id);
     }
 
@@ -46,4 +46,7 @@ public class ApplyService {
     public List<Apply> ShowAccept(){
         return applyMapper.ShowPass();
     }
+
+    //根据id获取申请
+    public  Apply getApplyById(Long id){return applyMapper.getApplyById(id);}
 }

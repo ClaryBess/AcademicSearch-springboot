@@ -28,6 +28,10 @@ public interface ApplyMapper {
     @Select("select * from Apply where state='pass' order by id desc")
     public List<Apply> ShowPass();
 
+    //根据id获取申请
+    @Select("select * from Apply where id=#{id}")
+    public Apply getApplyById(Long id);
+
     /*展示某一用户的所有申请*/
     @Select("select * from Apply where user=#{user} order by id desc")
     public List<Apply> ShowApplyByUser(long user);
@@ -41,7 +45,7 @@ public interface ApplyMapper {
     public Integer Reject(long id);
 
     /*发送申请*/
-    @Insert("insert into Apply values(DEFAULT,#{user},'waiting',#{feedback})")
-    public Integer SendApply(Integer user,String feedback);
+    @Insert("insert into Apply values(DEFAULT,#{user},'waiting',#{feedback},#{researcher})")
+    public Integer SendApply(Integer user,String feedback,long researcher);
 
 }
