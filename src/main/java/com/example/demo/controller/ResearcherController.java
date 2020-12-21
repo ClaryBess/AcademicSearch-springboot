@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.DTO.RelationData;
+import com.example.demo.DTO.YearPubData;
 import com.example.demo.bean.*;
 import com.example.demo.service.PaperService;
 import com.example.demo.service.ResearcherService;
@@ -91,5 +92,26 @@ public class ResearcherController {
         return new CommonResult(200,"success",relationData);
     }
 
-
+    @RequestMapping(value = "/researcher/yearPub/{name}")
+    public CommonResult getYearPub(@PathVariable("name")String name) throws IOException {
+        //找到这个学者的所有文章，按年份统计
+        List<Paper> papers = paperService.searchByAuthorName(name);
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        List<YearPubData> yearPubDataList = new ArrayList<>();
+        for(Paper paper : papers){
+            Integer year = paper.getYear();
+            if(map.isEmpty() || map.get(year) == null){
+                map.put(year,1);
+            }
+            else{
+                Integer count = map.get(year);
+                map.replace(year,count+1);
+            }
+        }
+        for(Integer keys : map.keySet()){
+            YearPubData data = new YearPubData(keys,map.get(keys));
+            yearPubDataList.add(data);
+        }
+        return new CommonResult(200,"success",yearPubDataList);
+    }
 }
