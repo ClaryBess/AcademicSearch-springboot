@@ -5,22 +5,23 @@ import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @Mapper
 public interface MessageMapper {
 
     //展示所有系统信息，即管理员发送的信息
-    @Select("select Message.id as Mid,text,`read`,time,`name` from Message,`User` where `from`=`User`.id and role=0 and `to`=#{id} and `read`!=3")
-    public List<Object> ShowAllSysMessage(Integer id);
+    @Select("select Message.id as Mid,text,`read`,DATE_FORMAT(time,\"%Y-%m-%d %H:%i\") as time,`name` from Message,`User` where `from`=`User`.id and role=0 and `to`=#{id} and `read`!=3")
+    public List<Map<String,Object>> ShowAllSysMessage(Integer id);
 
     //展示所有学者私信
-    @Select("select Message.id as Mid,`User`.id as Uid,text,`read`,time,`name` from Message,`User` where `from`=`User`.id and role=2 and `to`=#{id} and `read`!=3")
-    public List<Object> ShowAllMessageFromRe(Integer id);
+    @Select("select Message.id as Mid,`User`.id as Uid,text,`read`,DATE_FORMAT(time,\"%Y-%m-%d %H:%i\") as time,`name` from Message,`User` where `from`=`User`.id and role=2 and `to`=#{id} and `read`!=3")
+    public List<Map<String,Object>> ShowAllMessageFromRe(Integer id);
 
     //展示所有我的私信
-    @Select("select Message.id as Mid,`User`.id as Uid,text,`read`,time,`name` from Message,`User` where `to`=`User`.id and role=2 and `from`=#{id} and `read`!=2")
-    public List<Object> ShowMyMessage(Integer id);
+    @Select("select Message.id as Mid,`User`.id as Uid,text,`read`,DATE_FORMAT(time,\"%Y-%m-%d %H:%i\") as time,`name` from Message,`User` where `to`=`User`.id and role=2 and `from`=#{id} and `read`!=2")
+    public List<Map<String,Object>> ShowMyMessage(Integer id);
 
     //向学者发送私信
     @Insert("insert into Message values(DEFAULT,#{from},#{to},#{text},0,NOW())")
