@@ -135,6 +135,45 @@ public class PaperService {
         return paperList;
     }
 
+    // 模糊查询，在标题、摘要、关键字中查询
+    public List<Paper> fuzzySearch(String KeyWord) throws IOException {
+        List<Paper> paperList = new ArrayList<>();
+        SearchRequest searchRequest = new SearchRequest("paper");
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+
+        QueryBuilder matchQueryBuilder1 = QueryBuilders.matchQuery("keywords",KeyWord).fuzziness(Fuzziness.AUTO);
+        QueryBuilder matchQueryBuilder2 = QueryBuilders.matchQuery("title",KeyWord).fuzziness(Fuzziness.AUTO);
+        QueryBuilder matchQueryBuilder3 = QueryBuilders.matchQuery("Abstract",KeyWord).fuzziness(Fuzziness.AUTO);
+
+        searchSourceBuilder.query(matchQueryBuilder1);
+        searchSourceBuilder.query(matchQueryBuilder2);
+        searchSourceBuilder.query(matchQueryBuilder3);
+
+        searchRequest.source(searchSourceBuilder);
+
+        SearchResponse searchResponse1 = client.search(searchRequest,RequestOptions.DEFAULT);
+        SearchResponse searchResponse2 = client.search(searchRequest,RequestOptions.DEFAULT);
+        SearchResponse searchResponse3 = client.search(searchRequest,RequestOptions.DEFAULT);
+
+        SearchHits hits1 = searchResponse1.getHits();
+        SearchHits hits2 = searchResponse2.getHits();
+        SearchHits hits3 = searchResponse3.getHits();
+
+        for (SearchHit hit : hits1) {
+            String sourceAsString = hit.getSourceAsString();
+            paperList.add(JSON.parseObject(sourceAsString, Paper.class));
+        }
+        for (SearchHit hit : hits2) {
+            String sourceAsString = hit.getSourceAsString();
+            paperList.add(JSON.parseObject(sourceAsString, Paper.class));
+        }
+        for (SearchHit hit : hits3) {
+            String sourceAsString = hit.getSourceAsString();
+            paperList.add(JSON.parseObject(sourceAsString, Paper.class));
+        }
+        return paperList;
+    }
+
     //按被引量排序
     //但由于es通常没有开放排序功能，对list排序
     public List<HotDTO> OrderByCitation() throws IOException {
