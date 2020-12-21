@@ -33,14 +33,14 @@ public class MessageController {
     @ResponseBody
     @RequestMapping("/message/fromre")
     public CommonResult ReMessage(@RequestParam("user")Integer Uid){
-        return new CommonResult(200,"学者私信",messageService.ResearcherMessage(Uid));
+        return new CommonResult(200,"接收的私信",messageService.ResearcherMessage(Uid));
     }
 
     //我的私信列表
     @ResponseBody
     @RequestMapping("/message/mine")
     public CommonResult MyMessage(@RequestParam("user")Integer Uid){
-        return new CommonResult(200,"学者私信",messageService.MyMessage(Uid));
+        return new CommonResult(200,"发送的私信",messageService.MyMessage(Uid));
     }
 
     //发送私信

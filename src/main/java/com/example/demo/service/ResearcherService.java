@@ -78,10 +78,6 @@ public class ResearcherService {
         return null;
     }
 
-    public User getResearcherByName(String name){
-        return researcherMapper.getResearcherByName(name);
-    }
-
     public List<Researcher> searchALLResearcher() throws IOException {
         List<Researcher> researchers = new ArrayList<>();
         SearchRequest searchRequest = new SearchRequest("researcher");

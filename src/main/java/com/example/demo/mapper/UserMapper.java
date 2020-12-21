@@ -25,8 +25,8 @@ public interface UserMapper {
 
     //添加用户
     @Options(useGeneratedKeys = true,keyProperty = "id")
-    @Insert("insert into User(id,name,organization,paperCount,index,email,pwd,info,role) values(#{id},#{name},#{organization},#{paperCount},#{index},#{email},#{pwd},#{info},#{role})")
-    public User insertUser(User user);
+    @Insert("insert into User(name,email,pwd,role,avatar) values(#{name},#{email},#{pwd},#{role},#{avatar})")
+    public int insertUser(User user);
 
     //根据id删除用户
     @Delete("delete from User where id=#{id}")
