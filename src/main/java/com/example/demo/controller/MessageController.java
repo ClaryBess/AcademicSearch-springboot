@@ -59,10 +59,10 @@ public class MessageController {
     @ResponseBody
     @RequestMapping("/message/send/byname")
     public CommonResult SendMessageByName(@RequestBody Map<String,Object> items){
-        String name = (String)items.get("user");
+        String name = (String)items.get("to");
         User u = userService.getUserByTrueName(name);
-        Integer Uid = u.getId();
-        Integer to = Integer.valueOf((String)items.get("to"));
+        Integer Uid = (Integer) items.get("user");
+        Integer to = u.getId();
         String text = (String) items.get("text");
         return new CommonResult(200,"发送成功",messageService.SendMessage(Uid,to,text));
     }
@@ -71,11 +71,11 @@ public class MessageController {
     @ResponseBody
     @RequestMapping("/message/response")
     public CommonResult ResponseMessage(@RequestBody Map<String,Object> items ){
-        Integer Uid = Integer.valueOf((String)items.get("user"));
-        Integer from = Integer.valueOf((String)items.get("from"));
+        Integer Uid = (Integer) items.get("user");
+        Integer from = (Integer) items.get("from");
         String text = (String) items.get("text");
         return new CommonResult(200,"发送成功",messageService.SendMessage(Uid,from,text));
-    }
+}
 
     //删除接收的私信
     @ResponseBody
