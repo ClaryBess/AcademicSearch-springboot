@@ -162,7 +162,7 @@ public class PaperController {
 
             String field=String.join(", ",researcher.getField());
             if(field.equals("")) paperAuthorDTO.setField(null);
-            else paperAuthorDTO.setField(field);
+            else paperAuthorDTO.setField(researcher.getField().get(0));
 //            if(researcher.getField()==null) paperAuthorDTO.setField(null);
 //            else{
 //                //只要第一个
