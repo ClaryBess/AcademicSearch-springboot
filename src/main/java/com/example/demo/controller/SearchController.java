@@ -41,6 +41,12 @@ public class SearchController {
         return new CommonResult(200, "success", researcherService.searchResearcherByName(keyword));
     }
 
+    // 按领域搜索学者
+    @RequestMapping(value = "/search/researcher/field", method = RequestMethod.GET)
+    public CommonResult searchResearcherByField(@RequestParam("field") String field) throws IOException {
+        return new CommonResult(200, "success", researcherService.searchResearcherByField(field));
+    }
+
     // 按时间搜索论文
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public CommonResult searchPaperByTime(@RequestParam(value="time1", required = true) int start, @RequestParam(value="time2", required = true) int end) throws IOException {
