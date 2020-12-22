@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.bean.CommonResult;
-import com.example.demo.bean.Researcher;
 import com.example.demo.service.PaperService;
 import com.example.demo.service.ResearcherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,21 +18,21 @@ public class SearchController {
     ResearcherService researcherService;
 
     @RequestMapping("/hello")
-    public String sayHello(@RequestParam("hey") String str) {
+    public String sayHello(@RequestParam(value = "hey", required = false) String str) {
         System.out.println("Hello:"+str);
         return "Hello! Member of group 12!";
-    }
-
-    // 搜索论文
-    @RequestMapping(value = "/search/paper", method = RequestMethod.GET)
-    public CommonResult searchPaperByTitle(@RequestParam("key") String keyword) throws IOException {
-        return new CommonResult(200,"success",paperService.getPaperByKeyWord(keyword));
     }
 
     // 按学科领域搜索论文
     @RequestMapping(value = "/search/subject", method = RequestMethod.GET)
     public CommonResult searchPaperByField(@RequestParam("subject") String subject) throws IOException {
-        return new CommonResult(200, "success", paperService.getPaperByField(subject));
+        CommonResult commonResult =  new CommonResult(200, "success", paperService.getPaperByField(subject));
+        if(commonResult.getData().equals(null)) {
+            System.out.println("Null pointer");
+            return new CommonResult(402, "null pointer", null);
+        }
+        else
+            return commonResult;
     }
 
     // 按姓名搜索学者
@@ -51,12 +50,13 @@ public class SearchController {
     // 模糊搜索论文，在标题、摘要和关键字中搜索
     @RequestMapping(value = "/fuzzysearch", method = RequestMethod.GET)
     public CommonResult fuzzySearch(@RequestParam(value = "key")String keyword) throws IOException {
+        System.out.println(keyword);
         return new CommonResult(200,"success",paperService.fuzzySearch(keyword));
     }
 
     // 按关键字搜索论文
     @RequestMapping(value = "/search/keyword", method = RequestMethod.GET)
     public CommonResult searchPaperByTitle(@RequestParam("key") String keyword, @RequestParam("field") String field) throws IOException {
-        return new CommonResult(200,"success",paperService.getPaperByKeyWord(keyword));
+        return new CommonResult(200,"success",paperService.getPaperByKeyWord(keyword, field));
     }
 }

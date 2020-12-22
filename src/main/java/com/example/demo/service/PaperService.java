@@ -8,10 +8,13 @@ import com.example.demo.bean.User;
 import com.example.demo.mapper.PaperMapper;
 import com.example.demo.mapper.ResearcherMapper;
 import org.apache.http.HttpHost;
+import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.DocWriteResponse;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
 
+import org.elasticsearch.action.search.MultiSearchRequest;
+import org.elasticsearch.action.search.MultiSearchResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateRequest;
@@ -21,6 +24,7 @@ import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 
 import org.elasticsearch.common.unit.Fuzziness;
+import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
@@ -35,6 +39,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class PaperService {
@@ -113,51 +118,96 @@ public class PaperService {
             String sourceAsString = hit.getSourceAsString();
             paperList.add(JSON.parseObject(sourceAsString,Paper.class));
         }
+
         return paperList;
     }
 
 
     //按关键字查询,模糊查询
-    public List<Paper> getPaperByKeyWord(String KeyWord) throws IOException {
+    public List<Paper> getPaperByKeyWord(String KeyWord, String field) throws IOException {
         List<Paper> paperList = new ArrayList<>();
-        SearchRequest searchRequest = new SearchRequest("paper");
-        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        QueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("keywords",KeyWord)
-                .fuzziness(Fuzziness.AUTO);
-        searchSourceBuilder.query(matchQueryBuilder);
-        searchRequest.source(searchSourceBuilder);
-        SearchResponse searchResponse = client.search(searchRequest,RequestOptions.DEFAULT);
-        SearchHits hits = searchResponse.getHits();
-        for (SearchHit hit : hits) {
+        MultiSearchRequest request = new MultiSearchRequest();
+        SearchRequest keySearchRequest = new SearchRequest("paper");
+        SearchRequest fieldSearchRequest = new SearchRequest("paper");
+        SearchSourceBuilder keySearchSourceBuilder = new SearchSourceBuilder();
+        SearchSourceBuilder fieldSearchSourceBuilder = new SearchSourceBuilder();
+        MatchQueryBuilder keyMatchQueryBuilder = QueryBuilders.matchQuery("Abstract", KeyWord)
+                .fuzziness(Fuzziness.AUTO)
+                .prefixLength(1)
+                .maxExpansions(10);
+        MatchQueryBuilder fieldMatchQueryBuilder = QueryBuilders.matchQuery("keywords", field);
+
+        keySearchSourceBuilder.query(keyMatchQueryBuilder);
+        fieldSearchSourceBuilder.query(fieldMatchQueryBuilder);
+
+        keySearchRequest.source(keySearchSourceBuilder);
+        fieldSearchRequest.source(fieldSearchSourceBuilder);
+        request.add(keySearchRequest);
+        request.add(fieldSearchRequest);
+
+        MultiSearchResponse response = client.msearch(request, RequestOptions.DEFAULT);
+
+        MultiSearchResponse.Item firstResponse = response.getResponses()[0];
+        SearchResponse firstSearchResponse = firstResponse.getResponse();
+        SearchHits firstSearchHits = firstSearchResponse.getHits();
+
+        MultiSearchResponse.Item secondResponse = response.getResponses()[1];
+        SearchResponse secondSearchResponse = secondResponse.getResponse();
+        SearchHits secondSearchHits = secondSearchResponse.getHits();
+
+        for (SearchHit hit : firstSearchHits) {
             String sourceAsString = hit.getSourceAsString();
             paperList.add(JSON.parseObject(sourceAsString, Paper.class));
         }
+        for (SearchHit hit : secondSearchHits) {
+            String sourceAsString = hit.getSourceAsString();
+            paperList.add(JSON.parseObject(sourceAsString, Paper.class));
+        }
+        paperList = paperList.stream().distinct().collect(Collectors.toList());
         return paperList;
     }
 
     // 模糊查询，在标题、摘要、关键字中查询
     public List<Paper> fuzzySearch(String KeyWord) throws IOException {
         List<Paper> paperList = new ArrayList<>();
-        SearchRequest searchRequest = new SearchRequest("paper");
-        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        MultiSearchRequest request = new MultiSearchRequest();
+        SearchRequest searchRequest1 = new SearchRequest("paper");
+        SearchRequest searchRequest2 = new SearchRequest("paper");
+        SearchRequest searchRequest3 = new SearchRequest("paper");
+
+        SearchSourceBuilder searchSourceBuilder1 = new SearchSourceBuilder();
+        SearchSourceBuilder searchSourceBuilder2 = new SearchSourceBuilder();
+        SearchSourceBuilder searchSourceBuilder3 = new SearchSourceBuilder();
 
         QueryBuilder matchQueryBuilder1 = QueryBuilders.matchQuery("keywords",KeyWord).fuzziness(Fuzziness.AUTO);
         QueryBuilder matchQueryBuilder2 = QueryBuilders.matchQuery("title",KeyWord).fuzziness(Fuzziness.AUTO);
         QueryBuilder matchQueryBuilder3 = QueryBuilders.matchQuery("Abstract",KeyWord).fuzziness(Fuzziness.AUTO);
 
-        searchSourceBuilder.query(matchQueryBuilder1);
-        searchSourceBuilder.query(matchQueryBuilder2);
-        searchSourceBuilder.query(matchQueryBuilder3);
+        searchSourceBuilder1.query(matchQueryBuilder1);
+        searchSourceBuilder2.query(matchQueryBuilder2);
+        searchSourceBuilder3.query(matchQueryBuilder3);
 
-        searchRequest.source(searchSourceBuilder);
+        searchRequest1.source(searchSourceBuilder1);
+        searchRequest2.source(searchSourceBuilder2);
+        searchRequest3.source(searchSourceBuilder3);
 
-        SearchResponse searchResponse1 = client.search(searchRequest,RequestOptions.DEFAULT);
-        SearchResponse searchResponse2 = client.search(searchRequest,RequestOptions.DEFAULT);
-        SearchResponse searchResponse3 = client.search(searchRequest,RequestOptions.DEFAULT);
+        request.add(searchRequest1);
+        request.add(searchRequest2);
+        request.add(searchRequest3);
 
-        SearchHits hits1 = searchResponse1.getHits();
-        SearchHits hits2 = searchResponse2.getHits();
-        SearchHits hits3 = searchResponse3.getHits();
+        MultiSearchResponse response = client.msearch(request, RequestOptions.DEFAULT);
+
+        MultiSearchResponse.Item Response1 = response.getResponses()[0];
+        SearchResponse SearchResponse1 = Response1.getResponse();
+        SearchHits hits1 = SearchResponse1.getHits();
+
+        MultiSearchResponse.Item Response2 = response.getResponses()[1];
+        SearchResponse SearchResponse2 = Response2.getResponse();
+        SearchHits hits2 = SearchResponse2.getHits();
+
+        MultiSearchResponse.Item Response3 = response.getResponses()[2];
+        SearchResponse SearchResponse3 = Response3.getResponse();
+        SearchHits hits3 = SearchResponse3.getHits();
 
         for (SearchHit hit : hits1) {
             String sourceAsString = hit.getSourceAsString();
@@ -171,6 +221,7 @@ public class PaperService {
             String sourceAsString = hit.getSourceAsString();
             paperList.add(JSON.parseObject(sourceAsString, Paper.class));
         }
+        paperList = paperList.stream().distinct().collect(Collectors.toList());
         return paperList;
     }
 
@@ -207,6 +258,7 @@ public class PaperService {
 
     // 按学科领域查询
     public List<Paper> getPaperByField(String field) throws IOException {
+        System.out.println("*******"+field+"*******");
         List<Paper> paperList = new ArrayList<>();
         SearchRequest searchRequest = new SearchRequest("paper");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
@@ -220,6 +272,7 @@ public class PaperService {
             String sourceAsString = hit.getSourceAsString();
             paperList.add(JSON.parseObject(sourceAsString, Paper.class));
         }
+        System.out.println(paperList);
         return paperList;
     }
 
