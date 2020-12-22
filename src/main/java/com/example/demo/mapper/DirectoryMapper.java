@@ -25,14 +25,14 @@ public interface DirectoryMapper {
     public int CreateDirectory(Integer user, String name);
 
     //删除收藏夹
-    @Delete("delete from Directory id=#{id}")
+    @Delete("delete from Directory where id=#{id}")
     public int deleteDirectoryById(Integer id);
 
     //删除某用户的所有收藏夹
-    @Delete("delete from Directory user=#{user}")
+    @Delete("delete from Directory where user=#{user}")
     public int deleteDirectoryByUser(Integer user);
 
     //删除某用户的名为name的收藏夹
-    @Delete("delete from Directory where  user=#{user} and name=#{name}")
+    @Delete("delete from Directory where user=#{user} and name=#{name}")
     public int deleteDirectoryByUserAndName(Integer user, String name);
 }
