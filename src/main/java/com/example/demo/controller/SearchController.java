@@ -65,4 +65,10 @@ public class SearchController {
     public CommonResult searchPaperByTitle(@RequestParam("key") String keyword, @RequestParam("field") String field) throws IOException {
         return new CommonResult(200,"success",paperService.getPaperByKeyWord(keyword, field));
     }
+
+    // 返回所有领域
+    @RequestMapping(value = "/field", method = RequestMethod.GET)
+    public CommonResult getFields() throws IOException{
+        return new CommonResult(200, "success for get fields", paperService.getFields());
+    }
 }
