@@ -15,6 +15,7 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
@@ -99,7 +100,24 @@ public class ResearcherService {
         List<Researcher> researchers = new ArrayList<>();
         SearchRequest searchRequest = new SearchRequest("researcher");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        QueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("name",name);
+        QueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("name",name).fuzziness(Fuzziness.AUTO);
+        searchSourceBuilder.query(matchQueryBuilder);
+        searchRequest.source(searchSourceBuilder);
+        SearchResponse searchResponse = client.search(searchRequest,RequestOptions.DEFAULT);
+        SearchHits hits = searchResponse.getHits();
+        for (SearchHit hit : hits) {
+            String sourceAsString = hit.getSourceAsString();
+            System.out.println(sourceAsString);
+            researchers.add(JSON.parseObject(sourceAsString,Researcher.class));
+        }
+        return researchers;
+    }
+
+    public List<Researcher> searchResearcherByField(String field) throws IOException {
+        List<Researcher> researchers = new ArrayList<>();
+        SearchRequest searchRequest = new SearchRequest("researcher");
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        QueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("field",field).fuzziness(Fuzziness.AUTO);
         searchSourceBuilder.query(matchQueryBuilder);
         searchRequest.source(searchSourceBuilder);
         SearchResponse searchResponse = client.search(searchRequest,RequestOptions.DEFAULT);
