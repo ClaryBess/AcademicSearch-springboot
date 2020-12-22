@@ -55,4 +55,8 @@ public interface UserMapper {
     //更新学者id
     @Update("update User set researcherId=#{researcherId} where id=#{id}")
     public int updateResearcherId(User user);
+    
+    //按真实姓名搜索用户
+    @Select("select * from User where trueName=#{trueName}")
+    public  User getUserByTrueName(String trueName);
 }
