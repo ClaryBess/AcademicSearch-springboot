@@ -25,7 +25,7 @@ public interface ApplyMapper {
     public List<Apply> ShowReject();
 
     /*展示所有接受的申请*/
-    @Select("select * from Apply where state='pass' order by id desc")
+    @Select("select * from Apply where state='accept' order by id desc")
     public List<Apply> ShowPass();
 
     //根据id获取申请
