@@ -34,4 +34,7 @@ public class Follow {
         this.user = user;
         this.researcher = researcher;
     }
+
+    public Follow() {
+    }
 }
