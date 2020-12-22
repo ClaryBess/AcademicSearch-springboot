@@ -21,18 +21,18 @@ public interface DirectoryMapper {
     public List<Directory> getDirectoryByUser(Integer user);
 
     //创建一个新的收藏夹
-    @Insert("insert into Directory values(DEFAULT,#{user},#{name})")
+    @Insert("insert into Directory values(DEFAULT,#{name},#{user})")
     public int CreateDirectory(Integer user, String name);
 
     //删除收藏夹
-    @Delete("delete from Directory id=#{id}")
+    @Delete("delete from Directory where id=#{id}")
     public int deleteDirectoryById(Integer id);
 
     //删除某用户的所有收藏夹
-    @Delete("delete from Directory user=#{user}")
+    @Delete("delete from Directory where user=#{user}")
     public int deleteDirectoryByUser(Integer user);
 
     //删除某用户的名为name的收藏夹
-    @Delete("delete from Directory where  user=#{user} and name=#{name}")
+    @Delete("delete from Directory where user=#{user} and name=#{name}")
     public int deleteDirectoryByUserAndName(Integer user, String name);
 }
