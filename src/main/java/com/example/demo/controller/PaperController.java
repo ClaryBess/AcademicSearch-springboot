@@ -159,10 +159,20 @@ public class PaperController {
             PaperAuthorDTO paperAuthorDTO=new PaperAuthorDTO();
             if (researcher == null) return new CommonResult(400, "The researcher does not exist!", null);
             paperAuthorDTO.setId(researcher.getId());
+
             String field=String.join(", ",researcher.getField());
-            paperAuthorDTO.setField(field);
+            if(field.equals("")) paperAuthorDTO.setField(null);
+            else paperAuthorDTO.setField(field);
+//            if(researcher.getField()==null) paperAuthorDTO.setField(null);
+//            else{
+//                //只要第一个
+//                String field=researcher.getField().get(0);
+//                //String.join(", ",researcher.getField());
+//                paperAuthorDTO.setField(field);
+//            }
             paperAuthorDTO.setName(researcher.getName());
-            paperAuthorDTO.setWork(researcher.getOrganization());
+            if(researcher.getOrganization().equals("")) paperAuthorDTO.setWork(null);
+            else paperAuthorDTO.setWork(researcher.getOrganization());
             CommonResult commonResult=new CommonResult(200, null, paperAuthorDTO);
             return commonResult;
         } catch (IOException e) {
