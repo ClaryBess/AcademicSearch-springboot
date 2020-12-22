@@ -1,14 +1,11 @@
 package com.example.demo.controller;
 
 import com.example.demo.bean.CommonResult;
-import com.example.demo.bean.User;
 import com.example.demo.service.MessageService;
-import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 public class MessageController {
@@ -46,14 +43,20 @@ public class MessageController {
     //发送私信
     @ResponseBody
     @RequestMapping("/message/send")
-    public CommonResult SendMessage(@RequestParam("to")Integer to, @RequestParam("text")String text,@RequestParam("user")Integer Uid){
+    public CommonResult SendMessage(@RequestBody Map<String,Object> items){
+        Integer Uid = Integer.valueOf((String)items.get("user"));
+        Integer to = Integer.valueOf((String)items.get("to"));
+        String text = (String) items.get("text");
         return new CommonResult(200,"发送成功",messageService.SendMessage(Uid,to,text));
     }
 
     //回复私信
     @ResponseBody
     @RequestMapping("/message/response")
-    public CommonResult ResponseMessage(@RequestParam("from")Integer from, @RequestParam("text")String text,@RequestParam("user")Integer Uid){
+    public CommonResult ResponseMessage(@RequestBody Map<String,Object> items ){
+        Integer Uid = Integer.valueOf((String)items.get("user"));
+        Integer from = Integer.valueOf((String)items.get("from"));
+        String text = (String) items.get("text");
         return new CommonResult(200,"发送成功",messageService.SendMessage(Uid,from,text));
     }
 
