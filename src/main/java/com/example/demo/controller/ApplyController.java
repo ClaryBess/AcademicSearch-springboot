@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import com.example.demo.bean.Apply;
+import com.example.demo.bean.ApplyItem;
 import com.example.demo.bean.CommonResult;
 import com.example.demo.bean.User;
 import com.example.demo.service.ApplyService;
@@ -8,12 +10,11 @@ import com.example.demo.service.ResearcherService;
 import com.example.demo.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class ApplyController {
@@ -84,5 +85,19 @@ public class ApplyController {
     @RequestMapping("/apply/accept/show")
     public CommonResult ShowAccept(){
         return new CommonResult(200,"已通过的申请",applyService.ShowAccept());
+    }
+
+    @ResponseBody
+    @RequestMapping("/apply/show")
+    public CommonResult ShowAll() throws IOException {
+        List<Apply> applyList = applyService.ShowAll();
+        for (Apply apply:applyList){
+            System.out.println(apply.getUser());
+        }
+        List<ApplyItem> applyItemList = new ArrayList<>();
+        for (Apply apply : applyList) {
+            applyItemList.add(new ApplyItem(apply.getId(), apply.getUser(), apply.getState(), apply.getFeedback(), apply.getResearcher(), researcherService.searchById(apply.getResearcher()).getName()));
+        }
+        return new CommonResult(200,"所有申请",applyItemList);
     }
 }

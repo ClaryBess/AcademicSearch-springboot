@@ -49,4 +49,7 @@ public class ApplyService {
 
     //根据id获取申请
     public  Apply getApplyById(Long id){return applyMapper.getApplyById(id);}
+
+    //获取所有申请
+    public List<Apply> ShowAll(){return applyMapper.ShowAll();}
 }
