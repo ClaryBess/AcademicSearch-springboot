@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.DTO.FieldPubData;
 import com.example.demo.DTO.RelationData;
 import com.example.demo.DTO.YearPubData;
 import com.example.demo.bean.*;
@@ -113,5 +114,30 @@ public class ResearcherController {
             yearPubDataList.add(data);
         }
         return new CommonResult(200,"success",yearPubDataList);
+    }
+
+    @RequestMapping(value = "/researcher/fieldPub/{name}")
+    public CommonResult getFieldPub(@PathVariable("name") String name) throws IOException {
+        //找到这个学者的所有文章，按领域统计
+        List<Paper> papers = paperService.searchByAuthorName(name);
+        HashMap<String,Integer> map = new HashMap<>();
+        List<FieldPubData> fieldPubDataList = new ArrayList<>();
+        for(Paper paper : papers){
+            String[] keywords = paper.getKeywords();
+            for(String keyword : keywords){
+                if(map.isEmpty() || map.get(keyword) == null){
+                    map.put(keyword,1);
+                }
+                else{
+                    Integer count = map.get(keyword);
+                    map.replace(keyword,count+1);
+                }
+            }
+        }
+        for(String keyword : map.keySet()){
+            FieldPubData data = new FieldPubData(keyword,map.get(keyword));
+            fieldPubDataList.add(data);
+        }
+        return new CommonResult(200,"success",fieldPubDataList);
     }
 }
