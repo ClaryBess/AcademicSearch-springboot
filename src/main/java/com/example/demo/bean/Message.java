@@ -66,4 +66,7 @@ public class Message {
         this.read = read;
         this.time = time;
     }
+
+    public Message() {
+    }
 }

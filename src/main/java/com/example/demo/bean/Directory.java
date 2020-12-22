@@ -5,6 +5,9 @@ public class Directory {
     private String name;
     private Integer user;
 
+    public Directory() {
+    }
+
     public int getId() {
         return id;
     }
