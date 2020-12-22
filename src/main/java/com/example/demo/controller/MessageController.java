@@ -71,11 +71,11 @@ public class MessageController {
     @ResponseBody
     @RequestMapping("/message/response")
     public CommonResult ResponseMessage(@RequestBody Map<String,Object> items ){
-        Integer Uid = Integer.valueOf((String)items.get("user"));
-        Integer from = Integer.valueOf((String)items.get("from"));
+        Integer Uid = (Integer) items.get("user");
+        Integer from = (Integer) items.get("from");
         String text = (String) items.get("text");
         return new CommonResult(200,"发送成功",messageService.SendMessage(Uid,from,text));
-    }
+}
 
     //删除接收的私信
     @ResponseBody
