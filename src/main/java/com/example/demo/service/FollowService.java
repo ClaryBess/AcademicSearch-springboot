@@ -22,12 +22,12 @@ public class FollowService {
     }
 
     //取消关注
-    public int deleteByUserAndResearcher(Integer user, Long researcher){
+    public int deleteByUserAndResearcher(Integer user, String researcher){
         return followMapper.deleteFollowByUserAndResearcher(user,researcher);
     }
 
     //根据用户和学者获取
-    public Follow getFollowByUserAndResearcher(Integer user, Long researcher){
+    public Follow getFollowByUserAndResearcher(Integer user, String researcher){
         return followMapper.getFollowByUserAndResearcher(user,researcher);
     }
 

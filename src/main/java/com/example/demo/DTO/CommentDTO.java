@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class CommentDTO {
     private String content;
-    private Long paperId;
+    private String paperId;
 }

@@ -14,7 +14,7 @@ public interface ResearcherMapper {
     public List<Researcher> getAllResearcher();
 
     @Select("select * from User where researcherId=#{researcherId} and role=2")
-    public User getResearcherById(Long researcherId);
+    public User getResearcherById(String researcherId);
 
     @Select("select * from User where name=#{name} and role=2")
     public User getResearcherByName(String name);

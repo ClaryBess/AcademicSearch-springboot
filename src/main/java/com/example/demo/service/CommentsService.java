@@ -26,7 +26,7 @@ public class CommentsService {
 
 
     //添加评论
-    public Comments insertComments(Long paperId,String content, User user){
+    public Comments insertComments(String paperId,String content, User user){
 
         Comments comment = new Comments();
         comment.setContent(content);
@@ -45,7 +45,7 @@ public class CommentsService {
 
 
     //获得文章评论
-    public List<Comments> selectByPaperId(Long id) {
+    public List<Comments> selectByPaperId(String id) {
         return commentsMapper.getCommentsByPaperId(id);
     }
 

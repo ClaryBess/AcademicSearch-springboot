@@ -12,9 +12,9 @@ public class User {
     String info;
     Integer role;   //0为管理员，1为普通用户，2为学者
     String avatar;
-    Long researcherId; //对应ES中的学者ID
+    String researcherId; //对应ES中的学者ID
 
-    public User(Integer id, String name, String trueName, String organization, String email, Integer paperCount, Integer index, String pwd, String info, Integer role, String avatar, Long researcherId) {
+    public User(Integer id, String name, String trueName, String organization, String email, Integer paperCount, Integer index, String pwd, String info, Integer role, String avatar, String researcherId) {
         this.id = id;
         this.name = name;
         this.trueName = trueName;
@@ -116,11 +116,11 @@ public class User {
 
     public void setAvatar(String avatar) { this.avatar = avatar; }
 
-    public Long getResearcherId() {
+    public String getResearcherId() {
         return researcherId;
     }
 
-    public void setResearcherId(Long researcherId) {
+    public void setResearcherId(String researcherId) {
         this.researcherId = researcherId;
     }
 }

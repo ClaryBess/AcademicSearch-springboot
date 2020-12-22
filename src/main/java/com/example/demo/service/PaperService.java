@@ -59,14 +59,14 @@ public class PaperService {
     public void save(Paper paper) { paperMapper.save(paper);}
 
 
-    public void delete(long id) {
+    public void delete(String id) {
         paperMapper.deleteById(id);
     }
 
     //成功更新返回1
     //无更新返回2
     //更新失败返回0
-    public int update(long id, Paper paper) throws IOException {
+    public int update(String id, Paper paper) throws IOException {
         //构建改的hashmap
         Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("id", id);
@@ -90,7 +90,7 @@ public class PaperService {
         else return 0;
     }
 
-    public Paper search(long id) throws IOException {
+    public Paper search(String id) throws IOException {
         GetRequest getRequest = new GetRequest("paper", String.valueOf(id));
         GetResponse response = client.get(getRequest, RequestOptions.DEFAULT);
         String sourceAsString = response.getSourceAsString();
@@ -98,7 +98,7 @@ public class PaperService {
     }
 
     //按作者id查询
-    public List<Paper> searchByAuthorId(long AuthorId) throws IOException {
+    public List<Paper> searchByAuthorId(String AuthorId) throws IOException {
         User user = researcherMapper.getResearcherById(AuthorId);
         String Author = user.getName();
         return searchByAuthorName(Author);

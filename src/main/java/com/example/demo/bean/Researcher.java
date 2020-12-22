@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 @Document(indexName = "researcher")
 public class Researcher{
-    private Long id;
+    private String id;
     private String name;
     private Integer index;
     private String organization;
@@ -51,7 +51,7 @@ public class Researcher{
 
 
 
-    public Researcher(Long id, String name, Integer index, String organization, Integer paperCount, Integer citation, String info, List<String> pubs, List<String> field) {
+    public Researcher(String id, String name, Integer index, String organization, Integer paperCount, Integer citation, String info, List<String> pubs, List<String> field) {
         this.id = id;
         this.name = name;
         this.index = index;

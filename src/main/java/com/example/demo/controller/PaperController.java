@@ -43,7 +43,7 @@ public class PaperController {
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/paper/detail/{id}", method = RequestMethod.GET)
-    public Object viewDoc(@PathVariable("id") Long id,
+    public Object viewDoc(@PathVariable("id") String id,
                           HttpServletRequest request,
                           HttpServletResponse response) {
         try {
@@ -86,7 +86,7 @@ public class PaperController {
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/paper/update", method = RequestMethod.POST)
-    public Object UpdateDoc(@RequestParam Long id,
+    public Object UpdateDoc(@RequestParam String id,
                          @RequestParam(required = false) String title,
                          @RequestParam(required = false) Integer citation,
                          @RequestParam (required = false) Integer year,
@@ -103,7 +103,7 @@ public class PaperController {
     }
 
     @RequestMapping("/paper/get/{id}")
-    public CommonResult getPaperById(@PathVariable("id") Long id) throws IOException {
+    public CommonResult getPaperById(@PathVariable("id") String id) throws IOException {
         Paper paper = paperService.search(id);
         if(paper.getAuthor()!=null){
             List<String> authors=java.util.Arrays.asList(paper.getAuthor());
@@ -118,7 +118,7 @@ public class PaperController {
 
 
     @RequestMapping(value = "/paper/comment/{id}")
-    public CommonResult getCommentByPaper(@PathVariable("id") Long id){
+    public CommonResult getCommentByPaper(@PathVariable("id") String id){
         List<CommentItem> commentItems = new ArrayList<CommentItem>();
         List<Comments> comments = commentService.selectByPaperId(id);
         for(Comments comments1 : comments){
@@ -146,7 +146,7 @@ public class PaperController {
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/paper/author/{id}", method = RequestMethod.GET)
-    public Object PaperAuthor(@PathVariable("id") Long id,
+    public Object PaperAuthor(@PathVariable("id") String id,
                           HttpServletRequest request,
                           HttpServletResponse response) {
         try {
@@ -176,7 +176,7 @@ public class PaperController {
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/paper/delete/{id}", method = RequestMethod.GET)
-    public CommonResult CommentDelete(@PathVariable("id") Long paperId) throws IOException {
+    public CommonResult CommentDelete(@PathVariable("id") String paperId) throws IOException {
         Paper paper=paperService.search(paperId);
         if(paper==null) return new CommonResult(200,null,paper);
         paperService.delete(paperId);

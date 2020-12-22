@@ -32,36 +32,36 @@ public class PaperTest {
     public void SaveTest() throws Exception{
         String[] author={"Author1","Author2"};
         String[] keywords={"keyword1","Test1"};
-        Paper paper=new Paper(18L,"title",13,2000,author,keywords,"url","Abstract");
+        Paper paper=new Paper("18L","title",13,2000,author,keywords,"url","Abstract");
         paperService.save(paper);
         System.out.println(paper);
     }
 
     @Test
     public void DeleteTest() throws Exception{
-        long id=18L;
+        String id="18L";
         paperService.delete(id);
     }
 
     @Test
     public void UpdateTest() throws Exception{
-        long id=1L;
+        String id="1L";
         String[] Author={"Author1","Author2"};
         //Paper paper=new Paper(null,"titleupdate","Abstractupdate",null,null,null,"fieldupdate",12,null);
-        Paper paper=new Paper((Long) null,null,null,null,null,null,null,null);
+        Paper paper=new Paper((String) null,null,null,null,null,null,null,null);
 
         paperService.update(id,paper);
     }
 
     @Test
     public void SearchTest() throws Exception{
-        long id=2L;
+        String id="2L";
         Paper paper =paperService.search(id);
         System.out.println(paper);
     }
     @Test
     public void SearchByAuthorTest() throws Exception{
-        int userId=1;
+        String userId="1";
         List<Paper> pp= paperService.searchByAuthorId(userId);
         System.out.println(pp);
     }
@@ -105,7 +105,7 @@ public class PaperTest {
 
     @Test
     public void searchByAuthoridTest() throws IOException {
-        long id=1L;
+        String id="1L";
         Researcher researcher=researcherService.searchByAuthorid(id);
         System.out.println(researcher);
     }

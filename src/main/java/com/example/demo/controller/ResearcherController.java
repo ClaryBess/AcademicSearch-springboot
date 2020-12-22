@@ -19,13 +19,13 @@ public class ResearcherController {
     PaperService paperService;
 
     @RequestMapping("/researcher/info/{researcherId}")
-    public CommonResult getResearcherById(@PathVariable("researcherId") Long researcherId) throws IOException {
+    public CommonResult getResearcherById(@PathVariable("researcherId") String researcherId) throws IOException {
         Researcher researcher = researcherService.searchById(researcherId);
         return new CommonResult(200,"success",researcher);
     }
 
     @RequestMapping("/researcher/field/{researcherId}")
-    public CommonResult getField(@PathVariable("researcherId") Long researcherId) throws IOException {
+    public CommonResult getField(@PathVariable("researcherId") String researcherId) throws IOException {
         List<String> field = researcherService.getFieldByResearcher(researcherId);
         if(field == null)
             return new CommonResult(400,"researcher not exist",null);
@@ -34,7 +34,7 @@ public class ResearcherController {
     }
 
     @RequestMapping("/researcher/citation/{researcherId}")
-    public CommonResult getCitation(@PathVariable("researcherId") Long researcherId) throws IOException {
+    public CommonResult getCitation(@PathVariable("researcherId") String researcherId) throws IOException {
         Researcher researcher = researcherService.searchById(researcherId);
         if(researcher != null)
             return new CommonResult(200,"success",researcher.getCitation());
@@ -49,7 +49,7 @@ public class ResearcherController {
     }
 
     @RequestMapping("/researcher/relation/{researcherId}")
-    public CommonResult getRelationByResearcher(@PathVariable("researcherId") Long researcherId) throws IOException{
+    public CommonResult getRelationByResearcher(@PathVariable("researcherId") String researcherId) throws IOException{
         List<Researcher> researchers = new ArrayList<>();
         List<Edge> edges = new ArrayList<Edge>();
         Researcher researcher = researcherService.searchById(researcherId);

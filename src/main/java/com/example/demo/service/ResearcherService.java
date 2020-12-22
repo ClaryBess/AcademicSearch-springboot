@@ -48,7 +48,7 @@ public class ResearcherService {
 
     public void save(Researcher researcher) { esresearcherMapper.save(researcher);}
 
-    public Researcher searchById(long id) throws IOException {
+    public Researcher searchById(String id) throws IOException {
         GetRequest getRequest = new GetRequest("researcher", String.valueOf(id));
         GetResponse response = client.get(getRequest, RequestOptions.DEFAULT);
         String sourceAsString = response.getSourceAsString();
@@ -65,7 +65,7 @@ public class ResearcherService {
         return researcher;
     }
 
-    public List<String> getFieldByResearcher(long id) throws IOException {
+    public List<String> getFieldByResearcher(String id) throws IOException {
         GetRequest getRequest = new GetRequest("researcher", String.valueOf(id));
         GetResponse response = client.get(getRequest, RequestOptions.DEFAULT);
         String sourceAsString = response.getSourceAsString();
@@ -130,7 +130,7 @@ public class ResearcherService {
         return researchers;
     }
 
-    public Researcher searchByAuthorid(Long id) throws IOException {
+    public Researcher searchByAuthorid(String id) throws IOException {
         GetRequest getRequest = new GetRequest("researcher", String.valueOf(id));
         GetResponse response = client.get(getRequest, RequestOptions.DEFAULT);
         String sourceAsString = response.getSourceAsString();

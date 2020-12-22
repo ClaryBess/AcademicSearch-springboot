@@ -39,7 +39,7 @@ public class CollectionController {
         Map<String,String> map = new HashMap<>();
         try{
             for (int i = 0; i < lc.size(); i++) {
-            long id = lc.get(i).getPaper();
+            String id = lc.get(i).getPaper();
             Integer Cid = lc.get(i).getId();
             Integer Dir = lc.get(i).getDirectory();
             Integer User = lc.get(i).getUserId();
@@ -71,14 +71,14 @@ public class CollectionController {
     //添加收藏
     @ResponseBody
     @RequestMapping("/collect")
-    public CommonResult Collect(@RequestParam("Did") Integer Did,@RequestParam("paper") long paper,@RequestParam("user")Integer Uid){
+    public CommonResult Collect(@RequestParam("Did") Integer Did,@RequestParam("paper") String paper,@RequestParam("user")Integer Uid){
         return new CommonResult(200,"收藏成功",collectionService.insertCollection(Did,paper,Uid));
     }
 
     //在文献页面取消收藏
     @ResponseBody
     @RequestMapping("/collection/cancelinpaper")
-    public CommonResult DeleteCollectionInPaper(@RequestParam("paper") long paper,@RequestParam("user")Integer Uid){
+    public CommonResult DeleteCollectionInPaper(@RequestParam("paper") String paper,@RequestParam("user")Integer Uid){
         return new CommonResult(200,"取消收藏成功",collectionService.DeleteCollectionInPaper(Uid,paper));
     }
 
@@ -92,7 +92,7 @@ public class CollectionController {
     //文献收藏状态
     @ResponseBody
     @RequestMapping("/collection/status")
-    public CommonResult ShowCollectionStatus(@RequestParam("paper") Integer paper,@RequestParam("user") Integer uid){
+    public CommonResult ShowCollectionStatus(@RequestParam("paper") String paper,@RequestParam("user") Integer uid){
         if(collectionService.ShowCollectionStatus(paper,uid)==0)
             return new CommonResult(200,"未收藏",0);
         else

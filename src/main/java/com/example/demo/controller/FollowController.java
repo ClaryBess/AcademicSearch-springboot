@@ -31,7 +31,7 @@ public class FollowController {
     }
 
     @PostMapping("/follow/getStatus")
-    public CommonResult getStatus(@RequestParam("user") Integer user,@RequestParam("researcher") Long researcher){
+    public CommonResult getStatus(@RequestParam("user") Integer user,@RequestParam("researcher") String researcher){
         if(followService.getFollowByUserAndResearcher(user,researcher)!=null)
             return new CommonResult(200,"already followed",1);
         else
@@ -39,7 +39,7 @@ public class FollowController {
     }
 
     @PostMapping("/follow/cancel")
-    public CommonResult cancelFollow(@RequestParam("user")Integer user,@RequestParam("researcher") Long researcher){
+    public CommonResult cancelFollow(@RequestParam("user")Integer user,@RequestParam("researcher") String researcher){
             if(followService.getFollowByUserAndResearcher(user,researcher)!=null){
                 followService.deleteByUserAndResearcher(user,researcher);
                 return new CommonResult(200,"cancel success",null);
@@ -56,7 +56,7 @@ public class FollowController {
             return null;
         }
         for(Follow follow : followList){
-            Long researcherId = follow.getResearcher();
+            String researcherId = follow.getResearcher();
             Researcher researcher = researcherService.searchById(researcherId);
             researcherList.add(researcher);
         }
