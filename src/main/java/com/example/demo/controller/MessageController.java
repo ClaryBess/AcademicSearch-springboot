@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.bean.CommonResult;
+import com.example.demo.bean.User;
 import com.example.demo.service.MessageService;
+import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +13,9 @@ import java.util.Map;
 public class MessageController {
     @Autowired
     MessageService messageService;
+
+    @Autowired
+    UserService userService;
 
     //读消息
     @ResponseBody
@@ -45,6 +50,18 @@ public class MessageController {
     @RequestMapping("/message/send")
     public CommonResult SendMessage(@RequestBody Map<String,Object> items){
         Integer Uid = Integer.valueOf((String)items.get("user"));
+        Integer to = Integer.valueOf((String)items.get("to"));
+        String text = (String) items.get("text");
+        return new CommonResult(200,"发送成功",messageService.SendMessage(Uid,to,text));
+    }
+
+    //通过真名发送消息
+    @ResponseBody
+    @RequestMapping("/message/send/byname")
+    public CommonResult SendMessageByName(@RequestBody Map<String,Object> items){
+        String name = (String)items.get("user");
+        User u = userService.getUserByTrueName(name);
+        Integer Uid = u.getId();
         Integer to = Integer.valueOf((String)items.get("to"));
         String text = (String) items.get("text");
         return new CommonResult(200,"发送成功",messageService.SendMessage(Uid,to,text));
