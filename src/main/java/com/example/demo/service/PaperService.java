@@ -289,6 +289,7 @@ public class PaperService {
             String sourceAsString = hit.getSourceAsString();
             paperList.add(JSON.parseObject(sourceAsString, Paper.class));
         }
+        paperList = paperList.stream().distinct().collect(Collectors.toList());
         return paperList;
     }
 
