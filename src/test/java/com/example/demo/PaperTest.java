@@ -82,11 +82,11 @@ public class PaperTest {
     }
 
     //数组测试
-    @Test
-    public void ByKeyWordTest() throws Exception{
-        List<Paper> pp= paperService.getPaperByKeyWord("Class Rank");
-        System.out.println(pp);
-    }
+//    @Test
+//    public void ByKeyWordTest() throws Exception{
+//        List<Paper> pp= paperService.getPaperByKeyWord("Class Rank");
+//        System.out.println(pp);
+//    }
 
 
     //被引量降序
