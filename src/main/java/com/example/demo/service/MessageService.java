@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MessageService {
@@ -21,17 +22,17 @@ public class MessageService {
     }
 
     //展示系统消息
-    public List<Object> SysMessage(Integer id){
+    public List<Map<String,Object>> SysMessage(Integer id){
         return messageMapper.ShowAllSysMessage(id);
     }
 
     //展示学者私信
-    public List<Object> ResearcherMessage(Integer id){
+    public List<Map<String,Object>> ResearcherMessage(Integer id){
         return messageMapper.ShowAllMessageFromRe(id);
     }
 
     //展示我的私信
-    public List<Object> MyMessage(Integer id){
+    public List<Map<String,Object>> MyMessage(Integer id){
         return messageMapper.ShowMyMessage(id);
     }
 

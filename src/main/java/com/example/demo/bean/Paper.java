@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @Document(indexName = "paper")
 public class Paper implements Comparable<Paper> {
     @Id
-    private Long id;
+    private String id;
     private String title;  //题目
     private Integer citation; //被引用量
     private Integer year; //发布年份
@@ -24,7 +24,7 @@ public class Paper implements Comparable<Paper> {
     private String keyWordShow;//关键词显示
 
 
-    public Paper(Long id, String title, Integer citation, Integer year, String[] author, String[] keywords, String url, String anAbstract) {
+    public Paper(String id, String title, Integer citation, Integer year, String[] author, String[] keywords, String url, String Abstract) {
         this.id = id;
         this.title = title;
         this.citation = citation;
@@ -34,9 +34,9 @@ public class Paper implements Comparable<Paper> {
         this.author = author;
 
         this.url = url;
-        Abstract = anAbstract;
+        this.Abstract = Abstract;
     }
-    public Paper(String title, Integer citation, Integer year, String[] author, String[] keywords, String url, String anAbstract) {
+    public Paper(String title, Integer citation, Integer year, String[] author, String[] keywords, String url, String Abstract) {
         this.title = title;
         this.citation = citation;
         this.year = year;
@@ -44,14 +44,14 @@ public class Paper implements Comparable<Paper> {
         this.author = author;
         this.keywords = keywords;
         this.url = url;
-        Abstract = anAbstract;
+        this.Abstract = Abstract;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

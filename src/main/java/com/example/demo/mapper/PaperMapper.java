@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 
-public interface PaperMapper extends ElasticsearchRepository<Paper, Long> {
+public interface PaperMapper extends ElasticsearchRepository<Paper, String> {
 
 
 }

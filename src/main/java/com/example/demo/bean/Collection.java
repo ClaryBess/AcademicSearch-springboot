@@ -3,7 +3,7 @@ package com.example.demo.bean;
 public class Collection {
     private Integer id;
     private Integer directory;
-    private Long paper;
+    private String paper;
     private Integer user;
 
     public Integer getUserId() {
@@ -30,11 +30,11 @@ public class Collection {
         this.directory = directory;
     }
 
-    public Long getPaper() {
+    public String getPaper() {
         return paper;
     }
 
-    public void setPaper(Long paper) {
+    public void setPaper(String paper) {
         this.paper = paper;
     }
 }

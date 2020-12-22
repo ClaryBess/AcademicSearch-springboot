@@ -15,7 +15,7 @@ public interface CommentsMapper extends BaseMapper<Comments> {
 
     //根据文章id获取评论信息
     @Select("select * from Comments where paperId=#{paperId}")
-    public List<Comments> getCommentsByPaperId(Long paperId);
+    public List<Comments> getCommentsByPaperId(String paperId);
 
     //根据用户获取评论
     @Select("select * from Comments where Commentator=#{Commentator}")

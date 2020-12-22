@@ -3,7 +3,7 @@ package com.example.demo.bean;
 public class Follow {
     private Integer id;
     private Integer user;
-    private Integer researcher;
+    private String researcher;
 
     public Integer getId() {
         return id;
@@ -21,15 +21,15 @@ public class Follow {
         this.user = user;
     }
 
-    public Integer getResearcher() {
+    public String getResearcher() {
         return researcher;
     }
 
-    public void setResearcher(Integer researcher) {
+    public void setResearcher(String researcher) {
         this.researcher = researcher;
     }
 
-    public Follow(Integer id, Integer user, Integer researcher) {
+    public Follow(Integer id, Integer user, String researcher) {
         this.id = id;
         this.user = user;
         this.researcher = researcher;

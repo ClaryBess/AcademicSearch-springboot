@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class PaperAuthorDTO {
-    Long id;
+    String id;
     String name;
     String field;
     String work;

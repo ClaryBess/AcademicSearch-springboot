@@ -12,12 +12,12 @@ public class Comments{
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
     private String content;
-    private Long paperId;
+    private String paperId;
     private Integer Commentator;
     private String commentatorName;
     private Timestamp commentTime;
 
-    public Comments(Integer id, String content, Long paperId, Integer commentator, String commentatorName, Timestamp commentTime) {
+    public Comments(Integer id, String content, String paperId, Integer commentator, String commentatorName, Timestamp commentTime) {
         this.id = id;
         this.content = content;
         this.paperId = paperId;
@@ -25,7 +25,7 @@ public class Comments{
         this.commentatorName = commentatorName;
         this.commentTime = commentTime;
     }
-    public Comments(String content, Long paperId) {
+    public Comments(String content, String paperId) {
         this.content = content;
         this.paperId = paperId;
     }
@@ -50,11 +50,11 @@ public class Comments{
         this.content = content;
     }
 
-    public Long getPaperId() {
+    public String getPaperId() {
         return paperId;
     }
 
-    public void setPaperId(Long paperId) {
+    public void setPaperId(String paperId) {
         this.paperId = paperId;
     }
 

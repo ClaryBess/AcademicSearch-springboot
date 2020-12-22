@@ -17,7 +17,7 @@ public interface FollowMapper {
     public Follow getFollowById(Integer id);
 
     @Select("select * from Follow where user=#{user} and researcher=#{researcher}")
-    public Follow getFollowByUserAndResearcher(Integer user, Integer researcher);
+    public Follow getFollowByUserAndResearcher(Integer user, String researcher);
 
     @Select("select * from Follow where user=#{user}")
     public List<Follow> getFollowByUser(Integer user);
@@ -35,8 +35,8 @@ public interface FollowMapper {
     public int deleteFollowByUser(Integer user);
 
     @Delete("delete from Follow where researcher=#{researcher}")
-    public int deleteFollowByResearcher(Integer researcher);
+    public int deleteFollowByResearcher(String researcher);
 
     @Delete("delete from Follow where  user=#{user} and researcher=#{researcher}")
-    public int deleteFollowByUserAndResearcher(Integer user, Integer researcher);
+    public int deleteFollowByUserAndResearcher(Integer user, String researcher);
 }
