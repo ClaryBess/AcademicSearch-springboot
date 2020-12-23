@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.DTO.FieldPubData;
 import com.example.demo.DTO.RelationData;
 import com.example.demo.DTO.YearPubData;
 import com.example.demo.bean.*;
@@ -19,9 +18,20 @@ public class ResearcherController {
     @Autowired
     PaperService paperService;
 
+    @RequestMapping("/researcher/all")
+    public List<Researcher> getAllResearcher() throws IOException{
+        return researcherService.searchALLResearcher();
+    }
+
     @RequestMapping("/researcher/info/{researcherId}")
     public CommonResult getResearcherById(@PathVariable("researcherId") String researcherId) throws IOException {
         Researcher researcher = researcherService.searchById(researcherId);
+        return new CommonResult(200,"success",researcher);
+    }
+
+    @RequestMapping("/researcher/getByName/{name}")
+    public CommonResult getResearcherByName(@PathVariable("name") String name) throws IOException {
+        Researcher researcher = researcherService.searchResearcherByName(name);
         return new CommonResult(200,"success",researcher);
     }
 
@@ -52,24 +62,31 @@ public class ResearcherController {
     @RequestMapping("/researcher/relation/{researcherId}")
     public CommonResult getRelationByResearcher(@PathVariable("researcherId") String researcherId) throws IOException{
         List<Researcher> researchers = new ArrayList<>();
+        HashMap<String,Integer> map = new HashMap<>();
         List<Edge> edges = new ArrayList<Edge>();
         Researcher researcher = researcherService.searchById(researcherId);
         researchers.add(researcher);
+        if(researcher == null)
+            return new CommonResult(400,"researcher not exist",null);
+
         String source = researcher.getName();
+        map.put(source,1);
+
         if(source != null){
             List<Paper> papers = paperService.searchByAuthorName(source);
             for(Paper paper : papers){
                 String[] authors = paper.getAuthor();
                 for(String target : authors){
-                    if(!target.equals(source)){
-                        researchers.addAll(researcherService.searchResearcherByName(target));
+                    if( ( !target.equals(source) ) && map.get(target) == null){
+                        map.put(target,1);
+                        researchers.add(researcherService.searchResearcherByName(target));
                         edges.add(new Edge(source,target,"合作"));
                     }
                 }
             }
         }
         RelationData relationData = new RelationData("学者关系",researchers,edges);
-        return new CommonResult(200,"success",relationData);
+        return new CommonResult(200,"success,nodes: "+researchers.size()+", edges: "+edges.size()+" ",relationData);
     }
 
     @RequestMapping("/researcher/allRelation")
@@ -113,31 +130,8 @@ public class ResearcherController {
             YearPubData data = new YearPubData(keys,map.get(keys));
             yearPubDataList.add(data);
         }
+        yearPubDataList.sort(Comparator.comparing(YearPubData::getYear));
         return new CommonResult(200,"success",yearPubDataList);
     }
 
-    @RequestMapping(value = "/researcher/fieldPub/{name}")
-    public CommonResult getFieldPub(@PathVariable("name")String name) throws IOException {
-        //找到这个学者的所有文章，按年份统计
-        List<Paper> papers = paperService.searchByAuthorName(name);
-        HashMap<String, Integer> map = new HashMap<String, Integer>();
-        List<FieldPubData> fieldPubDataList = new ArrayList<>();
-        for(Paper paper : papers){
-            List<String> keyWords=java.util.Arrays.asList(paper.getKeywords());
-            for (String keyword:keyWords){
-                if(map.isEmpty() || map.get(keyword) == null){
-                    map.put(keyword,1);
-                }
-                else{
-                    Integer count = map.get(keyword);
-                    map.replace(keyword,count+1);
-                }
-            }
-        }
-        for(String keys : map.keySet()){
-            FieldPubData data =new FieldPubData(keys,map.get(keys));
-            fieldPubDataList.add(data);
-        }
-        return new CommonResult(200,"success",fieldPubDataList);
-    }
 }

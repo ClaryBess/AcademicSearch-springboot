@@ -96,7 +96,7 @@ public class ResearcherService {
         return researchers;
     }
 
-    public List<Researcher> searchResearcherByName(String name) throws IOException {
+    public Researcher searchResearcherByName(String name) throws IOException {
         List<Researcher> researchers = new ArrayList<>();
         SearchRequest searchRequest = new SearchRequest("researcher");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
@@ -110,8 +110,26 @@ public class ResearcherService {
             System.out.println(sourceAsString);
             researchers.add(JSON.parseObject(sourceAsString,Researcher.class));
         }
-        return researchers;
+        if(researchers.size() == 0) return null;
+        return researchers.get(0);
     }
+
+//    public List<Researcher> searchResearcherByName(String name) throws IOException {
+//        List<Researcher> researchers = new ArrayList<>();
+//        SearchRequest searchRequest = new SearchRequest("researcher");
+//        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+//        QueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("name",name).fuzziness(Fuzziness.AUTO);
+//        searchSourceBuilder.query(matchQueryBuilder);
+//        searchRequest.source(searchSourceBuilder);
+//        SearchResponse searchResponse = client.search(searchRequest,RequestOptions.DEFAULT);
+//        SearchHits hits = searchResponse.getHits();
+//        for (SearchHit hit : hits) {
+//            String sourceAsString = hit.getSourceAsString();
+//            System.out.println(sourceAsString);
+//            researchers.add(JSON.parseObject(sourceAsString,Researcher.class));
+//        }
+//        return researchers;
+//    }
 
     public List<Researcher> searchResearcherByField(String field) throws IOException {
         List<Researcher> researchers = new ArrayList<>();
