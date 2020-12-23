@@ -37,7 +37,7 @@ public interface ApplyMapper {
     public List<Apply> ShowApplyByUser(long user);
 
     /*接受申请*/
-    @Update("update Apply set state='pass' where id=#{id}")
+    @Update("update Apply set state='accept' where id=#{id}")
     public Integer Accept(long id);
 
     /*拒绝申请*/
