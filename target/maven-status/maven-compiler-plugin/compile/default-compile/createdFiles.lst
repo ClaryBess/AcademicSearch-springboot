@@ -3,7 +3,6 @@ com\example\demo\service\UserService.class
 com\example\demo\service\FollowService.class
 com\example\demo\bean\Comments.class
 com\example\demo\config\CorsConfig.class
-com\example\demo\DTO\PaperCreateDTO.class
 com\example\demo\bean\CommonResult.class
 com\example\demo\controller\ResearcherController.class
 com\example\demo\mapper\ResearcherMapper.class
