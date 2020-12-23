@@ -33,7 +33,7 @@ public class ApplyController {
     //发送申请
     @ResponseBody
     @RequestMapping("/apply/send")
-    public CommonResult SendApply(@RequestParam("feedback") String feedback,@RequestParam("user")Integer Uid,@RequestParam("researcher")Integer researcher){
+    public CommonResult SendApply(@RequestParam("feedback") String feedback,@RequestParam("user")Integer Uid,@RequestParam("researcher")String researcher){
         return new CommonResult(200,"发送成功",applyService.SendApply(Uid,feedback,researcher));
     }
 
