@@ -6,6 +6,8 @@ public class Collection {
     private String paper;
     private Integer user;
 
+    public Collection(){}
+
     public Integer getUserId() {
         return user;
     }

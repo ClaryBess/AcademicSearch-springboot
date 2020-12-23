@@ -77,4 +77,9 @@ public class UserService {
     public int updateResearcherId(User user){
         return userMapper.updateResearcherId(user);
     }
+    
+    //根据真实姓名搜索用户
+    public User getUserByTrueName(String trueName){
+        return userMapper.getUserByTrueName(trueName);
+    }
 }

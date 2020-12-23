@@ -22,7 +22,7 @@ public interface CollectionMapper {
     public int deleteCollectionById(Integer id);
 
     //删除一个收藏夹里面的所有收藏
-    @Delete("delete from Collection directory=#{directory}")
+    @Delete("delete from Collection where directory=#{directory}")
     public int deleteCollectionByDir(Integer directory);
 
     //查找一个用户对某文献的收藏情况

@@ -3,35 +3,27 @@ package com.example.demo.service;
 import com.alibaba.fastjson.JSON;
 import com.example.demo.DTO.HotDTO;
 import com.example.demo.bean.Paper;
-import com.example.demo.bean.Researcher;
 import com.example.demo.bean.User;
 import com.example.demo.mapper.PaperMapper;
 import com.example.demo.mapper.ResearcherMapper;
 import org.apache.http.HttpHost;
-import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.DocWriteResponse;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
-
-import org.elasticsearch.action.search.MultiSearchRequest;
-import org.elasticsearch.action.search.MultiSearchResponse;
-import org.elasticsearch.action.search.SearchRequest;
-import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.*;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
-
 import org.elasticsearch.common.unit.Fuzziness;
+import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.elasticsearch.search.sort.FieldSortBuilder;
-import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -40,6 +32,8 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 
 @Service
 public class PaperService {
@@ -109,7 +103,7 @@ public class PaperService {
         List<Paper> paperList = new ArrayList<>();
         SearchRequest searchRequest = new SearchRequest("paper");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        QueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("author",name);
+        QueryBuilder matchQueryBuilder = matchQuery("author",name);
         searchSourceBuilder.query(matchQueryBuilder);
         searchRequest.source(searchSourceBuilder);
         SearchResponse searchResponse = client.search(searchRequest,RequestOptions.DEFAULT);
@@ -131,11 +125,11 @@ public class PaperService {
         SearchRequest fieldSearchRequest = new SearchRequest("paper");
         SearchSourceBuilder keySearchSourceBuilder = new SearchSourceBuilder();
         SearchSourceBuilder fieldSearchSourceBuilder = new SearchSourceBuilder();
-        MatchQueryBuilder keyMatchQueryBuilder = QueryBuilders.matchQuery("Abstract", KeyWord)
+        MatchQueryBuilder keyMatchQueryBuilder = matchQuery("Abstract", KeyWord)
                 .fuzziness(Fuzziness.AUTO)
                 .prefixLength(1)
                 .maxExpansions(10);
-        MatchQueryBuilder fieldMatchQueryBuilder = QueryBuilders.matchQuery("keywords", field);
+        MatchQueryBuilder fieldMatchQueryBuilder = matchQuery("keywords", field);
 
         keySearchSourceBuilder.query(keyMatchQueryBuilder);
         fieldSearchSourceBuilder.query(fieldMatchQueryBuilder);
@@ -179,9 +173,9 @@ public class PaperService {
         SearchSourceBuilder searchSourceBuilder2 = new SearchSourceBuilder();
         SearchSourceBuilder searchSourceBuilder3 = new SearchSourceBuilder();
 
-        QueryBuilder matchQueryBuilder1 = QueryBuilders.matchQuery("keywords",KeyWord).fuzziness(Fuzziness.AUTO);
-        QueryBuilder matchQueryBuilder2 = QueryBuilders.matchQuery("title",KeyWord).fuzziness(Fuzziness.AUTO);
-        QueryBuilder matchQueryBuilder3 = QueryBuilders.matchQuery("Abstract",KeyWord).fuzziness(Fuzziness.AUTO);
+        QueryBuilder matchQueryBuilder1 = matchQuery("keywords",KeyWord).fuzziness(Fuzziness.AUTO);
+        QueryBuilder matchQueryBuilder2 = matchQuery("title",KeyWord).fuzziness(Fuzziness.AUTO);
+        QueryBuilder matchQueryBuilder3 = matchQuery("Abstract",KeyWord).fuzziness(Fuzziness.AUTO);
 
         searchSourceBuilder1.query(matchQueryBuilder1);
         searchSourceBuilder2.query(matchQueryBuilder2);
@@ -262,7 +256,7 @@ public class PaperService {
         List<Paper> paperList = new ArrayList<>();
         SearchRequest searchRequest = new SearchRequest("paper");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        QueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("keywords",field)
+        QueryBuilder matchQueryBuilder = matchQuery("keywords",field)
                 .fuzziness(Fuzziness.AUTO);
         searchSourceBuilder.query(matchQueryBuilder);
         searchRequest.source(searchSourceBuilder);
@@ -331,5 +325,28 @@ public class PaperService {
             paperList.add(paper);
         }
         return paperList;
+    }
+
+    // 获取所有领域（关键词）
+    public List<String> getFields() throws IOException {
+        List<String> fields = new ArrayList<>();
+        SearchRequest searchRequest = new SearchRequest("paper");
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+        searchSourceBuilder.size(30);
+        searchRequest.source(searchSourceBuilder);
+        searchRequest.scroll(TimeValue.timeValueMinutes(1L));
+        SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+        String scrollId = searchResponse.getScrollId();
+        SearchHits hits = searchResponse.getHits();
+        for (SearchHit hit : hits) {
+            String sourceAsString = hit.getSourceAsString();
+            System.out.println(sourceAsString);
+            Paper paper = JSON.parseObject(sourceAsString, Paper.class);
+            for (String e : paper.getKeywords()) {
+                fields.add(e);
+            }
+        }
+        return fields;
     }
 }

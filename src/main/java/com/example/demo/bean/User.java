@@ -1,6 +1,6 @@
 package com.example.demo.bean;
 
-public class User {
+public class /**/User {
     Integer id;
     String name;
     String trueName;

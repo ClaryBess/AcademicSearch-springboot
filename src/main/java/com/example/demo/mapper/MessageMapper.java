@@ -12,15 +12,15 @@ import java.util.Map;
 public interface MessageMapper {
 
     //展示所有系统信息，即管理员发送的信息
-    @Select("select Message.id as Mid,text,`read`,DATE_FORMAT(time,\"%Y-%m-%d %H:%i\") as time,`name` from Message,`User` where `from`=`User`.id and role=0 and `to`=#{id} and `read`!=3")
+    @Select("select Message.id as Mid,text,`read`,DATE_FORMAT(time,\"%Y-%m-%d %H:%i\") as time,`name` from Message,`User` where `from`=`User`.id and role=0 and `to`=#{id} and `read`!=3 order by Message.id desc")
     public List<Map<String,Object>> ShowAllSysMessage(Integer id);
 
     //展示所有学者私信
-    @Select("select Message.id as Mid,`User`.id as Uid,text,`read`,DATE_FORMAT(time,\"%Y-%m-%d %H:%i\") as time,`name` from Message,`User` where `from`=`User`.id and role=2 and `to`=#{id} and `read`!=3")
+    @Select("select Message.id as Mid,`User`.id as Uid,text,`read`,DATE_FORMAT(time,\"%Y-%m-%d %H:%i\") as time,`name` from Message,`User` where `from`=`User`.id and role=2 and `to`=#{id} and `read`!=3 order by Message.id desc")
     public List<Map<String,Object>> ShowAllMessageFromRe(Integer id);
 
     //展示所有我的私信
-    @Select("select Message.id as Mid,`User`.id as Uid,text,`read`,DATE_FORMAT(time,\"%Y-%m-%d %H:%i\") as time,`name` from Message,`User` where `to`=`User`.id and role=2 and `from`=#{id} and `read`!=2")
+    @Select("select Message.id as Mid,`User`.id as Uid,text,`read`,DATE_FORMAT(time,\"%Y-%m-%d %H:%i\") as time,`name` from Message,`User` where `to`=`User`.id and role=2 and `from`=#{id} and `read`!=2 order by Message.id desc")
     public List<Map<String,Object>> ShowMyMessage(Integer id);
 
     //向学者发送私信

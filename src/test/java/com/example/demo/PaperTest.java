@@ -105,7 +105,7 @@ public class PaperTest {
 
     @Test
     public void searchByAuthoridTest() throws IOException {
-        String id="1L";
+        String id="53e9ab7eb7602d970352850a";
         Researcher researcher=researcherService.searchByAuthorid(id);
         System.out.println(researcher);
     }

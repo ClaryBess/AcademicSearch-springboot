@@ -16,6 +16,8 @@ public class Apply {
         this.researcher = researcher;
     }
 
+    public Apply(){}
+
     public long getId() {
         return id;
     }

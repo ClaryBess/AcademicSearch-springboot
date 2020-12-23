@@ -118,6 +118,7 @@ public class ResearcherController {
     }
 
     @RequestMapping(value = "/researcher/fieldPub/{name}")
+<<<<<<< HEAD
     public CommonResult getFieldPub(@PathVariable("name") String name) throws IOException {
         //找到这个学者的所有文章，按领域统计
         List<Paper> papers = paperService.searchByAuthorName(name);
@@ -126,6 +127,16 @@ public class ResearcherController {
         for(Paper paper : papers){
             String[] keywords = paper.getKeywords();
             for(String keyword : keywords){
+=======
+    public CommonResult getFieldPub(@PathVariable("name")String name) throws IOException {
+        //找到这个学者的所有文章，按年份统计
+        List<Paper> papers = paperService.searchByAuthorName(name);
+        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        List<FieldPubData> fieldPubDataList = new ArrayList<>();
+        for(Paper paper : papers){
+            List<String> keyWords=java.util.Arrays.asList(paper.getKeywords());
+            for (String keyword:keyWords){
+>>>>>>> 74e0a9a2a86d60a370658c60bbc6056b77939dd8
                 if(map.isEmpty() || map.get(keyword) == null){
                     map.put(keyword,1);
                 }
@@ -135,8 +146,13 @@ public class ResearcherController {
                 }
             }
         }
+<<<<<<< HEAD
         for(String keyword : map.keySet()){
             FieldPubData data = new FieldPubData(keyword,map.get(keyword));
+=======
+        for(String keys : map.keySet()){
+            FieldPubData data =new FieldPubData(keys,map.get(keys));
+>>>>>>> 74e0a9a2a86d60a370658c60bbc6056b77939dd8
             fieldPubDataList.add(data);
         }
         return new CommonResult(200,"success",fieldPubDataList);
