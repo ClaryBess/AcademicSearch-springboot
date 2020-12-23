@@ -49,18 +49,17 @@ public class FollowController {
     }
 
     @PostMapping("/follow/getList")
-    public List<Follow> getList(@RequestParam("id")Integer id) throws IOException {
+    public List<Researcher> getList(@RequestParam("id")Integer id) throws IOException {
         List<Follow> followList=followService.getFollowByUser(id);
         List<Researcher> researcherList = new ArrayList<>();
         if(followList == null || followList.size() == 0){
             return null;
         }
-        return followList;
-//        for(Follow follow : followList){
-//            String researcherId = follow.getResearcher();
-//            Researcher researcher = researcherService.searchById(researcherId);
-//            researcherList.add(researcher);
-//        }
-//        return researcherList;
+        for(Follow follow : followList){
+            String researcherId = follow.getResearcher();
+            Researcher researcher = researcherService.searchById(researcherId);
+            researcherList.add(researcher);
+        }
+        return researcherList;
     }
 }
