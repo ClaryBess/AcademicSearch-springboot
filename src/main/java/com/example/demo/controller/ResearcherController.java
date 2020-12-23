@@ -113,6 +113,7 @@ public class ResearcherController {
             YearPubData data = new YearPubData(keys,map.get(keys));
             yearPubDataList.add(data);
         }
+        yearPubDataList.sort(Comparator.comparing(YearPubData::getYear));
         return new CommonResult(200,"success",yearPubDataList);
     }
 
