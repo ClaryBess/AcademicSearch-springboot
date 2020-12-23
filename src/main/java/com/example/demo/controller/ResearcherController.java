@@ -61,16 +61,17 @@ public class ResearcherController {
 
     @RequestMapping("/researcher/relation/{researcherId}")
     public CommonResult getRelationByResearcher(@PathVariable("researcherId") String researcherId) throws IOException{
-        List<Researcher> researchers = new ArrayList<>();
+        List<Node> nodes = new ArrayList<Node>();
         HashMap<String,Integer> map = new HashMap<>();
         List<Edge> edges = new ArrayList<Edge>();
-        Researcher researcher = researcherService.searchById(researcherId);
-        researchers.add(researcher);
+        Researcher researcher;
+
+        researcher = researcherService.searchById(researcherId);
         if(researcher == null)
             return new CommonResult(400,"researcher not exist",null);
-
         String source = researcher.getName();
         map.put(source,1);
+        nodes.add(new Node(source, researcher.getPaperCount()));
 
         if(source != null){
             List<Paper> papers = paperService.searchByAuthorName(source);
@@ -79,35 +80,17 @@ public class ResearcherController {
                 for(String target : authors){
                     if( ( !target.equals(source) ) && map.get(target) == null){
                         map.put(target,1);
-                        researchers.add(researcherService.searchResearcherByName(target));
-                        edges.add(new Edge(source,target,"合作"));
-                    }
-                }
-            }
-        }
-        RelationData relationData = new RelationData("学者关系",researchers,edges);
-        return new CommonResult(200,"success,nodes: "+researchers.size()+", edges: "+edges.size()+" ",relationData);
-    }
-
-    @RequestMapping("/researcher/allRelation")
-    public CommonResult getAllRelation() throws IOException {
-        List<Researcher> researchers = researcherService.searchALLResearcher();
-        List<Edge> edges = new ArrayList<Edge>();
-        for(Researcher researcher : researchers){
-            String source = researcher.getName();
-            if(source != null){
-                List<Paper> papers = paperService.searchByAuthorName(source);
-                for(Paper paper : papers){
-                    String[] authors = paper.getAuthor();
-                    for(String target : authors){
-                        if(!target.equals(source))
+                        researcher = researcherService.searchResearcherByName(target);
+                        if(researcher != null){
+                            nodes.add(new Node(target, researcher.getPaperCount()));
                             edges.add(new Edge(source,target,"合作"));
+                        }
                     }
                 }
             }
         }
-        RelationData relationData = new RelationData("学者关系",researchers,edges);
-        return new CommonResult(200,"success",relationData);
+        RelationData relationData = new RelationData("学者关系",nodes,edges);
+        return new CommonResult(200,"success,nodes: "+nodes.size()+", edges: "+edges.size()+" ",relationData);
     }
 
     @RequestMapping(value = "/researcher/yearPub/{name}")
