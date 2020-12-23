@@ -46,6 +46,6 @@ public interface ApplyMapper {
 
     /*发送申请*/
     @Insert("insert into Apply values(DEFAULT,#{user},'waiting',#{feedback},#{researcher})")
-    public Integer SendApply(Integer user,String feedback,Integer researcher);
+    public Integer SendApply(Integer user,String feedback,String researcher);
 
 }
