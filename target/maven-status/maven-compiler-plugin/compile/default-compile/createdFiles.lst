@@ -27,6 +27,7 @@ com\example\demo\bean\Researcher.class
 com\example\demo\controller\FollowController.class
 com\example\demo\controller\UserController.class
 com\example\demo\bean\Directory.class
+com\example\demo\bean\Node.class
 com\example\demo\mapper\PaperMapper.class
 com\example\demo\config\MyBatisConfig$1.class
 com\example\demo\config\RestClientConfig.class

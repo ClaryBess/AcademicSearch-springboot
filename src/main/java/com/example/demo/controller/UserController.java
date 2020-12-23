@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -109,8 +110,9 @@ public class UserController {
             return new CommonResult(500,"password error",null);
     }
 
-    @RequestMapping("user/save")
-    public Map<String, Object> materialPictureAndText(HttpServletRequest request, @RequestParam(value="file", required=false) MultipartFile file){
+    @RequestMapping("/user/save/{id}")
+    public Map<String, Object> materialPictureAndText(@PathVariable Integer id, HttpServletResponse response, @RequestParam(value="file", required=false) MultipartFile file){
+        response.setHeader("Access-Control-Allow-Origin", "*");
         if (StringUtils.isEmpty(file)) {
             HashMap<String, Object> resultMap = new HashMap<>();
             resultMap.put("msg", "请上传图片");
@@ -131,6 +133,9 @@ public class UserController {
 
         HashMap map = new HashMap();
         map.put("picture_url","/file/"+filename);
+        User user=userService.getUserById(id);
+        user.setAvatar("/file/"+filename);
+        userService.updateAvatar(user);
         return map;
     }
 
@@ -144,7 +149,6 @@ public class UserController {
     public CommonResult infoChange(@RequestBody User user){
         userService.updateTrueName(user);
         userService.updateInfo(user);
-        userService.updateAvatar(user);
         user=userService.getUserById(user.getId());
         return new CommonResult(200,null,user);
     }
