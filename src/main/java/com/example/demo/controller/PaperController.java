@@ -152,10 +152,8 @@ public class PaperController {
         try {
             Paper paper=paperService.search(id);
             String name=paper.getAuthor()[0];
-            List<Researcher> r=researcherService.searchResearcherByName(name);
-            if(r.size()==0) return new CommonResult(400, "this author not exist", name);
-            //用第一个
-            Researcher researcher= r.get(0);
+            Researcher researcher = researcherService.searchResearcherByName(name);
+            if(researcher == null) return new CommonResult(400, "this author not exist", name);
             PaperAuthorDTO paperAuthorDTO=new PaperAuthorDTO();
             if (researcher == null) return new CommonResult(400, "The researcher does not exist!", null);
             paperAuthorDTO.setId(researcher.getId());

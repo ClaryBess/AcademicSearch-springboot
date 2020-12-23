@@ -18,9 +18,20 @@ public class ResearcherController {
     @Autowired
     PaperService paperService;
 
+    @RequestMapping("/researcher/all")
+    public List<Researcher> getAllResearcher() throws IOException{
+        return researcherService.searchALLResearcher();
+    }
+
     @RequestMapping("/researcher/info/{researcherId}")
     public CommonResult getResearcherById(@PathVariable("researcherId") String researcherId) throws IOException {
         Researcher researcher = researcherService.searchById(researcherId);
+        return new CommonResult(200,"success",researcher);
+    }
+
+    @RequestMapping("/researcher/getByName/{name}")
+    public CommonResult getResearcherByName(@PathVariable("name") String name) throws IOException {
+        Researcher researcher = researcherService.searchResearcherByName(name);
         return new CommonResult(200,"success",researcher);
     }
 
@@ -51,24 +62,31 @@ public class ResearcherController {
     @RequestMapping("/researcher/relation/{researcherId}")
     public CommonResult getRelationByResearcher(@PathVariable("researcherId") String researcherId) throws IOException{
         List<Researcher> researchers = new ArrayList<>();
+        HashMap<String,Integer> map = new HashMap<>();
         List<Edge> edges = new ArrayList<Edge>();
         Researcher researcher = researcherService.searchById(researcherId);
         researchers.add(researcher);
+        if(researcher == null)
+            return new CommonResult(400,"researcher not exist",null);
+
         String source = researcher.getName();
+        map.put(source,1);
+
         if(source != null){
             List<Paper> papers = paperService.searchByAuthorName(source);
             for(Paper paper : papers){
                 String[] authors = paper.getAuthor();
                 for(String target : authors){
-                    if(!target.equals(source)){
-                        researchers.addAll(researcherService.searchResearcherByName(target));
+                    if( ( !target.equals(source) ) && map.get(target) == null){
+                        map.put(target,1);
+                        researchers.add(researcherService.searchResearcherByName(target));
                         edges.add(new Edge(source,target,"合作"));
                     }
                 }
             }
         }
         RelationData relationData = new RelationData("学者关系",researchers,edges);
-        return new CommonResult(200,"success",relationData);
+        return new CommonResult(200,"success,nodes: "+researchers.size()+", edges: "+edges.size()+" ",relationData);
     }
 
     @RequestMapping("/researcher/allRelation")
