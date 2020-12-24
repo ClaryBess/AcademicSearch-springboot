@@ -116,7 +116,6 @@ public class PaperService {
         return paperList;
     }
 
-
     //按关键字查询,模糊查询
     public List<Paper> getPaperByKeyWord(String KeyWord, String field) throws IOException {
         List<Paper> paperList = new ArrayList<>();
