@@ -48,7 +48,7 @@ public class ApplyController {
         userService.updateResearcherId(user1);
         user1.setTrueName(researcherService.searchById(applyService.getApplyById(id).getResearcher()).getName());
         userService.updateTrueName(user1);
-        return new CommonResult(200,"已同意",messageService.SendMessage(100000,user,"您的申请"+id.toString()+"已通过审核。"));
+        return new CommonResult(200,"已同意",messageService.SendMessage(100001,user,"您的申请"+id.toString()+"已通过审核。"));
     }
 
     //拒绝申请,同时发送通知到该用户
@@ -56,7 +56,7 @@ public class ApplyController {
     @RequestMapping("/apply/reject")
     public CommonResult RejectApply(@RequestParam("Aid")Long id,@RequestParam("user")Integer user){
         applyService.RejectApply(id);
-        return new CommonResult(200,"已拒绝",messageService.SendMessage(100000,user,"您的申请"+id.toString()+"未通过审核。"));
+        return new CommonResult(200,"已拒绝",messageService.SendMessage(100001,user,"您的申请"+id.toString()+"未通过审核。"));
     }
 
     //展示用户发送的所有申请
