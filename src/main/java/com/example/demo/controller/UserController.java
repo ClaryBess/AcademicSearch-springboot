@@ -111,12 +111,10 @@ public class UserController {
     }
 
     @RequestMapping("/user/save/{id}")
-    public Map<String, Object> materialPictureAndText(@PathVariable Integer id, HttpServletResponse response, @RequestParam(value="file", required=false) MultipartFile file){
+    public User materialPictureAndText(@PathVariable Integer id, HttpServletResponse response, @RequestParam(value="file", required=false) MultipartFile file){
         response.setHeader("Access-Control-Allow-Origin", "*");
         if (StringUtils.isEmpty(file)) {
-            HashMap<String, Object> resultMap = new HashMap<>();
-            resultMap.put("msg", "请上传图片");
-            return resultMap;
+            return userService.getUserById(id);
         }
 
         String filename = file.getOriginalFilename();
@@ -131,12 +129,10 @@ public class UserController {
             e.printStackTrace();
         }
 
-        HashMap map = new HashMap();
-        map.put("picture_url","/file/"+filename);
         User user=userService.getUserById(id);
         user.setAvatar("/file/"+filename);
         userService.updateAvatar(user);
-        return map;
+        return userService.getUserById(id);
     }
 
     @PostMapping("/user/getUser")

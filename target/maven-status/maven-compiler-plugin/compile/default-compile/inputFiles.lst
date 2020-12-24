@@ -1,10 +1,10 @@
-D:\祖泊宁\软件分析与设计\学术搜索\AcademicSearch2\AcademicSearch-springboot\src\main\java\com\example\demo\DTO\FieldPubData.java
 D:\祖泊宁\软件分析与设计\学术搜索\AcademicSearch2\AcademicSearch-springboot\src\main\java\com\example\demo\config\ShiroConfig.java
 D:\祖泊宁\软件分析与设计\学术搜索\AcademicSearch2\AcademicSearch-springboot\src\main\java\com\example\demo\mapper\EsResearcherMapper.java
 D:\祖泊宁\软件分析与设计\学术搜索\AcademicSearch2\AcademicSearch-springboot\src\main\java\com\example\demo\bean\ApplyItem.java
 D:\祖泊宁\软件分析与设计\学术搜索\AcademicSearch2\AcademicSearch-springboot\src\main\java\com\example\demo\controller\MessageController.java
 D:\祖泊宁\软件分析与设计\学术搜索\AcademicSearch2\AcademicSearch-springboot\src\main\java\com\example\demo\service\DirectoryService.java
 D:\祖泊宁\软件分析与设计\学术搜索\AcademicSearch2\AcademicSearch-springboot\src\main\java\com\example\demo\bean\Follow.java
+D:\祖泊宁\软件分析与设计\学术搜索\AcademicSearch2\AcademicSearch-springboot\src\main\java\com\example\demo\bean\Node.java
 D:\祖泊宁\软件分析与设计\学术搜索\AcademicSearch2\AcademicSearch-springboot\src\main\java\com\example\demo\bean\Directory.java
 D:\祖泊宁\软件分析与设计\学术搜索\AcademicSearch2\AcademicSearch-springboot\src\main\java\com\example\demo\DTO\YearPubData.java
 D:\祖泊宁\软件分析与设计\学术搜索\AcademicSearch2\AcademicSearch-springboot\src\main\java\com\example\demo\mapper\ApplyMapper.java
