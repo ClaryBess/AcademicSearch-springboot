@@ -118,7 +118,7 @@ public class UserController {
         }
 
         String filename = file.getOriginalFilename();
-        String path = filePath;
+        String path = filePath+"/file";
         File filepath = new File(path,filename);
         if(!filepath.getParentFile().exists()) {
             filepath.getParentFile().mkdirs();
