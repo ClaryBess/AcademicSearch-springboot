@@ -26,6 +26,9 @@ public class ResearcherController {
     @RequestMapping("/researcher/info/{researcherId}")
     public CommonResult getResearcherById(@PathVariable("researcherId") String researcherId) throws IOException {
         Researcher researcher = researcherService.searchById(researcherId);
+        String name = researcher.getName();
+        List<Paper> papers = paperService.searchByAuthorName(name);
+        researcher.setPaperCount(papers.size());
         return new CommonResult(200,"success",researcher);
     }
 
